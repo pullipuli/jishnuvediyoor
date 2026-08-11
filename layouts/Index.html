@@ -1,256 +1,670 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jishnu V V - Digital Design Manager</title>
-    <style>
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 50px 20px;
-            background-color: #fafafa;
-        }
-        .container {
-            background: #ffffff;
-            padding: 40px 50px;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
-        }
-        header {
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 30px;
-            margin-bottom: 40px;
-        }
-        h1 {
-            margin: 0 0 5px 0;
-            font-size: 2.8em;
-            color: #111;
-            font-weight: 700;
-        }
-        .title {
-            font-size: 1.2em;
-            color: #666;
-            margin-bottom: 15px;
-        }
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            font-size: 0.95em;
-        }
-        .contact-info a {
-            color: #005bb5;
-            text-decoration: none;
-        }
-        .contact-info a:hover {
-            text-decoration: underline;
-        }
-        h2 {
-            font-size: 1.5em;
-            color: #222;
-            margin-top: 40px;
-            margin-bottom: 20px;
-            border-bottom: 1px solid #eaeaea;
-            padding-bottom: 8px;
-            font-weight: 600;
-        }
-        h3 {
-            margin: 0 0 5px 0;
-            font-size: 1.15em;
-            color: #222;
-            font-weight: 600;
-        }
-        .meta {
-            font-size: 0.9em;
-            color: #777;
-            margin-bottom: 10px;
-        }
-        p {
-            margin: 0 0 15px 0;
-            color: #444;
-            font-size: 1em;
-        }
-        ul {
-            color: #444;
-            padding-left: 20px;
-            margin-bottom: 20px;
-        }
-        li {
-            margin-bottom: 8px;
-        }
-        .badges {
-            list-style: none;
-            padding: 0;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 0;
-        }
-        .badges li {
-            background: #f0f0f0;
-            color: #333;
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 0.9em;
-        }
-        .exp-item, .edu-item {
-            margin-bottom: 30px;
-        }
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-        }
-        @media (max-width: 600px) {
-            .grid {
-                grid-template-columns: 1fr;
-            }
-            .container {
-                padding: 30px 20px;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jishnu Vediyoor — Manager, Digital Design</title>
+<meta name="description" content="Manager, Digital Design">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F6F4EE;
+    --card:#EFEAE0;
+    --card-line:#E0DACB;
+    --ink:#17161C;
+    --ink-soft:#5C5A63;
+    --ink-faint:#98958E;
+    --accent:#BD7C34;
+    --accent-deep:#8F5A22;
+    --line:#DEDACE;
+    --nav-bg:rgba(14,13,15,0.68);
+    --nav-bg-strong:rgba(10,9,11,0.86);
+    --nav-text:#EDE9DF;
+    --nav-text-dim:#9C988E;
+    --radius:18px;
+    --maxw:760px;
+  }
+ 
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth; scroll-padding-top:40px;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:16px;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+ 
+  ::selection{ background:var(--accent); color:#fff; }
+ 
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+  }
+ 
+  /* ---------- background texture: faint frame ticks ---------- */
+  .filmrail{
+    position:fixed; top:0; left:0; height:100%; width:100%;
+    pointer-events:none; z-index:0;
+    background-image:
+      repeating-linear-gradient(180deg, transparent, transparent 79px, rgba(23,22,28,0.05) 79px, rgba(23,22,28,0.05) 80px);
+    opacity:.5;
+  }
+ 
+  header, main, footer{ position:relative; z-index:1; }
+ 
+  /* ---------- HERO ---------- */
+  #home{
+    padding:120px 0 64px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--accent-deep);
+    display:flex;
+    align-items:center;
+    gap:8px;
+    margin-bottom:18px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px; border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 0 3px rgba(189,124,52,0.18);
+  }
+  h1.name{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:800;
+    font-size:clamp(44px, 8vw, 74px);
+    line-height:0.98;
+    letter-spacing:-0.02em;
+    margin:0 0 14px;
+  }
+  .role-line{
+    font-size:19px;
+    color:var(--ink-soft);
+    margin:0 0 4px;
+  }
+  .loc-line{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    color:var(--ink-faint);
+    letter-spacing:.04em;
+    margin:0 0 28px;
+  }
+  .socials{ display:flex; gap:10px; }
+  .social-btn{
+    width:42px; height:42px;
+    border-radius:12px;
+    border:1px solid var(--line);
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink);
+    transition:background .18s ease, transform .18s ease, border-color .18s ease;
+  }
+  .social-btn:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); transform:translateY(-2px); }
+  .social-btn svg{ width:18px; height:18px; }
+ 
+  /* ---------- SECTION HEADERS ---------- */
+  section{ padding:56px 0; }
+  section + section{ border-top:1px solid var(--line); }
+  .sec-head{
+    display:flex;
+    align-items:baseline;
+    gap:14px;
+    margin-bottom:30px;
+  }
+  .sec-tc{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    letter-spacing:.08em;
+  }
+  h2.sec-title{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:700;
+    font-size:30px;
+    letter-spacing:-0.01em;
+    margin:0;
+  }
+  .about-copy{
+    font-size:17px;
+    color:var(--ink-soft);
+    max-width:62ch;
+    margin:0;
+  }
+ 
+  /* ---------- TIMELINE (Work) ---------- */
+  .timeline{
+    position:relative;
+    padding-left:26px;
+  }
+  .timeline::before{
+    content:"";
+    position:absolute;
+    left:5px; top:6px; bottom:6px;
+    width:1px;
+    background:
+      repeating-linear-gradient(180deg, var(--ink-faint) 0 2px, transparent 2px 10px);
+    opacity:.55;
+  }
+  .entry{
+    position:relative;
+    margin-bottom:14px;
+  }
+  .entry:last-child{ margin-bottom:0; }
+  .dot{
+    position:absolute;
+    left:-26px; top:26px;
+    width:11px; height:11px;
+    border-radius:50%;
+    background:var(--paper);
+    border:2px solid var(--ink-faint);
+  }
+  .entry.current .dot{
+    background:var(--accent);
+    border-color:var(--accent);
+    box-shadow:0 0 0 4px rgba(189,124,52,0.2);
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    padding:24px 26px;
+  }
+  .card-top{
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:12px;
+    margin-bottom:6px;
+  }
+  .card-title{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:700;
+    font-size:19px;
+    letter-spacing:-0.005em;
+  }
+  .card-title .role{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-weight:400;
+    color:var(--ink-soft);
+    font-size:16px;
+  }
+  .ext{
+    flex:none;
+    width:32px; height:32px;
+    border-radius:9px;
+    border:1px solid var(--card-line);
+    background:var(--paper);
+    display:flex; align-items:center; justify-content:center;
+    color:var(--ink-soft);
+  }
+  .ext svg{ width:13px; height:13px; }
+  .meta-row{
+    font-size:14.5px;
+    color:var(--ink-soft);
+    margin-bottom:2px;
+  }
+  .timecode{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    letter-spacing:.05em;
+    color:var(--accent-deep);
+    margin-bottom:14px;
+    display:inline-block;
+  }
+  .entry.current .timecode{ color:var(--accent); }
+  .card-summary{
+    font-size:15px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+  .card-summary .label{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:10.5px;
+    letter-spacing:.1em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    display:block;
+    margin-bottom:6px;
+  }
+ 
+  /* ---------- EDUCATION (reuse card, lighter) ---------- */
+  .edu-grid{ display:flex; flex-direction:column; gap:14px; }
+  .edu-card{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    padding:22px 26px;
+    display:flex;
+    align-items:flex-start;
+    justify-content:space-between;
+    gap:14px;
+  }
+  .edu-name{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    margin-bottom:5px;
+  }
+  .edu-loc{ font-size:14.5px; color:var(--ink-soft); margin-bottom:8px; }
+  .edu-bottom{
+    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  }
+  .edu-degree{
+    font-size:13.5px;
+    color:var(--ink-soft);
+  }
+  .edu-degree::before{ content:"•"; margin-right:12px; color:var(--ink-faint); }
+ 
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  .skill-card{
+    background:var(--card);
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    padding:22px 24px;
+  }
+  .skill-num{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    color:var(--accent);
+    letter-spacing:.08em;
+    margin-bottom:10px;
+    display:block;
+  }
+  .skill-name{
+    font-family:'Bricolage Grotesque', sans-serif;
+    font-weight:700;
+    font-size:18px;
+    margin:0 0 8px;
+  }
+  .skill-list{
+    font-size:14px;
+    color:var(--ink-soft);
+    margin:0;
+  }
+ 
+  footer{
+    padding:60px 0 160px;
+    text-align:center;
+  }
+  footer .foot-tc{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--ink-faint);
+    letter-spacing:.08em;
+  }
+ 
+  /* ---------- FLOATING NAV (dark, transparent, blurred) ---------- */
+  .navdock{
+    position:fixed;
+    left:50%;
+    bottom:26px;
+    transform:translateX(-50%);
+    z-index:50;
+    display:flex;
+    align-items:center;
+    gap:2px;
+    padding:6px;
+    border-radius:999px;
+    background:var(--nav-bg);
+    backdrop-filter:blur(18px) saturate(150%);
+    -webkit-backdrop-filter:blur(18px) saturate(150%);
+    border:1px solid rgba(255,255,255,0.08);
+    box-shadow:0 12px 34px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
+  }
+  .navdock a{
+    font-family:'IBM Plex Sans', sans-serif;
+    font-size:14px;
+    font-weight:500;
+    color:var(--nav-text-dim);
+    text-decoration:none;
+    padding:10px 18px;
+    border-radius:999px;
+    transition:color .2s ease, background .2s ease;
+    white-space:nowrap;
+  }
+  .navdock a:hover{ color:var(--nav-text); }
+  .navdock a.active{
+    color:var(--nav-text);
+    background:rgba(255,255,255,0.1);
+  }
+  .navdock a.active::before{
+    content:"";
+    display:inline-block;
+    width:5px; height:5px;
+    border-radius:50%;
+    background:var(--accent);
+    margin-right:7px;
+    vertical-align:middle;
+  }
+ 
+  @media (max-width:600px){
+    #home{ padding:90px 0 48px; }
+    .skills-grid{ grid-template-columns:1fr; }
+    .navdock{
+      left:16px; right:16px; transform:none;
+      justify-content:space-between;
+      overflow-x:auto;
+      bottom:16px;
+    }
+    .navdock a{ padding:9px 12px; font-size:13px; }
+    .card{ padding:20px; }
+    .edu-card{ flex-direction:column; }
+  }
+</style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Jishnu V V</h1>
-            <div class="title">Manager | Digital Design at AXA GBS</div>
-            <div class="contact-info">
-                <span>📍 Bengaluru, India</span>
-                <a href="mailto:mail@jishnuvediyoor.com">✉️ mail@jishnuvediyoor.com</a>
-                <span>📞 09645452809</span>
-                <a href="https://www.linkedin.com/in/jishnuvediyoor" target="_blank">🔗 LinkedIn</a>
-                <a href="https://linktr.ee/jishnuvediyoor" target="_blank">🔗 Linktree</a>
+ 
+<div class="filmrail"></div>
+ 
+<main>
+  <div class="wrap">
+ 
+    <header id="home">
+      <div class="eyebrow">Portfolio / Résumé</div>
+      <h1 class="name">Jishnu<br>Vediyoor</h1>
+      <p class="role-line">Manager, Digital Design</p>
+      <p class="loc-line">BANGALORE, IN</p>
+      <div class="socials">
+        <a class="social-btn" href="#" aria-label="LinkedIn">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+        </a>
+        <a class="social-btn" href="#" aria-label="X (Twitter)">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.98 10.62 21.05 3h-1.68l-6.14 6.62L8.34 3H2.5l7.42 10.02L2.5 21h1.68l6.48-7 5.18 7h5.84l-7.7-10.38zm-2.3 2.48-.75-1.02L4.98 4.24h2.58l4.8 6.53.75 1.02 6.24 8.48h-2.58l-5.09-6.9z"/></svg>
+        </a>
+      </div>
+    </header>
+ 
+    <section id="about">
+      <div class="sec-head">
+        <span class="sec-tc">00 / ABOUT</span>
+        <h2 class="sec-title">About</h2>
+      </div>
+      <p class="about-copy">Creative design leader with extensive experience in digital design, video services, branding, and communications across global and India-based organizations. Skilled in graphic design, motion graphics, multimedia production, digital marketing, and creative direction, with a strong foundation in film and video production.</p>
+    </section>
+ 
+    <section id="work">
+      <div class="sec-head">
+        <span class="sec-tc">01 / TIMELINE</span>
+        <h2 class="sec-title">Work</h2>
+      </div>
+ 
+      <div class="timeline">
+ 
+        <div class="entry current">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">AXA Global Business Services (AXA GBS) <span class="role">| Manager, Digital Design</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
             </div>
-        </header>
-
-        <section>
-            <h2>Summary</h2>
-            <p>I am an accomplished professional delivering 11 years of career success in conceiving & implementing designs for brands, Content Development, Corporate Communication and Team Management. My dexterity lies in developing brand style guidelines, creating captivating logos and designs for print and digital media, and coordinating a team for pre- and post-production and multiple projects across varying phases of production & overlapping deadlines.</p>
-        </section>
-
-        <section>
-            <h2>Experience</h2>
-            
-            <div class="exp-item">
-                <h3>AXA Global Business Services (AXA GBS)</h3>
-                <div class="meta">Manager, Digital Design | May 2025 - Present | Bengaluru, India</div>
-            <ul>
-                    <li>Building a world-class video capability.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <h3>Standard Chartered Bank</h3>
-                <div class="meta">Manager, Video Services | Design Studio | Nov 2023 - May 2025</div>
-                <ul>
-                    <li>Building a world-class video capability.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <h3>Carelon Global Solutions</h3>
-                <div class="meta">Senior Associate - Branding and Communications | Feb 2020 - Nov 2023</div>
-                <ul>
-                    <li>Led the internal Graphic Design and Communication Team of 10-12 members for huge rebranding events.</li>
-                    <li>Collaborated with Branding Team and business towers in all design aspects & brand identity development.</li>
-                    <li>Administered service & experience design for rebranding/new brand development.</li>
-                    <li>Mapped user research and customer journeys; provided quality control over design outputs.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <h3>Artistory Media Labs</h3>
-                <div class="meta">Founder | May 2017 - Mar 2022 | Cochin Area, India</div>
-                <p>Digital content creation and marketing agency from Kerala. Worked with clients including Kerala Tourism, Landrover, Jaguar, Eat Kochi Eat, and more.</p>
-            </div>
-
-            <div class="exp-item">
-                <h3>Lowe's India</h3>
-                <div class="meta">Creative Design Consultant | Apr 2019 - Jan 2020 | Bengaluru, India</div>
-            </div>
-
-            <div class="exp-item">
-                <h3>Buzzstop Integrated Communications Pvt. Ltd.</h3>
-                <div class="meta">Digital Technologist | Mar 2018 - Aug 2018</div>
-                <ul>
-                    <li>Produced video content, created wireframes, and executed designs for websites.</li>
-                    <li>Provided technical advice for social media campaigns.</li>
-                </ul>
-            </div>
-
-            <div class="exp-item">
-                <h3>Winning Wayz Digital</h3>
-                <div class="meta">Senior Digital Visualizer | Apr 2014 - Jan 2017</div>
-                <ul>
-                    <li>Led a team of young and talented designers.</li>
-                    <li>Created and executed design and communications for clients like Mathrubhumi, Kappa TV, Club FM.</li>
-                </ul>
-            </div>
-            
-            <div class="exp-item">
-                <h3>Previous Roles</h3>
-                <ul>
-                    <li><strong>Smursh Media</strong> - Digital Visualizer (Jun 2013 - Mar 2014)</li>
-                    <li><strong>SaltMango Tree Creative Communications</strong> - Visual Director Jr / Photographer (Sep 2011 - Mar 2013)</li>
-                    <li><strong>Indiavibes Web Tv</strong> - Cinematographer (Dec 2010 - Mar 2013)</li>
-                </ul>
-            </div>
-        </section>
-
-        <div class="grid">
-            <section>
-                <h2>Education</h2>
-                <div class="edu-item">
-                    <h3>Indian Institute of Technology, Delhi</h3>
-                    <div class="meta">Certificate Programme In Design Thinking For UX (Jun 2023 - Jan 2024)</div>
-                </div>
-                <div class="edu-item">
-                    <h3>Dr CV Raman University</h3>
-                    <div class="meta">Bachelor's Degree, Business Administration and Management (Jun 2016 - Mar 2019)</div>
-                </div>
-                <div class="edu-item">
-                    <h3>SAE Institute</h3>
-                    <div class="meta">Diploma in Digital Film Making (2008 - 2009)</div>
-                </div>
-            </section>
-
-            <section>
-                <h2>Skills & Languages</h2>
-                <h3>Core Skills</h3>
-                <ul class="badges" style="margin-bottom: 20px;">
-                    <li>Illustration</li>
-                    <li>Design Thinking</li>
-                    <li>Typography</li>
-                    <li>Team Management</li>
-                    <li>Brand Development</li>
-                </ul>
-                
-                <h3>Languages</h3>
-                <ul class="badges">
-                    <li>English (Full Professional)</li>
-                    <li>Malayalam</li>
-                    <li>Hindi</li>
-                    <li>Tamil</li>
-                </ul>
-            </section>
+            <div class="meta-row">Pune, Maharashtra, India</div>
+            <div class="timecode">MAY 2025 &nbsp;→&nbsp; PRESENT</div>
+            <p class="card-summary"><span class="label">Summary</span>Lead digital design initiatives for AXA GBS, overseeing creative strategy, design execution, and multimedia projects within corporate services in insurance.</p>
+          </div>
         </div>
-
-        <section>
-            <h2>Certifications</h2>
-            <ul>
-                <li>Foundations of User Experience (UX) Design</li>
-                <li>Communication Fundamentals: How To Communicate Better</li>
-                <li>Powerpoint 2016 2019 365 - Master powerpoint presentation</li>
-                <li>After Effects Motion Graphics Beast</li>
-            </ul>
-        </section>
-    </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Standard Chartered <span class="role">| Manager, Video Services | Design Studio</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">London, England, United Kingdom of Great Britain and Northern Ireland</div>
+            <div class="timecode">NOV 2023 &nbsp;→&nbsp; MAY 2025</div>
+            <p class="card-summary"><span class="label">Summary</span>Managed video services and design studio operations, executing multimedia and video production deliverables for banking and investment clients.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Carelon Global Solutions India <span class="role">| Senior Associate - Branding and Communications</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Indianapolis, Indiana, US</div>
+            <div class="timecode">FEB 2020 &nbsp;→&nbsp; NOV 2023</div>
+            <p class="card-summary"><span class="label">Summary</span>Drove branding, communications, and marketing collateral development as part of global IT services operations.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Artistory Media Labs <span class="role">| Founder</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Kochi, Kerala, India</div>
+            <div class="timecode">MAY 2017 &nbsp;→&nbsp; MAR 2022</div>
+            <p class="card-summary"><span class="label">Summary</span>Founded and managed media production operations, delivering creative video, photography, and storytelling projects.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Lowe's India <span class="role">| Creative Design Consultant</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Arabic College (Bangalore), Karnataka, India</div>
+            <div class="timecode">APR 2019 &nbsp;→&nbsp; JAN 2020</div>
+            <p class="card-summary"><span class="label">Summary</span>Provided creative design consultancy to retail operations, focusing on visual merchandising and graphic content.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Buzzstop Integrated Communications Pvt. Ltd. <span class="role">| Digital Technologist</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Kochi, Kerala, India</div>
+            <div class="timecode">MAR 2018 &nbsp;→&nbsp; AUG 2018</div>
+            <p class="card-summary"><span class="label">Summary</span>Implemented digital technology solutions and supported integrated communication strategies in marketing and advertising.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Winningwayz <span class="role">| Senior Digital Visualizer</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Kochi, Kerala, India</div>
+            <div class="timecode">APR 2014 &nbsp;→&nbsp; JAN 2017</div>
+            <p class="card-summary"><span class="label">Summary</span>Visualized digital campaigns and creative assets for marketing and advertising clients.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Smursh Media <span class="role">| Digital Visualizer</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Mumbai, Maharashtra, India</div>
+            <div class="timecode">JUN 2013 &nbsp;→&nbsp; MAR 2014</div>
+            <p class="card-summary"><span class="label">Summary</span>Created digital visual assets and contributed to internet-based media initiatives.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">The Links India Pvt Ltd <span class="role">| Visual Director Junior</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">Kerala, Kerala, India</div>
+            <div class="timecode">SEP 2011 &nbsp;→&nbsp; MAR 2013</div>
+            <p class="card-summary"><span class="label">Summary</span>Supported visual direction for advertising campaigns at a creative communications agency.</p>
+          </div>
+        </div>
+ 
+        <div class="entry">
+          <span class="dot"></span>
+          <div class="card">
+            <div class="card-top">
+              <div class="card-title">Indiavibes Web TV – India's First Web TV <span class="role">| Cinematographer – Social Marketing</span></div>
+              <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+            </div>
+            <div class="meta-row">India</div>
+            <div class="timecode">DEC 2010 &nbsp;→&nbsp; MAR 2013</div>
+            <p class="card-summary"><span class="label">Summary</span>Shot and created video content for social marketing initiatives in early web television production.</p>
+          </div>
+        </div>
+ 
+      </div>
+    </section>
+ 
+    <section id="education">
+      <div class="sec-head">
+        <span class="sec-tc">02 / CREDENTIALS</span>
+        <h2 class="sec-title">Education</h2>
+      </div>
+ 
+      <div class="edu-grid">
+ 
+        <div class="edu-card">
+          <div>
+            <div class="edu-name">Indian Institute of Technology, Delhi</div>
+            <div class="edu-loc">India</div>
+            <div class="edu-bottom">
+              <span class="timecode">JUN 2023 → JAN 2024</span>
+              <span class="edu-degree">Certification • Design</span>
+            </div>
+          </div>
+          <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+ 
+        <div class="edu-card">
+          <div>
+            <div class="edu-name">Dr CV Raman University, Vaishali</div>
+            <div class="edu-loc">Vaishali, Bihar, India</div>
+            <div class="edu-bottom">
+              <span class="timecode">JUN 2016 → MAR 2019</span>
+              <span class="edu-degree">Bachelor's • Business Administration and Management</span>
+            </div>
+          </div>
+          <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+ 
+        <div class="edu-card">
+          <div>
+            <div class="edu-name">SAE Institute</div>
+            <div class="edu-loc">Amsterdam, North Holland, Netherlands</div>
+            <div class="edu-bottom">
+              <span class="timecode">JAN 2008 → DEC 2009</span>
+              <span class="edu-degree">Diploma • Film</span>
+            </div>
+          </div>
+          <span class="ext"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M7 17 17 7M8 7h9v9"/></svg></span>
+        </div>
+ 
+        <div class="edu-card">
+          <div>
+            <div class="edu-name">BHSS Kalady</div>
+            <div class="edu-loc">Kalady, Kerala, India</div>
+            <div class="edu-bottom">
+              <span class="timecode">JAN 1999 → DEC 2001</span>
+            </div>
+          </div>
+        </div>
+ 
+      </div>
+    </section>
+ 
+    <section id="skills">
+      <div class="sec-head">
+        <span class="sec-tc">03 / TOOLKIT</span>
+        <h2 class="sec-title">Skills</h2>
+      </div>
+ 
+      <div class="skills-grid">
+        <div class="skill-card">
+          <span class="skill-num">01</span>
+          <h3 class="skill-name">Graphic Design</h3>
+          <p class="skill-list">Photoshop, Illustrator, Premiere, After Effects.</p>
+        </div>
+        <div class="skill-card">
+          <span class="skill-num">02</span>
+          <h3 class="skill-name">Video &amp; Motion Graphics</h3>
+          <p class="skill-list">Motion Graphics, Video Editing, Videography, Final Cut Pro, Premiere.</p>
+        </div>
+        <div class="skill-card">
+          <span class="skill-num">03</span>
+          <h3 class="skill-name">Photography</h3>
+          <p class="skill-list">Digital Photography, Portrait Photography, Travel Photography, Image Editing, Lightroom.</p>
+        </div>
+        <div class="skill-card">
+          <span class="skill-num">04</span>
+          <h3 class="skill-name">Creative Direction &amp; Art Direction</h3>
+          <p class="skill-list">Creative Direction, Art Direction, Storyboarding.</p>
+        </div>
+        <div class="skill-card">
+          <span class="skill-num">05</span>
+          <h3 class="skill-name">Digital Media &amp; Marketing</h3>
+          <p class="skill-list">Social Media, Social Media Marketing, Digital Marketing, Digital Media, Advertising.</p>
+        </div>
+        <div class="skill-card">
+          <span class="skill-num">06</span>
+          <h3 class="skill-name">Multimedia Production</h3>
+          <p class="skill-list">Film Production, Video Production, Multimedia, Camera.</p>
+        </div>
+      </div>
+    </section>
+ 
+    <footer>
+      <span class="foot-tc">JISHNU VEDIYOOR — BANGALORE, IN</span>
+    </footer>
+ 
+  </div>
+</main>
+ 
+<nav class="navdock" id="navdock">
+  <a href="#home" class="active">Home</a>
+  <a href="#about">About</a>
+  <a href="#work">Work</a>
+  <a href="#education">Education</a>
+  <a href="#skills">Skills</a>
+</nav>
+ 
+<script>
+  const links = document.querySelectorAll('#navdock a');
+  const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+ 
+  function setActive(){
+    let idx = 0;
+    const y = window.scrollY + window.innerHeight * 0.3;
+    sections.forEach((sec, i) => {
+      if (sec && sec.offsetTop <= y) idx = i;
+    });
+    links.forEach((l, i) => l.classList.toggle('active', i === idx));
+  }
+  window.addEventListener('scroll', setActive, { passive:true });
+  setActive();
+</script>
+ 
 </body>
-
-</html>
+</html
