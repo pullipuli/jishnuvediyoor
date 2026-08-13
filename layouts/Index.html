@@ -397,6 +397,7 @@
     vertical-align:middle;
   }
 
+  /* ---------- MOBILE / TABLET: full-bleed fading photo banner ---------- */
   @media (max-width:1024px){
     #home{
       grid-template-columns:1fr;
@@ -435,24 +436,8 @@
       z-index:2;
     }
     .hero-copy{ padding:0 24px; }
-}@media (max-width:1024px){
-    #home{
-      grid-template-columns:1fr;
-      padding:90px 0 48px;
-    }
-    .hero-photo{ order:-1; margin-bottom:20px; }
-    .hero-photo-card{
-      width:84px;
-      aspect-ratio:1;
-      padding:0;
-      border-radius:50%;
-      box-shadow:none;
-      border:2px solid var(--card-line);
-    }
-    .hero-photo-card::before{ display:none; }
-    .hero-photo-card img{ border-radius:50%; }
-}
-  
+  }
+
   @media (max-width:600px){
     .skills-grid{ grid-template-columns:1fr; }
     .navdock{
@@ -468,7 +453,7 @@
     .navdock a{ padding:8px 14px; font-size:13px; flex:none; }
     .card{ padding:20px; }
     .edu-card{ flex-direction:column; }
-}
+  }
 </style>
 </head>
 <body>
