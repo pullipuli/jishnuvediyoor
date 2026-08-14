@@ -750,7 +750,8 @@
 
 <script>
   const links = document.querySelectorAll('#navdock a');
-  const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+  const inPageLinks = Array.from(links).filter(l => l.getAttribute('href').startsWith('#'));
+  const sections = inPageLinks.map(l => document.querySelector(l.getAttribute('href')));
 
   function setActive(){
     let idx = 0;
@@ -758,8 +759,13 @@
     sections.forEach((sec, i) => {
       if (sec && sec.offsetTop <= y) idx = i;
     });
-    links.forEach((l, i) => l.classList.toggle('active', i === idx));
-  }
+    inPageLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
+
+    const activeLink = inPageLinks[idx];
+    if (activeLink) {
+      activeLink.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    }
+}
   window.addEventListener('scroll', setActive, { passive:true });
   setActive();
 </script>
