@@ -1,0 +1,58 @@
+{{ define "main" }}
+<div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
+  
+  <a href="/movies/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">← Back to Movies</a>
+
+  <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
+    
+    <!-- Poster -->
+    {{ if .Params.poster }}
+    <div style="flex:0 0 260px;max-width:100%;">
+      <img src="{{ .Params.poster }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;">
+    </div>
+    {{ end }}
+
+    <!-- Details -->
+    <div style="flex:1;min-width:280px;">
+      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 8px;">{{ .Title }}</h1>
+      
+      <!-- Meta (Date & Rating) -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        {{ if .Params.date }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.date }}</span>
+        {{ end }}
+        
+        {{ if .Params.rating }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#17161C;color:#F6F4EE;padding:2px 8px;border-radius:6px;font-weight:600;">
+          ★ {{ .Params.rating }}
+        </span>
+        {{ end }}
+      </div>
+
+      <!-- Genres / Tags -->
+      {{ if .Params.genre }}
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+        {{ range .Params.genre }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;background:#FAF9F5;">
+          {{ . }}
+        </span>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <!-- Description / Plot -->
+      <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
+        {{ if .Params.Plot }}
+          <p style="margin:0;">{{ .Params.Plot }}</p>
+        {{ else if .Params.plot }}
+          <p style="margin:0;">{{ .Params.plot }}</p>
+        {{ else }}
+          {{ .Content }}
+        {{ end }}
+      </div>
+
+    </div>
+  </div>
+
+</div>
+{{ end }}
