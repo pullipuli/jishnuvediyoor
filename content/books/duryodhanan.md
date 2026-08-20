@@ -2,6 +2,7 @@
 title: "ദുര്യോധനൻ കൗരവ വംശത്തിന്റെ ഇതിഹാസം - ചൂത്"
 author: "NAND NEELAKANDAN"
 year: 2026
+poster: "/images/books/41VSmTwBrYL.jpg"
 cover:
   image: "/images/books/41VSmTwBrYL.jpg"
 rating: 4
