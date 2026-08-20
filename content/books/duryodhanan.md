@@ -3,7 +3,7 @@ title: "ദുര്യോധനൻ കൗരവ വംശത്തിന്റ�
 author: "NAND NEELAKANDAN"
 year: 2026
 cover:
-  image: "/images/books/your-cover-image.jpg"
+  image: "/images/books/41VSmTwBrYL.jpg"
 rating: 4
 genre: ["Mythology", "Fiction"]
 review: >
