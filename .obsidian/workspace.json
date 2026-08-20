@@ -99,6 +99,7 @@
             "state": {
               "type": "backlink",
               "state": {
+                "file": "content/about.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -198,12 +199,12 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "44eaebe235723e1d",
+  "active": "00ef3e38846328f3",
   "lastOpenFiles": [
+    "content/movies/oldboy.md",
     "content/movies/The Summit of the Gods.md",
     "static/images/gallery/635689-the-summit-of-the-gods-0-2000-0-3000-crop.jpg",
     "content/about.md",
-    "content/movies/oldboy.md",
     "conflict-files-obsidian-git.md",
     "content/posts/hello-world.md",
     "static/images/ChatGPT Image Apr 28, 2025, 04_10_49 PM.png",
