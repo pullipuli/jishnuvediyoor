@@ -35,8 +35,7 @@
               "title": "Diff: workspace.json  (Working Tree)"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -114,7 +113,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c 1.jpeg",
+                "file": "content/movies/oldboy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -214,7 +213,7 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "823c1e2237adf4a8",
+  "active": "aad22ca40de3703d",
   "lastOpenFiles": [
     "conflict-files-obsidian-git.md",
     "content/posts/hello-world.md",
