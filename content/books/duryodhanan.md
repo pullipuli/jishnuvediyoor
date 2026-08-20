@@ -2,9 +2,7 @@
 title: "ദുര്യോധനൻ കൗരവ വംശത്തിന്റെ ഇതിഹാസം - ചൂത്"
 author: "NAND NEELAKANDAN"
 year: 2026
-cover:
-  image: "/images/books/your-cover-image.jpg"
-  alt: "Duryodhanan Book Cover"
+cover: "/images/books/your-cover-image.jpg"
 rating: 4
 genre: ["Mythology", "Fiction"]
 review: |
