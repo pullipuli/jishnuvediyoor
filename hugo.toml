@@ -1,5 +1,5 @@
 baseURL = 'http://jishnuvediyoor.com/'
-languageCode = 'en-us'
+locale = 'en-us'
 title = 'Jishnu Vediyoor'
 theme = "PaperMod"
 [[menu.main]]
