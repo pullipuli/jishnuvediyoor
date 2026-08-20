@@ -20,8 +20,37 @@
               "icon": "lucide-file",
               "title": "oldboy"
             }
+          },
+          {
+            "id": "823c1e2237adf4a8",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "content/posts/hello-world.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "hello-world"
+            }
+          },
+          {
+            "id": "4baa97af0a27c79b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "conflict-files-obsidian-git.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "conflict-files-obsidian-git"
+            }
           }
-        ]
+        ],
+        "currentTab": 2
       }
     ],
     "direction": "vertical"
@@ -199,14 +228,15 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "00ef3e38846328f3",
+  "active": "4baa97af0a27c79b",
   "lastOpenFiles": [
     "content/posts/hello-world.md",
+    "conflict-files-obsidian-git.md",
+    "content/movies/oldboy.md",
     "static/images/ChatGPT Image Apr 28, 2025, 04_10_49 PM.png",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
     "content/_index.md",
     "content/about.md",
-    "content/movies/oldboy.md",
     "content/books/atomic-habits.md",
     "layouts/collection/list.html",
     "layouts/collection",
