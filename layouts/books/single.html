@@ -8,15 +8,21 @@
 
   <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
     
-    <!-- Cover Image Finder -->
-    {{ $cover := .Params.cover | default .Params.poster | default .Params.image }}
+    <!-- Cover Image Finder (Handles PaperMod nested cover.image or flat strings) -->
+    {{ $cover := "" }}
+    {{ if reflect.IsMap .Params.cover }}
+      {{ $cover = .Params.cover.image }}
+    {{ else }}
+      {{ $cover = .Params.image | default .Params.poster | default .Params.cover }}
+    {{ end }}
+
     {{ if $cover }}
     <div style="flex:0 0 240px;max-width:100%;">
       <img src="{{ $cover | relURL }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;">
     </div>
     {{ end }}
 
-    <!-- Details -->
+    <!-- Book Details -->
     <div style="flex:1;min-width:280px;">
       
       <!-- Title -->
@@ -44,7 +50,7 @@
       </div>
       {{ end }}
 
-      <!-- Genres / Tags -->
+      <!-- Genres / Tags Badges -->
       {{ $tags := .Params.genre | default .Params.tags | default .Params.categories }}
       {{ if $tags }}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
@@ -56,7 +62,7 @@
       </div>
       {{ end }}
 
-      <!-- Main Body / Summary / Review -->
+      <!-- Main Review / Summary / Body Content -->
       <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
         {{ if .Params.review }}
           <p style="margin:0 0 12px;">{{ .Params.review }}</p>
