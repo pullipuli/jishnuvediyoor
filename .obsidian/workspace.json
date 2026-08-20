@@ -25,12 +25,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/books/atomic-habits.md",
+                "file": "content/posts/hello-world.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "atomic-habits"
+              "title": "hello-world"
             }
           }
         ],
@@ -214,6 +214,10 @@
   },
   "active": "e42c8a1499c9d2df",
   "lastOpenFiles": [
+    "content/_index.md",
+    "content/about.md",
+    "content/movies/oldboy.md",
+    "content/books/atomic-habits.md",
     "layouts/collection/list.html",
     "layouts/collection",
     "content/collection/_index.md",
@@ -223,17 +227,14 @@
     "layouts/books/lists",
     "layouts/books",
     "content/gallery/Psyco the cat who found us 1.md",
-    "content/books/atomic-habits.md",
     "content/books/_index.md",
     "content/books",
-    "content/movies/oldboy.md",
     "content/movies/_index.md",
     "content/movies",
     "content/posts/hello-world.md",
     "content/posts",
     "static/images/gallery/scootu.jpeg",
     "content/gallery/Psyco the cat who found us.md",
-    "content/_index.md",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
     "static/images/gallery/psyco.jpeg",
     "static/images/gallery/D4D6B419-1A05-424D-9359-E662A4409768_1_105_c.jpeg",
