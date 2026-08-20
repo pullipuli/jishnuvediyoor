@@ -25,12 +25,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/gallery/Psyco the cat who found us 1.md",
+                "file": "content/books/atomic-habits.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Psyco the cat who found us 1"
+              "title": "atomic-habits"
             }
           }
         ],
@@ -212,8 +212,9 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "44eaebe235723e1d",
+  "active": "e42c8a1499c9d2df",
   "lastOpenFiles": [
+    "content/gallery/Psyco the cat who found us 1.md",
     "content/books/atomic-habits.md",
     "content/books/_index.md",
     "content/books",
@@ -223,7 +224,6 @@
     "content/posts/hello-world.md",
     "content/posts",
     "static/images/gallery/scootu.jpeg",
-    "content/gallery/Psyco the cat who found us 1.md",
     "content/gallery/Psyco the cat who found us.md",
     "content/_index.md",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
