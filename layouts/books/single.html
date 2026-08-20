@@ -1,28 +1,28 @@
 {{ define "main" }}
 <div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
   
-  <!-- Back Link (Always points to /collections/) -->
+  <!-- Back Link -->
   <a href="/collections/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
     ← Back to Collection
   </a>
 
   <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
     
-    <!-- Book Cover Image -->
+    <!-- Cover Image Finder -->
     {{ $cover := .Params.cover | default .Params.poster | default .Params.image }}
     {{ if $cover }}
-    <div style="flex:0 0 260px;max-width:100%;">
+    <div style="flex:0 0 240px;max-width:100%;">
       <img src="{{ $cover | relURL }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;">
     </div>
     {{ end }}
 
-    <!-- Book Details -->
+    <!-- Details -->
     <div style="flex:1;min-width:280px;">
       
       <!-- Title -->
       <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 8px;line-height:1.2;">{{ .Title }}</h1>
       
-      <!-- Author & Year (if available) -->
+      <!-- Author & Year -->
       {{ if or .Params.author .Params.year .Params.date }}
       <div style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#5C5A63;margin-bottom:12px;font-weight:500;">
         {{ if .Params.author }}by {{ .Params.author }}{{ end }}
@@ -44,11 +44,11 @@
       </div>
       {{ end }}
 
-      <!-- Genres / Tags (Pill Badges) -->
-      {{ $genres := .Params.genre | default .Params.tags }}
-      {{ if $genres }}
+      <!-- Genres / Tags -->
+      {{ $tags := .Params.genre | default .Params.tags | default .Params.categories }}
+      {{ if $tags }}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
-        {{ range $genres }}
+        {{ range $tags }}
         <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid #E6E2D8;color:#5C5A63;background:#FAF9F5;">
           {{ . }}
         </span>
@@ -56,7 +56,7 @@
       </div>
       {{ end }}
 
-      <!-- Description / Review Body -->
+      <!-- Main Body / Summary -->
       <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
         {{ if .Params.summary }}
           <p style="margin:0 0 12px;">{{ .Params.summary }}</p>
