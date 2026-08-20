@@ -13,26 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/movies/oldboy.md",
+                "file": "content/about.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "oldboy"
-            }
-          },
-          {
-            "id": "823c1e2237adf4a8",
-            "type": "leaf",
-            "state": {
-              "type": "split-diff-view",
-              "state": {
-                "aFile": ".obsidian/workspace.json",
-                "bFile": ".obsidian/workspace.json",
-                "aRef": ""
-              },
-              "icon": "diff",
-              "title": "Diff: workspace.json  (Working Tree)"
+              "title": "about"
             }
           }
         ]
@@ -113,7 +99,6 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "content/movies/oldboy.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -213,15 +198,17 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "aad22ca40de3703d",
+  "active": "44eaebe235723e1d",
   "lastOpenFiles": [
+    "content/movies/The Summit of the Gods.md",
+    "static/images/gallery/635689-the-summit-of-the-gods-0-2000-0-3000-crop.jpg",
+    "content/about.md",
+    "content/movies/oldboy.md",
     "conflict-files-obsidian-git.md",
     "content/posts/hello-world.md",
-    "content/movies/oldboy.md",
     "static/images/ChatGPT Image Apr 28, 2025, 04_10_49 PM.png",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
     "content/_index.md",
-    "content/about.md",
     "content/books/atomic-habits.md",
     "layouts/collection/list.html",
     "layouts/collection",
