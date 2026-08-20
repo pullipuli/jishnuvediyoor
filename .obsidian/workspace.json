@@ -214,6 +214,10 @@
   },
   "active": "e42c8a1499c9d2df",
   "lastOpenFiles": [
+    "layouts/collection/list.html",
+    "layouts/collection",
+    "content/collection/_index.md",
+    "content/collection",
     "layouts/books/single.html",
     "layouts/books/list.html",
     "layouts/books/lists",

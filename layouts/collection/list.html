@@ -1,0 +1,68 @@
+{{ define "main" }}
+<div style="max-width:960px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:#98958E;">EVERYTHING</span>
+  <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:6px 0 24px;">Collection</h1>
+
+  <div id="filters" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
+    <span class="filter-pill active" data-type="all" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;background:#17161C;color:#F6F4EE;">All</span>
+    <span class="filter-pill" data-type="gallery" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Photos</span>
+    <span class="filter-pill" data-type="movies" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Movies</span>
+    <span class="filter-pill" data-type="books" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Books</span>
+    <span class="filter-pill" data-type="posts" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Blog</span>
+  </div>
+
+  <div id="grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+    {{ $allItems := slice }}
+    {{ with .Site.GetPage "gallery" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+    {{ with .Site.GetPage "movies" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+    {{ with .Site.GetPage "books" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+    {{ with .Site.GetPage "posts" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+
+    {{ range (sort $allItems "Date" "desc") }}
+      {{ $type := .Section }}
+      {{ $img := "" }}
+      {{ if eq $type "gallery" }}{{ $img = .Params.image }}{{ end }}
+      {{ if eq $type "movies" }}{{ $img = .Params.poster }}{{ end }}
+      {{ if eq $type "books" }}{{ $img = .Params.coverimg }}{{ end }}
+
+      <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" style="text-decoration:none;color:inherit;">
+        {{ if $img }}
+        <div style="aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:1px solid #E0DACB;">
+          <img src="{{ $img }}" alt="{{ .Title }}" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        {{ else }}
+        <div style="aspect-ratio:2/3;border-radius:10px;border:1px solid #E0DACB;background:#EFEAE0;display:flex;align-items:center;justify-content:center;padding:14px;text-align:center;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8F5A22;">POST</span>
+        </div>
+        {{ end }}
+        <div style="font-size:13px;margin-top:6px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;">{{ .Title }}</div>
+        <div style="font-size:11px;color:#98958E;text-transform:capitalize;">{{ $type }}</div>
+      </a>
+    {{ end }}
+  </div>
+</div>
+
+<style>
+  @media (max-width:700px){ #grid{ grid-template-columns:repeat(2,1fr) !important; } }
+</style>
+
+<script>
+  document.querySelectorAll('.filter-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.filter-pill').forEach(p => {
+        p.style.background = 'transparent';
+        p.style.color = '#5C5A63';
+        p.style.border = '1px solid #DEDACE';
+      });
+      pill.style.background = '#17161C';
+      pill.style.color = '#F6F4EE';
+      pill.style.border = 'none';
+
+      const type = pill.dataset.type;
+      document.querySelectorAll('.collection-item').forEach(item => {
+        item.style.display = (type === 'all' || item.dataset.type === type) ? 'block' : 'none';
+      });
+    });
+  });
+</script>
+{{ end }}
