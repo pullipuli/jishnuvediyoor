@@ -214,6 +214,10 @@
   },
   "active": "e42c8a1499c9d2df",
   "lastOpenFiles": [
+    "layouts/books/single.html",
+    "layouts/books/list.html",
+    "layouts/books/lists",
+    "layouts/books",
     "content/gallery/Psyco the cat who found us 1.md",
     "content/books/atomic-habits.md",
     "content/books/_index.md",

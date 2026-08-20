@@ -1,0 +1,9 @@
+{{ define "main" }}
+<div style="max-width:600px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
+  <a href="/movies/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8F5A22;text-decoration:none;">&larr; Back to movies</a>
+  <img src="{{ .Params.poster }}" alt="{{ .Title }}" style="width:200px;border-radius:10px;margin:20px 0;display:block;">
+  <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-size:26px;margin:0 0 6px;">{{ .Title }}</h1>
+  <div style="color:#BD7C34;margin-bottom:14px;">{{ "★" | strings.Repeat .Params.rating }}</div>
+  <p style="color:#5C5A63;">{{ .Params.review }}</p>
+</div>
+{{ end }}
