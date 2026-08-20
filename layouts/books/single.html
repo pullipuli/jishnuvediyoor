@@ -1,9 +1,73 @@
 {{ define "main" }}
-<div style="max-width:600px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
-  <a href="/movies/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#8F5A22;text-decoration:none;">&larr; Back to movies</a>
-  <img src="{{ .Params.poster }}" alt="{{ .Title }}" style="width:200px;border-radius:10px;margin:20px 0;display:block;">
-  <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-size:26px;margin:0 0 6px;">{{ .Title }}</h1>
-  <div style="color:#BD7C34;margin-bottom:14px;">{{ "★" | strings.Repeat .Params.rating }}</div>
-  <p style="color:#5C5A63;">{{ .Params.review }}</p>
+<div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
+  
+  <!-- Dynamic Back to Collection Link -->
+  <a href="/{{ .Type }}/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Back to Collection
+  </a>
+
+  <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
+    
+    <!-- Book Cover Image -->
+    {{ $cover := .Params.cover | default .Params.poster | default .Params.image }}
+    {{ if $cover }}
+    <div style="flex:0 0 240px;max-width:100%;">
+      <img src="{{ $cover | relURL }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;">
+    </div>
+    {{ end }}
+
+    <!-- Details -->
+    <div style="flex:1;min-width:280px;">
+      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 6px;">{{ .Title }}</h1>
+      
+      <!-- Author -->
+      {{ if .Params.author }}
+      <p style="font-family:'IBM Plex Sans',sans-serif;font-size:16px;color:#5C5A63;margin:0 0 12px;font-weight:500;">
+        by {{ .Params.author }}
+      </p>
+      {{ end }}
+
+      <!-- Meta (Year/Date & Rating) -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
+        {{ $publishedYear := .Params.year | default .Params.date }}
+        {{ if $publishedYear }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#98958E;">
+          {{ if reflect.IsMap $publishedYear }}{{ $publishedYear.Format "2006" }}{{ else }}{{ $publishedYear }}{{ end }}
+        </span>
+        {{ end }}
+        
+        {{ if .Params.rating }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#17161C;color:#F6F4EE;padding:2px 8px;border-radius:6px;font-weight:600;">
+          ★ {{ .Params.rating }}
+        </span>
+        {{ end }}
+      </div>
+
+      <!-- Genres / Tags -->
+      {{ $genres := .Params.genre | default .Params.tags }}
+      {{ if $genres }}
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
+        {{ range $genres }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;background:#FAF9F5;">
+          {{ . }}
+        </span>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      <!-- Summary / Review / Content -->
+      <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
+        {{ if .Params.summary }}
+          <p style="margin:0 0 12px;">{{ .Params.summary }}</p>
+        {{ else if .Params.plot }}
+          <p style="margin:0 0 12px;">{{ .Params.plot }}</p>
+        {{ end }}
+        
+        {{ .Content }}
+      </div>
+
+    </div>
+  </div>
+
 </div>
 {{ end }}
