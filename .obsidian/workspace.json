@@ -23,12 +23,14 @@
             "id": "e42c8a1499c9d2df",
             "type": "leaf",
             "state": {
-              "type": "image",
+              "type": "markdown",
               "state": {
-                "file": "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg"
+                "file": "content/gallery/Psyco the cat who found us 1.md",
+                "mode": "source",
+                "source": false
               },
-              "icon": "lucide-image",
-              "title": "916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c"
+              "icon": "lucide-file",
+              "title": "Psyco the cat who found us 1"
             }
           }
         ],
@@ -180,13 +182,23 @@
               "icon": "lucide-list",
               "title": "Outline"
             }
+          },
+          {
+            "id": "c27a7b16a6f3abb9",
+            "type": "leaf",
+            "state": {
+              "type": "git-view",
+              "state": {},
+              "icon": "git-pull-request",
+              "title": "Source Control"
+            }
           }
-        ]
+        ],
+        "currentTab": 5
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "left-ribbon": {
     "hiddenItems": {
@@ -200,13 +212,16 @@
       "obsidian-git:Open Git source control": false
     }
   },
-  "active": "44eaebe235723e1d",
+  "active": "e42c8a1499c9d2df",
   "lastOpenFiles": [
+    "static/images/gallery/scootu.jpeg",
+    "content/gallery/Psyco the cat who found us 1.md",
+    "content/gallery/Psyco the cat who found us.md",
+    "content/_index.md",
+    "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
     "static/images/gallery/psyco.jpeg",
     "static/images/gallery/D4D6B419-1A05-424D-9359-E662A4409768_1_105_c.jpeg",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c 1 1.jpeg",
-    "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c 1.jpeg",
-    "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
-    "content/_index.md"
+    "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c 1.jpeg"
   ]
 }
