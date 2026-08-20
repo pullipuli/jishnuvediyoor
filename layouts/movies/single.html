@@ -1,8 +1,9 @@
 {{ define "main" }}
 <div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
   
-  <a href="/movies/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">← Back to Movies</a>
-
+  <a href="/{{ .Type }}/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
+  ← Back to {{ .Type | humanize }}
+</a>
   <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
     
     <!-- Poster -->
@@ -19,7 +20,7 @@
       <!-- Meta (Date & Rating) -->
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
         {{ if .Params.date }}
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.date }}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.year }}</span>
         {{ end }}
         
         {{ if .Params.rating }}

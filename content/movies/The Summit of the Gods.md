@@ -1,6 +1,6 @@
 ---
 title: "The Summit of the Gods"
-date: 2021
+year: 2021
 poster: "/images/movies/635689-the-summit-of-the-gods-0-2000-0-3000-crop.jpeg"
 rating: 4.1
 genre: ["Animation", "Adventure", "Mystery"]
