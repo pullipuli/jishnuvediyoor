@@ -56,9 +56,11 @@
       </div>
       {{ end }}
 
-      <!-- Main Body / Summary -->
+      <!-- Main Body / Summary / Review -->
       <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
-        {{ if .Params.summary }}
+        {{ if .Params.review }}
+          <p style="margin:0 0 12px;">{{ .Params.review }}</p>
+        {{ else if .Params.summary }}
           <p style="margin:0 0 12px;">{{ .Params.summary }}</p>
         {{ else if .Params.plot }}
           <p style="margin:0 0 12px;">{{ .Params.plot }}</p>
