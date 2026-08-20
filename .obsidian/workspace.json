@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "content/posts/hello-world.md",
+                "file": "content/movies/oldboy.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "hello-world"
+              "title": "oldboy"
             }
           }
         ]
@@ -201,9 +201,9 @@
   },
   "active": "00ef3e38846328f3",
   "lastOpenFiles": [
+    "content/posts/hello-world.md",
     "static/images/ChatGPT Image Apr 28, 2025, 04_10_49 PM.png",
     "static/images/916F71D0-2DAB-48B6-9E1F-18D5306A73A9_1_105_c.jpeg",
-    "content/posts/hello-world.md",
     "content/_index.md",
     "content/about.md",
     "content/movies/oldboy.md",
