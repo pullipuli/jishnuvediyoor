@@ -1,7 +1,23 @@
 {{ define "main" }}
 <div style="max-width:960px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
-  <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:#98958E;">EVERYTHING</span>
-  <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:6px 0 24px;">Collection</h1>
+  
+  <!-- Header & Sort Bar -->
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:24px;flex-wrap:wrap;gap:12px;">
+    <div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:#98958E;">EVERYTHING</span>
+      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:6px 0 0;">Collection</h1>
+    </div>
+
+    <!-- Sort Dropdown Controls -->
+    <div style="display:flex;align-items:center;gap:8px;">
+      <label for="sort-select" style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#98958E;">SORT BY:</label>
+      <select id="sort-select" style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 12px;border-radius:8px;border:1px solid #DEDACE;background:#FAF9F5;color:#17161C;cursor:pointer;outline:none;">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="title">Title (A–Z)</option>
+      </select>
+    </div>
+  </div>
 
   <!-- Type Filters -->
   <div id="type-filters" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
@@ -52,9 +68,13 @@
       {{ if eq $type "movies" }}{{ $img = .Params.poster }}{{ end }}
       {{ if eq $type "books" }}{{ $img = .Params.coverimg }}{{ end }}
       {{ $itemYear := "" }}
-      {{ if .Date }}{{ $itemYear = .Date.Format "2006" }}{{ end }}
+      {{ $timestamp := 0 }}
+      {{ if .Date }}
+        {{ $itemYear = .Date.Format "2006" }}
+        {{ $timestamp = .Date.Unix }}
+      {{ end }}
 
-      <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" data-year="{{ $itemYear }}" style="text-decoration:none;color:inherit;">
+      <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" data-year="{{ $itemYear }}" data-date="{{ $timestamp }}" data-title="{{ .Title }}" style="text-decoration:none;color:inherit;">
         {{ if $img }}
         <div style="aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:1px solid #E0DACB;">
           <img src="{{ $img }}" alt="{{ .Title }}" style="width:100%;height:100%;object-fit:cover;">
@@ -86,6 +106,9 @@
   let activeType = 'all';
   let activeYear = 'all';
 
+  const grid = document.getElementById('grid');
+  const sortSelect = document.getElementById('sort-select');
+
   function filterItems() {
     document.querySelectorAll('.collection-item').forEach(item => {
       const matchType = (activeType === 'all' || item.dataset.type === activeType);
@@ -93,6 +116,26 @@
       item.style.display = (matchType && matchYear) ? 'block' : 'none';
     });
   }
+
+  function sortGrid() {
+    const items = Array.from(grid.querySelectorAll('.collection-item'));
+    const sortValue = sortSelect.value;
+
+    items.sort((a, b) => {
+      if (sortValue === 'newest') {
+        return parseInt(b.dataset.date || 0) - parseInt(a.dataset.date || 0);
+      } else if (sortValue === 'oldest') {
+        return parseInt(a.dataset.date || 0) - parseInt(b.dataset.date || 0);
+      } else if (sortValue === 'title') {
+        return a.dataset.title.localeCompare(b.dataset.title);
+      }
+    });
+
+    items.forEach(item => grid.appendChild(item));
+  }
+
+  // Handle Sort Change
+  sortSelect.addEventListener('change', sortGrid);
 
   // Type Filter Clicks
   document.querySelectorAll('.filter-pill').forEach(pill => {
