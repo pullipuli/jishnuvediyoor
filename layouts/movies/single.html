@@ -1,9 +1,10 @@
 {{ define "main" }}
 <div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
   
-  <a href="/{{ .Type }}/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
-  ← Back to {{ .Type | humanize }}
-</a>
+  <a href="/collection/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Back to Collection
+  </a>
+
   <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
     
     <!-- Poster -->
@@ -17,10 +18,12 @@
     <div style="flex:1;min-width:280px;">
       <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 8px;">{{ .Title }}</h1>
       
-      <!-- Meta (Date & Rating) -->
+      <!-- Meta (Year & Rating) -->
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
-        {{ if .Params.date }}
+        {{ if .Params.year }}
         <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.year }}</span>
+        {{ else if .Params.date }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.date }}</span>
         {{ end }}
         
         {{ if .Params.rating }}
