@@ -1,78 +1,70 @@
 {{ define "main" }}
 <div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
   
-  <!-- Back Link -->
-  <a href="/collections/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
-    ← Back to Collection
+  <a href="/{{ .Type }}/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
+    ← Back to {{ .Type | humanize }}
   </a>
 
   <div style="display:flex;gap:32px;flex-wrap:wrap;align-items:flex-start;">
     
-    <!-- Cover Image Finder (Handles PaperMod nested cover.image or flat strings) -->
-    {{ $cover := "" }}
-    {{ if reflect.IsMap .Params.cover }}
-      {{ $cover = .Params.cover.image }}
-    {{ else }}
-      {{ $cover = .Params.image | default .Params.poster | default .Params.cover }}
-    {{ end }}
-
-    {{ if $cover }}
-    <div style="flex:0 0 240px;max-width:100%;">
-      <img src="{{ $cover | relURL }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;">
+    <!-- Cover Image -->
+    {{ if .Params.coverimg }}
+    <div style="flex:0 0 260px;max-width:100%;">
+      <img src="{{ .Params.coverimg }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;aspect-ratio:2/3;object-fit:cover;">
     </div>
     {{ end }}
 
-    <!-- Book Details -->
+    <!-- Details -->
     <div style="flex:1;min-width:280px;">
+      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 6px;line-height:1.2;">{{ .Title }}</h1>
       
-      <!-- Title -->
-      <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:0 0 8px;line-height:1.2;">{{ .Title }}</h1>
-      
-      <!-- Author & Year -->
-      {{ if or .Params.author .Params.year .Params.date }}
-      <div style="font-family:'IBM Plex Sans',sans-serif;font-size:15px;color:#5C5A63;margin-bottom:12px;font-weight:500;">
-        {{ if .Params.author }}by {{ .Params.author }}{{ end }}
-        {{ $year := .Params.year | default .Params.date }}
-        {{ if $year }}
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#98958E;margin-left:6px;">
-            ({{ if reflect.IsMap $year }}{{ $year.Format "2006" }}{{ else }}{{ $year }}{{ end }})
-          </span>
-        {{ end }}
-      </div>
+      {{ if .Params.author }}
+      <p style="font-family:'IBM Plex Sans',sans-serif;font-size:16px;color:#5C5A63;margin:0 0 14px;font-weight:500;">
+        by {{ .Params.author }}
+      </p>
       {{ end }}
 
-      <!-- Rating Badge -->
-      {{ if .Params.rating }}
-      <div style="margin-bottom:16px;">
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#17161C;color:#F6F4EE;padding:3px 9px;border-radius:6px;font-weight:600;display:inline-block;">
+      <!-- Meta (Year, Pages & Rating) -->
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
+        {{ if .Params.year }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.year }}</span>
+        {{ end }}
+
+        {{ if .Params.pages }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#98958E;">{{ .Params.pages }} pages</span>
+        {{ end }}
+        
+        {{ if .Params.rating }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;background:#17161C;color:#F6F4EE;padding:2px 8px;border-radius:6px;font-weight:600;">
           ★ {{ .Params.rating }}
         </span>
+        {{ end }}
       </div>
-      {{ end }}
 
-      <!-- Genres / Tags Badges -->
-      {{ $tags := .Params.genre | default .Params.tags | default .Params.categories }}
-      {{ if $tags }}
+      <!-- Genres / Tags -->
+      {{ if .Params.genre }}
       <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:20px;">
-        {{ range $tags }}
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;padding:4px 12px;border-radius:999px;border:1px solid #E6E2D8;color:#5C5A63;background:#FAF9F5;">
+        {{ range .Params.genre }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;background:#FAF9F5;">
           {{ . }}
         </span>
         {{ end }}
       </div>
       {{ end }}
 
-      <!-- Main Review / Summary / Body Content -->
+      <!-- Description / Synopsis -->
       <div style="font-size:16px;line-height:1.6;color:#333238;margin-top:16px;">
-        {{ if .Params.review }}
-          <p style="margin:0 0 12px;">{{ .Params.review }}</p>
-        {{ else if .Params.summary }}
-          <p style="margin:0 0 12px;">{{ .Params.summary }}</p>
-        {{ else if .Params.plot }}
-          <p style="margin:0 0 12px;">{{ .Params.plot }}</p>
+        {{ if .Params.description }}
+          <p style="margin:0 0 16px;">{{ .Params.description }}</p>
+        {{ else if .Params.synopsis }}
+          <p style="margin:0 0 16px;">{{ .Params.synopsis }}</p>
         {{ end }}
-        
-        {{ .Content }}
+
+        {{ if .Content }}
+          <div style="margin-top:16px;border-top:1px solid #E0DACB;padding-top:16px;">
+            {{ .Content }}
+          </div>
+        {{ end }}
       </div>
 
     </div>
