@@ -3,29 +3,58 @@
   <span style="font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.08em;color:#98958E;">EVERYTHING</span>
   <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-weight:700;font-size:32px;margin:6px 0 24px;">Collection</h1>
 
-  <div id="filters" style="display:flex;gap:8px;margin-bottom:24px;flex-wrap:wrap;">
-    <span class="filter-pill active" data-type="all" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;background:#17161C;color:#F6F4EE;">All</span>
+  <!-- Type Filters -->
+  <div id="type-filters" style="display:flex;gap:8px;margin-bottom:12px;flex-wrap:wrap;">
+    <span class="filter-pill active" data-type="all" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;background:#17161C;color:#F6F4EE;">All Types</span>
     <span class="filter-pill" data-type="gallery" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Photos</span>
     <span class="filter-pill" data-type="movies" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Movies</span>
     <span class="filter-pill" data-type="books" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Books</span>
     <span class="filter-pill" data-type="posts" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:12px;padding:6px 14px;border-radius:999px;border:1px solid #DEDACE;color:#5C5A63;">Blog</span>
   </div>
 
-  <div id="grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
-    {{ $allItems := slice }}
-    {{ with .Site.GetPage "gallery" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
-    {{ with .Site.GetPage "movies" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
-    {{ with .Site.GetPage "books" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
-    {{ with .Site.GetPage "posts" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+  <!-- Build collection slice & generate available years dynamically -->
+  {{ $allItems := slice }}
+  {{ with .Site.GetPage "gallery" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+  {{ with .Site.GetPage "movies" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+  {{ with .Site.GetPage "books" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
+  {{ with .Site.GetPage "posts" }}{{ $allItems = $allItems | append .Pages }}{{ end }}
 
-    {{ range (sort $allItems "Date" "desc") }}
+  {{ $sortedItems := sort $allItems ".Date" "desc" }}
+
+  <!-- Date / Year Filters -->
+  <div id="year-filters" style="display:flex;gap:6px;margin-bottom:28px;flex-wrap:wrap;align-items:center;">
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#98958E;margin-right:4px;">YEAR:</span>
+    <span class="year-pill active" data-year="all" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:6px;background:#17161C;color:#F6F4EE;">All Years</span>
+    
+    {{ $years := slice }}
+    {{ range $sortedItems }}
+      {{ if .Date }}
+        {{ $year := .Date.Format "2006" }}
+        {{ if not (in $years $year) }}
+          {{ $years = $years | append $year }}
+        {{ end }}
+      {{ end }}
+    {{ end }}
+
+    {{ range $years }}
+    <span class="year-pill" data-year="{{ . }}" style="cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:4px 10px;border-radius:6px;border:1px solid #DEDACE;color:#5C5A63;">
+      {{ . }}
+    </span>
+    {{ end }}
+  </div>
+
+  <!-- Grid Items -->
+  <div id="grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+    {{ range $sortedItems }}
       {{ $type := .Section }}
       {{ $img := "" }}
       {{ if eq $type "gallery" }}{{ $img = .Params.image }}{{ end }}
       {{ if eq $type "movies" }}{{ $img = .Params.poster }}{{ end }}
       {{ if eq $type "books" }}{{ $img = .Params.coverimg }}{{ end }}
+      {{ $itemYear := "" }}
+      {{ if .Date }}{{ $itemYear = .Date.Format "2006" }}{{ end }}
 
-      <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" style="text-decoration:none;color:inherit;">
+      <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" data-year="{{ $itemYear }}" style="text-decoration:none;color:inherit;">
         {{ if $img }}
         <div style="aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:1px solid #E0DACB;">
           <img src="{{ $img }}" alt="{{ .Title }}" style="width:100%;height:100%;object-fit:cover;">
@@ -35,8 +64,15 @@
           <span style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#8F5A22;">POST</span>
         </div>
         {{ end }}
+
         <div style="font-size:13px;margin-top:6px;font-family:'Bricolage Grotesque',sans-serif;font-weight:600;">{{ .Title }}</div>
-        <div style="font-size:11px;color:#98958E;text-transform:capitalize;">{{ $type }}</div>
+        
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-top:2px;">
+          <span style="font-size:11px;color:#98958E;text-transform:capitalize;">{{ $type }}</span>
+          {{ if .Date }}
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#98958E;">{{ .Date.Format "Jan 2006" }}</span>
+          {{ end }}
+        </div>
       </a>
     {{ end }}
   </div>
@@ -47,6 +83,18 @@
 </style>
 
 <script>
+  let activeType = 'all';
+  let activeYear = 'all';
+
+  function filterItems() {
+    document.querySelectorAll('.collection-item').forEach(item => {
+      const matchType = (activeType === 'all' || item.dataset.type === activeType);
+      const matchYear = (activeYear === 'all' || item.dataset.year === activeYear);
+      item.style.display = (matchType && matchYear) ? 'block' : 'none';
+    });
+  }
+
+  // Type Filter Clicks
   document.querySelectorAll('.filter-pill').forEach(pill => {
     pill.addEventListener('click', () => {
       document.querySelectorAll('.filter-pill').forEach(p => {
@@ -58,10 +106,25 @@
       pill.style.color = '#F6F4EE';
       pill.style.border = 'none';
 
-      const type = pill.dataset.type;
-      document.querySelectorAll('.collection-item').forEach(item => {
-        item.style.display = (type === 'all' || item.dataset.type === type) ? 'block' : 'none';
+      activeType = pill.dataset.type;
+      filterItems();
+    });
+  });
+
+  // Year Filter Clicks
+  document.querySelectorAll('.year-pill').forEach(pill => {
+    pill.addEventListener('click', () => {
+      document.querySelectorAll('.year-pill').forEach(p => {
+        p.style.background = 'transparent';
+        p.style.color = '#5C5A63';
+        p.style.border = '1px solid #DEDACE';
       });
+      pill.style.background = '#17161C';
+      pill.style.color = '#F6F4EE';
+      pill.style.border = 'none';
+
+      activeYear = pill.dataset.year;
+      filterItems();
     });
   });
 </script>
