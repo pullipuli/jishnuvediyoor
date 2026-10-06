@@ -9,7 +9,9 @@ theme = "PaperMod"
 [params]
   env = "production"
   description = "Personal website of Jishnu Vediyoor"
-  defaultTheme = "auto"
+  # Custom layouts are designed for a light background only
+  defaultTheme = "light"
+  disableThemeToggle = true
   ShowReadingTime = true
   ShowShareButtons = true
   ShowPostNavLinks = true
@@ -19,14 +21,10 @@ theme = "PaperMod"
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
 
-  [params.homeInfoParams]
-    Title = "Hi there 👋"
-    Content = "I'm Jishnu. This is my personal site."
-
-  [[params.socialIcons]]
-    name = "github"
-    url = "https://github.com/yourusername"
-
   [[params.socialIcons]]
     name = "linkedin"
-    url = "https://linkedin.com/in/yourusername"
+    url = "https://www.linkedin.com/in/jishnuvediyoor/"
+
+  [[params.socialIcons]]
+    name = "instagram"
+    url = "https://www.instagram.com/thisconfusedguy/"
