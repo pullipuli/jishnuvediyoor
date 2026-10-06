@@ -43,6 +43,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           submodules: recursive
+      - name: Strip GPS location from images
+        run: |
+          sudo apt-get install -y -qq libimage-exiftool-perl
+          exiftool -q -r -overwrite_original -gps:all= -ext jpg -ext jpeg -ext png -ext webp static/images || true
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5

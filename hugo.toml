@@ -1,4 +1,4 @@
-baseURL = 'http://jishnuvediyoor.com/'
+baseURL = 'https://jishnuvediyoor.com/'
 locale = 'en-us'
 title = 'Jishnu Vediyoor'
 theme = "PaperMod"

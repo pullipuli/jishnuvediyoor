@@ -5,10 +5,8 @@ draft: false
 ---
 This is my first blog post.
 
-<<<<<<< HEAD
 testing if i can add any image in line
 
-![i will test this] (/images/psyco.jpg)
-=======
+![Psyco](/images/gallery/psyco.jpeg)
+
 ![test](/images/jishnuvediyoor.jpeg)
->>>>>>> origin/main

@@ -67,6 +67,7 @@
       {{ if eq $type "gallery" }}{{ $img = .Params.image }}{{ end }}
       {{ if eq $type "movies" }}{{ $img = .Params.poster }}{{ end }}
       {{ if eq $type "books" }}{{ $img = .Params.coverimg }}{{ end }}
+      {{ if eq $type "posts" }}{{ with .Params.cover }}{{ $img = .image }}{{ end }}{{ end }}
       {{ $itemYear := "" }}
       {{ $timestamp := 0 }}
       {{ if .Date }}
