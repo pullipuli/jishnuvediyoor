@@ -28,8 +28,8 @@
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;">
         {{ if .Params.year }}
         <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.year }}</span>
-        {{ else if .Params.date }}
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.date }}</span>
+        {{ else if not .Date.IsZero }}
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Date.Format "Jan 2006" }}</span>
         {{ end }}
         
         {{ if .Params.rating }}

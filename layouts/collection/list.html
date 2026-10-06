@@ -78,7 +78,7 @@
       <a href="{{ .RelPermalink }}" class="collection-item" data-type="{{ $type }}" data-year="{{ $itemYear }}" data-date="{{ $timestamp }}" data-title="{{ .Title }}" style="text-decoration:none;color:inherit;">
         {{ if $img }}
         <div style="aspect-ratio:2/3;border-radius:10px;overflow:hidden;border:1px solid #E0DACB;">
-          <img src="{{ $img }}" alt="{{ .Title }}" style="width:100%;height:100%;object-fit:cover;">
+          <img src="{{ $img }}" alt="{{ .Title }}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:cover;">
         </div>
         {{ else }}
         <div style="aspect-ratio:2/3;border-radius:10px;border:1px solid #E0DACB;background:#EFEAE0;display:flex;align-items:center;justify-content:center;padding:14px;text-align:center;">
