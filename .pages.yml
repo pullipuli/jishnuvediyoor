@@ -1,0 +1,84 @@
+# Pages CMS (https://app.pagescms.org) — edit the site from any browser, including your phone.
+media:
+  input: static/images/uploads
+  output: /images/uploads
+  extensions: [jpg, jpeg, png, webp, gif]
+  rename: safe
+
+content:
+  - name: gallery
+    label: Photos
+    type: collection
+    path: content/gallery
+    filename: "{year}-{month}-{day}-{primary}.md"
+    exclude: [_index.md]
+    view:
+      fields: [image, title, date]
+      sort: [date]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - { name: image, label: Photo, type: image, required: true }
+      - { name: caption, label: Caption, type: text }
+      - { name: tags, label: Tags, type: string, list: true }
+
+  - name: posts
+    label: Blog posts
+    type: collection
+    path: content/posts
+    filename: "{year}-{month}-{day}-{primary}.md"
+    exclude: [_index.md]
+    view:
+      fields: [title, date, draft]
+      sort: [date]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date, type: date, required: true }
+      - name: draft
+        label: Draft (hidden from the site)
+        type: boolean
+        default: false
+      - name: cover
+        label: Cover image
+        type: object
+        fields:
+          - { name: image, label: Image, type: image }
+          - { name: caption, label: Caption, type: string }
+      - { name: body, label: Post, type: rich-text }
+
+  - name: movies
+    label: Movies
+    type: collection
+    path: content/movies
+    filename: "{primary}.md"
+    exclude: [_index.md]
+    view:
+      fields: [poster, title, rating]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: date, label: Date watched, type: date }
+      - { name: year, label: Release year, type: number }
+      - { name: director, label: Director, type: string }
+      - { name: poster, label: Poster, type: image }
+      - { name: rating, label: Rating (out of 5), type: number, options: { min: 0, max: 5, step: 0.1 } }
+      - { name: genre, label: Genres, type: string, list: true }
+      - { name: plot, label: Plot / notes, type: text }
+
+  - name: books
+    label: Books
+    type: collection
+    path: content/books
+    filename: "{primary}.md"
+    exclude: [_index.md]
+    view:
+      fields: [coverimg, title, author]
+    fields:
+      - { name: title, label: Title, type: string, required: true }
+      - { name: author, label: Author, type: string }
+      - { name: date, label: Date read, type: date }
+      - { name: year, label: Published year, type: number }
+      - { name: pages, label: Pages, type: number }
+      - { name: coverimg, label: Cover, type: image }
+      - { name: rating, label: Rating (out of 5), type: number, options: { min: 0, max: 5, step: 0.1 } }
+      - { name: genre, label: Genres, type: string, list: true }
+      - { name: description, label: Description, type: text }
