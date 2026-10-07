@@ -1,8 +1,14 @@
 ---
-title: "The Summit of the Gods"
+title: The Summit of the Gods
+date: 2026-10-07
 year: 2021
-poster: "/images/movies/635689-the-summit-of-the-gods-0-2000-0-3000-crop.jpeg"
+poster: /images/uploads/mv5bnwrjzjc5mwytzwe2zi00mmexlwfmzmqtogzlmzuxzjawm2rjxkeyxkfqcgcv1fmjpguy2222.jpg
 rating: 4.1
-genre: ["Animation", "Adventure", "Mystery"]
-plot: "A photojournalist’s obsessive quest for the truth about the first expedition to Mt. Everest leads him to search for an esteemed climber who went missing."
+genre:
+  - Animation
+  - Adventure
+  - Mystery
+plot: A photojournalist’s obsessive quest for the truth about the first
+  expedition to Mt. Everest leads him to search for an esteemed climber who went
+  missing.
 ---
