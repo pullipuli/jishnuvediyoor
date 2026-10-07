@@ -334,32 +334,27 @@
   }
 
   /* ---------- EDUCATION (reuse card, lighter) ---------- */
-  .edu-grid{ display:flex; flex-direction:column; gap:14px; }
-  .edu-card{
-    background:var(--card);
-    border:1px solid var(--card-line);
-    border-radius:var(--radius);
-    padding:22px 26px;
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:14px;
+  .edu-list{
+    list-style:none; margin:0; padding:0;
+    background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
   }
-  .edu-name{
-    font-family:'Bricolage Grotesque', sans-serif;
-    font-weight:700;
-    font-size:18px;
-    margin-bottom:5px;
+  .edu-row{
+    display:grid; grid-template-columns:76px minmax(0,1fr) auto; align-items:baseline; gap:4px 18px;
+    padding:16px 22px;
   }
-  .edu-loc{ font-size:14.5px; color:var(--ink-soft); margin-bottom:8px; }
-  .edu-bottom{
-    display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  .edu-row + .edu-row{ border-top:1px solid var(--card-line); }
+  .edu-year{
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.05em;
+    color:var(--accent-deep); font-variant-numeric:tabular-nums;
   }
-  .edu-degree{
-    font-size:13.5px;
-    color:var(--ink-soft);
+  .edu-main{ display:flex; flex-direction:column; gap:2px; min-width:0; }
+  .edu-name{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:16.5px; }
+  .edu-degree{ font-size:14px; color:var(--ink-soft); }
+  .edu-loc{ font-size:13px; color:var(--ink-faint); text-align:right; white-space:nowrap; }
+  @media (max-width:600px){
+    .edu-row{ grid-template-columns:62px minmax(0,1fr); padding:14px 18px; }
+    .edu-loc{ grid-column:2; text-align:left; white-space:normal; }
   }
-  .edu-degree::before{ content:"•"; margin-right:12px; color:var(--ink-faint); }
 
   /* ---------- SKILLS ---------- */
   .skills-grid{
@@ -391,6 +386,46 @@
     font-size:14px;
     color:var(--ink-soft);
     margin:0;
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact-form{
+    display:flex; flex-direction:column; gap:14px;
+    background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
+    padding:24px 26px;
+  }
+  .cf-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+  .cf-field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
+  .cf-field span{
+    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
+  }
+  .cf-field input, .cf-field textarea{
+    font:inherit; font-size:15px; color:var(--ink); width:100%;
+    background:var(--paper); border:1px solid var(--card-line); border-radius:12px; padding:11px 14px;
+    transition:border-color .2s ease, box-shadow .2s ease;
+  }
+  .cf-field textarea{ resize:vertical; min-height:120px; }
+  .cf-field input:focus, .cf-field textarea:focus{
+    outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(189,124,52,0.18);
+  }
+  .cf-honey{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+  .cf-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .cf-send{
+    font:inherit; font-size:14px; font-weight:600; cursor:pointer;
+    color:var(--paper); background:var(--ink); border:1px solid var(--ink); border-radius:999px; padding:11px 22px;
+    transition:transform .2s ease, background .2s ease;
+  }
+  .cf-send:hover{ transform:translateY(-1px); }
+  .cf-send:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .cf-send[disabled]{ opacity:.6; cursor:progress; transform:none; }
+  .cf-status{ margin:0; font-size:14px; color:var(--ink-soft); }
+  .cf-status.ok{ color:#2F6B3A; }
+  .cf-status.err{ color:#A23B2A; }
+  .cf-alt{ margin:0; font-size:13.5px; color:var(--ink-faint); }
+  .cf-alt a{ color:var(--ink-soft); }
+  @media (max-width:600px){
+    .cf-row{ grid-template-columns:1fr; }
+    .contact-form{ padding:20px; }
   }
 
   footer{
@@ -504,7 +539,6 @@
     .navdock::-webkit-scrollbar{ display:none; }
     .navdock a{ padding:8px 14px; font-size:13px; flex:none; }
     .card{ padding:20px; }
-    .edu-card{ flex-direction:column; }
   }
 </style>
 </head>
@@ -706,52 +740,39 @@
         <h2 class="sec-title">Education</h2>
       </div>
 
-      <div class="edu-grid">
-
-        <div class="edu-card">
-          <div>
-            <div class="edu-name">Indian Institute of Technology, Delhi</div>
-            <div class="edu-loc">India</div>
-            <div class="edu-bottom">
-              <span class="timecode">JUN 2023 → JAN 2024</span>
-              <span class="edu-degree">Certification • Design Thinking for UX</span>
-            </div>
+      <ul class="edu-list">
+        <li class="edu-row">
+          <span class="edu-year">2023–24</span>
+          <div class="edu-main">
+            <span class="edu-name">Indian Institute of Technology, Delhi</span>
+            <span class="edu-degree">Certification · Design Thinking for UX</span>
           </div>
-        </div>
-
-        <div class="edu-card">
-          <div>
-            <div class="edu-name">Dr CV Raman University, Vaishali</div>
-            <div class="edu-loc">Vaishali, Bihar, India</div>
-            <div class="edu-bottom">
-              <span class="timecode">JUN 2016 → MAR 2019</span>
-              <span class="edu-degree">BBA • Business Administration and Management</span>
-            </div>
+          <span class="edu-loc">India</span>
+        </li>
+        <li class="edu-row">
+          <span class="edu-year">2016–19</span>
+          <div class="edu-main">
+            <span class="edu-name">Dr CV Raman University</span>
+            <span class="edu-degree">BBA · Business Administration and Management</span>
           </div>
-        </div>
-
-        <div class="edu-card">
-          <div>
-            <div class="edu-name">SAE Institute</div>
-            <div class="edu-loc">Chennai, Tamil Nadu, India</div>
-            <div class="edu-bottom">
-              <span class="timecode">2009</span>
-              <span class="edu-degree">Diploma • Digital Film Making</span>
-            </div>
+          <span class="edu-loc">Vaishali, Bihar</span>
+        </li>
+        <li class="edu-row">
+          <span class="edu-year">2009</span>
+          <div class="edu-main">
+            <span class="edu-name">SAE Institute</span>
+            <span class="edu-degree">Diploma · Digital Film Making</span>
           </div>
-        </div>
-
-        <div class="edu-card">
-          <div>
-            <div class="edu-name">BHSS Kalady</div>
-            <div class="edu-loc">Kalady, Kerala, India</div>
-            <div class="edu-bottom">
-              <span class="timecode">JAN 1999 → DEC 2001</span>
-            </div>
+          <span class="edu-loc">Chennai</span>
+        </li>
+        <li class="edu-row">
+          <span class="edu-year">1999–01</span>
+          <div class="edu-main">
+            <span class="edu-name">BHSS Kalady</span>
           </div>
-        </div>
-
-      </div>
+          <span class="edu-loc">Kalady, Kerala</span>
+        </li>
+      </ul>
     </section>
 
     <section id="skills">
@@ -794,6 +815,39 @@
       </div>
     </section>
 
+    <section id="contact">
+      <div class="sec-head">
+        <span class="sec-tc">04 / CONTACT</span>
+        <h2 class="sec-title">Get in touch</h2>
+      </div>
+      {{- $to := site.Params.contactEmail }}
+      <form class="contact-form" id="contact-form" action="https://formsubmit.co/{{ $to }}" method="POST">
+        <div class="cf-row">
+          <label class="cf-field">
+            <span>Name</span>
+            <input id="cf-name" type="text" name="name" autocomplete="name" required maxlength="120">
+          </label>
+          <label class="cf-field">
+            <span>Email</span>
+            <input id="cf-email" type="email" name="email" autocomplete="email" required maxlength="200">
+          </label>
+        </div>
+        <label class="cf-field">
+          <span>Message</span>
+          <textarea id="cf-message" name="message" rows="5" required maxlength="5000"></textarea>
+        </label>
+        <input type="hidden" name="_subject" value="New message from jishnuvediyoor.com">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_next" value="{{ site.BaseURL }}?sent=1#contact">
+        <input type="text" name="_honey" class="cf-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="cf-actions">
+          <button type="submit" class="cf-send">Send message</button>
+          <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
+        </div>
+        <p class="cf-alt">Or email <a href="mailto:{{ $to }}">{{ $to }}</a></p>
+      </form>
+    </section>
+
     <footer>
       <span class="foot-tc">JISHNU VEDIYOOR — BANGALORE, IN · <a href="mailto:mail@jishnuvediyoor.com">MAIL@JISHNUVEDIYOOR.COM</a></span>
     </footer>
@@ -807,6 +861,7 @@
   <a href="#work">Work</a>
   <a href="#education">Education</a>
   <a href="#skills">Skills</a>
+  <a href="#contact">Contact</a>
   <a href="/blog/">Blog</a>
 </nav>
 
@@ -829,6 +884,30 @@
     }
 }
   window.addEventListener('scroll', setActive, { passive:true });
+
+  (() => {
+    const form = document.getElementById('contact-form');
+    const status = document.getElementById('cf-status');
+    if (!form) return;
+    const show = (msg, cls) => { status.textContent = msg; status.className = 'cf-status ' + (cls || ''); };
+    if (new URLSearchParams(location.search).has('sent')) show('Thanks, your message was sent.', 'ok');
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (form._honey.value) return;
+      const btn = form.querySelector('.cf-send');
+      btn.disabled = true; show('Sending…');
+      try {
+        const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
+          method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form)
+        });
+        const data = await res.json().catch(() => ({}));
+        if (res.ok && String(data.success) === 'true') { form.reset(); show('Thanks, your message was sent.', 'ok'); }
+        else show(data.message || 'Something went wrong. Please email me directly instead.', 'err');
+      } catch (err) {
+        show('Could not send right now. Please email me directly instead.', 'err');
+      } finally { btn.disabled = false; }
+    });
+  })();
   setActive();
 </script>
 
