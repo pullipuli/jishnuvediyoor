@@ -1,0 +1,134 @@
+{{ define "main" }}
+{{- $sections := slice "gallery" "movies" "books" "posts" }}
+{{- $items := sort (where site.RegularPages "Section" "in" $sections) ".Date" "desc" }}
+{{- $icons := dict
+  "gallery" `<path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/>`
+  "movies"  `<rect x="3" y="5" width="18" height="14" rx="1"/><path d="M7 5v14M17 5v14M3 9.5h4M3 14.5h4M17 9.5h4M17 14.5h4"/>`
+  "books"   `<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>`
+  "posts"   `<path d="M4 20l4-1 11-11-3-3L5 16z"/><path d="M14 7l3 3"/>`
+}}
+
+<div class="blog">
+  <div class="blog-head">
+    <div>
+      <div class="blog-eyebrow">Photos · Films · Books · Writing</div>
+      <h1 class="blog-title">{{ .Title }}</h1>
+    </div>
+    <div class="blog-pills" role="group" aria-label="Filter by type">
+      <button class="blog-pill" type="button" data-f="all" aria-pressed="true">All</button>
+      <button class="blog-pill" type="button" data-f="gallery" aria-pressed="false">Photos</button>
+      <button class="blog-pill" type="button" data-f="movies" aria-pressed="false">Movies</button>
+      <button class="blog-pill" type="button" data-f="books" aria-pressed="false">Books</button>
+      <button class="blog-pill" type="button" data-f="posts" aria-pressed="false">Writing</button>
+    </div>
+  </div>
+
+  <div class="blog-grid" id="blog-grid">
+    {{- range $items }}
+      {{- $type := .Section }}
+      {{- $img := "" }}
+      {{- if eq $type "gallery" }}{{ $img = .Params.image }}{{ end }}
+      {{- if eq $type "movies" }}{{ $img = .Params.poster }}{{ end }}
+      {{- if eq $type "books" }}{{ $img = .Params.coverimg }}{{ end }}
+      {{- if eq $type "posts" }}{{ with .Params.cover }}{{ $img = .image }}{{ end }}{{ end }}
+    <a class="blog-tile" href="{{ .RelPermalink }}" data-type="{{ $type }}" aria-label="{{ .Title }}">
+      {{- if $img }}
+      <img src="{{ $img }}" alt="" loading="lazy" decoding="async">
+      {{- else }}
+      <div class="blog-note"><span class="blog-q" aria-hidden="true">&ldquo;</span><p>{{ .Summary | plainify | truncate 140 }}</p></div>
+      {{- end }}
+      <span class="blog-badge" aria-hidden="true"><svg viewBox="0 0 24 24">{{ index $icons $type | safeHTML }}</svg></span>
+    </a>
+    {{- end }}
+  </div>
+</div>
+
+<style>
+  .blog{
+    --paper:#F6F4EE; --card:#EFEAE0; --line:#E0DACB; --ink:#17161C; --ink-soft:#5C5A63; --ink-faint:#8A867D; --accent:#BD7C34;
+    --ease:cubic-bezier(.2,.75,.2,1);
+    max-width:1040px; margin:0 auto; padding-block:12px 40px; color:var(--ink); font-family:'IBM Plex Sans',sans-serif;
+  }
+  .blog-head{display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:space-between; gap:14px; margin-bottom:20px}
+  .blog-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; color:var(--ink-faint); text-transform:uppercase}
+  .blog-title{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(30px,6vw,40px); line-height:1.05; margin:6px 0 0}
+  .blog-pills{display:flex; flex-wrap:wrap; gap:6px}
+  .blog-pill{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--line);
+    background:transparent; color:var(--ink-soft); cursor:pointer}
+  .blog-pill[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
+  .blog-pill:focus-visible,.blog-tile:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+
+  .blog-grid{display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px}
+  @media (min-width:600px){ .blog-grid{grid-template-columns:repeat(3,minmax(0,1fr)); gap:14px} }
+  @media (min-width:900px){ .blog-grid{grid-template-columns:repeat(4,minmax(0,1fr))} }
+  @media (orientation:landscape) and (max-height:520px){ .blog-grid{grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px} }
+
+  .blog-tile{position:relative; display:block; aspect-ratio:3/4; max-width:100%; border-radius:12px; overflow:hidden;
+    background:var(--card); border:1px solid var(--line); box-shadow:none; color:inherit; text-decoration:none;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease); -webkit-tap-highlight-color:transparent}
+  .blog-tile img{width:100%; height:100%; object-fit:cover; display:block; margin:0; border-radius:0; transition:transform .6s var(--ease)}
+  .blog-note{height:100%; display:flex; flex-direction:column; justify-content:space-between; padding:16px}
+  .blog-q{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:64px; line-height:.8; color:var(--accent)}
+  .blog-note p{margin:0; font-size:15px; line-height:1.45; color:var(--ink)}
+  .blog-badge{position:absolute; left:8px; bottom:8px; width:28px; height:28px; border-radius:8px; display:grid; place-items:center;
+    background:rgba(23,22,28,.62); color:#F6F4EE; opacity:0; transform:translateY(4px); transition:opacity .3s, transform .3s var(--ease)}
+  .blog-badge svg{width:15px; height:15px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linejoin:round; stroke-linecap:round}
+  @media (hover:hover){
+    .blog-tile:hover{transform:translateY(-3px); box-shadow:0 10px 24px rgba(23,22,28,.12)}
+    .blog-tile:hover img{transform:scale(1.05)}
+    .blog-tile:hover .blog-badge,.blog-tile:focus-visible .blog-badge{opacity:1; transform:none}
+  }
+  .blog-tile:active{transform:scale(.97)}
+  .blog-tile[hidden]{display:none}
+
+  /* Entrance. Portrait: tiles rise and come into focus, row by row.
+     Landscape: a left-to-right wipe across the row, like film running through a gate. */
+  .blog-tile.pending{opacity:0}
+  .blog-tile.in{animation:blog-rise .75s var(--ease) var(--d,0ms) both}
+  @keyframes blog-rise{from{opacity:0; transform:translateY(26px) scale(.97); filter:blur(6px)} to{opacity:1; transform:none; filter:none}}
+  @media (orientation:landscape){
+    .blog-tile.in{animation:blog-wipe .85s cubic-bezier(.65,0,.35,1) var(--d,0ms) both}
+    .blog-tile.in img{animation:blog-settle 1.3s var(--ease) var(--d,0ms) both}
+  }
+  @keyframes blog-wipe{from{clip-path:inset(0 100% 0 0 round 12px)} to{clip-path:inset(0 0 0 0 round 12px)}}
+  @keyframes blog-settle{from{transform:scale(1.16)} to{transform:scale(1)}}
+  @media (prefers-reduced-motion:reduce){
+    .blog-tile.pending{opacity:1} .blog-tile.in,.blog-tile.in img{animation:none} .blog-tile,.blog-tile img{transition:none}
+  }
+</style>
+
+<script>
+(() => {
+  const grid = document.getElementById('blog-grid');
+  const tiles = [...grid.querySelectorAll('.blog-tile')];
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)');
+  let queue = [], timer = 0;
+
+  // Tiles that come into view together animate as one batch, staggered in reading order.
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { queue.push(e.target); io.unobserve(e.target); } });
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      queue.sort((a, b) => a.offsetTop - b.offsetTop || a.offsetLeft - b.offsetLeft)
+        .forEach((t, i) => { t.style.setProperty('--d', (i * 80) + 'ms'); t.classList.remove('pending'); t.classList.add('in'); });
+      queue = [];
+    }, 30);
+  }, { rootMargin: '0px 0px -8% 0px' });
+
+  function play() {
+    if (reduce.matches) return;
+    io.disconnect(); queue = [];
+    tiles.forEach(t => { t.classList.remove('in', 'pending'); t.style.removeProperty('--d'); });
+    void grid.offsetWidth;  // restart CSS animations
+    tiles.filter(t => !t.hidden).forEach(t => { t.classList.add('pending'); io.observe(t); });
+  }
+
+  document.querySelectorAll('.blog-pill').forEach(p => p.addEventListener('click', () => {
+    document.querySelectorAll('.blog-pill').forEach(x => x.setAttribute('aria-pressed', x === p));
+    tiles.forEach(t => { t.hidden = !(p.dataset.f === 'all' || t.dataset.type === p.dataset.f); });
+    play();
+  }));
+  play();
+})();
+</script>
+{{ end }}

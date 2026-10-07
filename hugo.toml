@@ -2,10 +2,6 @@ baseURL = 'https://jishnuvediyoor.com/'
 locale = 'en-us'
 title = 'Jishnu Vediyoor'
 theme = "PaperMod"
-[[menu.main]]
-  name = "Collection"
-  url = "/collection/"
-  weight = 1
 [params]
   env = "production"
   description = "Personal website of Jishnu Vediyoor"

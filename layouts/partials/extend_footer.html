@@ -1,0 +1,16 @@
+{{- $onBlog := eq page.RelPermalink "/blog/" }}
+<nav class="navdock" aria-label="Site">
+  <a href="/">Home</a>
+  <a href="/#about">About</a>
+  <a href="/#work">Work</a>
+  <a href="/#education">Education</a>
+  <a href="/#skills">Skills</a>
+  <a href="/blog/" class="active"{{ if $onBlog }} aria-current="page"{{ end }}>Blog</a>
+</nav>
+<script>
+  // On narrow screens the dock scrolls sideways; bring Blog into view, as the homepage does for its current section.
+  (() => {
+    const dock = document.querySelector('.navdock'), current = dock && dock.querySelector('.active');
+    if (current) dock.scrollLeft = current.offsetLeft - (dock.clientWidth - current.offsetWidth) / 2;
+  })();
+</script>
