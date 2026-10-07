@@ -5,6 +5,8 @@ theme = "PaperMod"
 [params]
   env = "production"
   description = "Personal website of Jishnu Vediyoor"
+  # Contact form messages are forwarded here by FormSubmit (formsubmit.co)
+  contactEmail = "mail@jishnuvediyoor.com"
   # Custom layouts are designed for a light background only
   defaultTheme = "light"
   disableThemeToggle = true
