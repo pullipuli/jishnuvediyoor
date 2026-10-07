@@ -1,3 +1,11 @@
 clients:
   - name: Federal Bank
     logo: /images/uploads/federal-wordmark-reverse.png
+  - name: "Kerala Tourism "
+    logo: /images/uploads/keralatourismlogo.png
+  - name: Eastern
+    logo: /images/uploads/images.png
+  - name: ClubFM
+    logo: /images/uploads/clubfm.jpeg
+  - name: Kappa TV
+    logo: /images/uploads/kappatvbackground.webp
