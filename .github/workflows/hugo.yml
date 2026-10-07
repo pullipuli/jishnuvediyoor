@@ -59,10 +59,13 @@ jobs:
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
+          # Pages reports http:// while "Enforce HTTPS" is off; the site is served over
+          # https, and http asset links (favicons, canonical URLs) get blocked as mixed content.
           hugo \
             --minify \
-            --baseURL "${{ steps.pages.outputs.base_url }}/"
+            --baseURL "${PAGES_BASE_URL/#http:/https:}/"
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
