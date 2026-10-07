@@ -1,5 +1,3 @@
-# Client logos for the homepage, shown in black and white under Work.
-# Edit in Pages CMS under "Client logos", or add entries here:
-#   - name: Client name
-#     logo: /images/uploads/client-logo.png
-clients: []
+clients:
+  - name: Federal Bank
+    logo: /images/uploads/federal-wordmark-reverse.png
