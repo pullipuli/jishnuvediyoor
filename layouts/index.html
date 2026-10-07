@@ -283,6 +283,41 @@
     display:inline-block;
   }
   .entry.current .timecode{ color:var(--accent); }
+  /* earlier roles fold away behind a toggle */
+  .more-roles > summary{
+    list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
+    margin:2px 0 0; padding:9px 16px; border-radius:999px;
+    border:1px solid var(--card-line); background:var(--paper);
+    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.04em; color:var(--ink-soft);
+  }
+  .more-roles > summary::-webkit-details-marker{ display:none; }
+  .more-roles > summary::after{ content:"↓"; color:var(--accent); transition:transform .25s ease; }
+  .more-roles[open] > summary::after{ transform:rotate(180deg); }
+  .more-roles > summary:hover{ color:var(--ink); border-color:var(--ink-faint); }
+  .more-roles > summary:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+  .more-roles .more-close, .more-roles[open] .more-open{ display:none; }
+  .more-roles[open] .more-close{ display:inline; }
+  .more-roles[open] > summary{ margin-bottom:14px; }
+  .more-roles .entry:last-child{ margin-bottom:0; }
+
+  /* client logos, shown in black and white */
+  .clients{ margin-top:44px; }
+  .clients .sec-tc{ display:block; margin-bottom:16px; }
+  .client-logos{
+    list-style:none; margin:0; padding:0;
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px;
+  }
+  .client-logos li{
+    height:84px; display:flex; align-items:center; justify-content:center; padding:16px 18px;
+    background:var(--card); border:1px solid var(--card-line); border-radius:14px;
+  }
+  .client-logos img{
+    max-width:100%; max-height:100%; object-fit:contain;
+    filter:grayscale(1) contrast(1.15); mix-blend-mode:multiply; opacity:.72;
+    transition:opacity .25s ease;
+  }
+  .client-logos li:hover img{ opacity:1; }
+
   .card-summary{
     font-size:15px;
     color:var(--ink-soft);
@@ -575,6 +610,9 @@
           </div>
         </div>
 
+        <details class="more-roles">
+          <summary><span class="more-open">Show 6 earlier roles</span><span class="more-close">Hide earlier roles</span></summary>
+
         <div class="entry">
           <span class="dot"></span>
           <div class="card">
@@ -647,7 +685,19 @@
           </div>
         </div>
 
+        </details>
       </div>
+
+      {{- with site.Data.clients.clients }}
+      <div class="clients">
+        <span class="sec-tc">SELECTED CLIENTS</span>
+        <ul class="client-logos">
+          {{- range . }}
+          <li><img src="{{ .logo }}" alt="{{ .name }}" title="{{ .name }}" loading="lazy" decoding="async"></li>
+          {{- end }}
+        </ul>
+      </div>
+      {{- end }}
     </section>
 
     <section id="education">

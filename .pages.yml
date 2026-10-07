@@ -2,7 +2,7 @@
 media:
   input: static/images/uploads
   output: /images/uploads
-  extensions: [jpg, jpeg, png, webp, gif]
+  extensions: [jpg, jpeg, png, webp, gif, svg]
   rename: safe
 
 content:
@@ -82,3 +82,17 @@ content:
       - { name: rating, label: Rating (out of 5), type: number, options: { min: 0, max: 5, step: 0.1 } }
       - { name: genre, label: Genres, type: string, list: true }
       - { name: description, label: Description, type: text }
+
+  - name: clients
+    label: Client logos
+    description: Shown in black and white under Work on the homepage. PNG or SVG with a transparent or white background works best.
+    type: file
+    path: data/clients.yml
+    fields:
+      - name: clients
+        label: Clients
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Client name, type: string, required: true }
+          - { name: logo, label: Logo, type: image, required: true }
