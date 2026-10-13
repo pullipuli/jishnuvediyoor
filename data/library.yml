@@ -1,0 +1,668 @@
+# Books on my shelves. Add a book by copying a block below.
+# lang: ml (Malayalam) or en (English). isbn is optional — English ISBNs show the real cover.
+books:
+- title: Codex Gigas
+  ml_title: കോഡക്സ് ഗിഗാസ്
+  author: Anurag Gopinath
+  genre: Novel (crime)
+  publisher: DC Books
+  isbn: '9789357321938'
+  lang: ml
+- title: Panchakanyakakal
+  ml_title: പഞ്ചകന്യകകൾ
+  author: N.S. Madhavan
+  genre: Short stories
+  publisher: DC Books
+  isbn: '9788126452514'
+  lang: ml
+- title: Postmortem Table
+  ml_title: പോസ്റ്റ്മോർട്ടം ടേബിൾ
+  author: Dr. Sherly Vasu
+  genre: Memoir
+  publisher: DC Books
+  isbn: '9788126420933'
+  lang: ml
+- title: Mistress (Malayalam translation)
+  ml_title: മിസ്ട്രസ്
+  author: Anita Nair; tr. Johny M.L.
+  genre: Novel (translation)
+  publisher: DC Books
+  isbn: '9788126412532'
+  lang: ml
+- title: Murinavu
+  ml_title: മുറിനാവ്
+  author: Manoj Kuroor
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789353905149'
+  lang: ml
+- title: Nishabda Sancharangal
+  ml_title: നിശബ്ദ സഞ്ചാരങ്ങൾ
+  author: Benyamin
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789353906689'
+  lang: ml
+- title: Oru Rajashilpiyude Apprentice (The Architect's Apprentice)
+  ml_title: ഒരു രാജശില്പിയുടെ അപ്രന്റീസ്
+  author: Elif Shafak
+  genre: Novel (translation)
+  publisher: DC Books
+  isbn: '9789356434431'
+  lang: ml
+- title: Kaali Gandaki
+  ml_title: കാളി ഗണ്ഡകി
+  author: G.R. Indugopan
+  genre: Novel
+  publisher: DC Books
+  isbn: '9788126450763'
+  lang: ml
+- title: Meesha
+  ml_title: മീശ
+  author: S. Hareesh
+  genre: Novel
+  publisher: DC Books
+  isbn: '9788126477371'
+  lang: ml
+- title: The Things You Can See Only When You Slow Down
+  ml_title: ''
+  author: Haemin Sunim
+  genre: Non-fiction (self-help)
+  publisher: Penguin
+  isbn: '9780241340660'
+  lang: en
+- title: Rendezvous with Rama
+  ml_title: ''
+  author: Arthur C. Clarke
+  genre: Science fiction
+  publisher: Gollancz
+  isbn: '9781407230078'
+  lang: en
+- title: Harry Potter and the Philosopher's Stone
+  ml_title: ''
+  author: J.K. Rowling
+  genre: Fantasy
+  publisher: Bloomsbury
+  isbn: '9780747532743'
+  lang: en
+- title: The Hundred-Year-Old Man Who Climbed Out of the Window and Disappeared
+  ml_title: ''
+  author: Jonas Jonasson
+  genre: Fiction
+  publisher: Little, Brown
+  isbn: '9780349141800'
+  lang: en
+- title: Ponni
+  ml_title: പൊന്നി
+  author: Malayattoor Ramakrishnan
+  genre: Novel
+  publisher: DC Books
+  isbn: '9788171307234'
+  lang: ml
+- title: Thiranjedutha Kathakal
+  ml_title: തിരഞ്ഞെടുത്ത കഥകൾ
+  author: Indu Menon
+  genre: Short stories
+  publisher: Manorama Books
+  isbn: '9788195231997'
+  lang: ml
+- title: Urakkappishachu
+  ml_title: ഉറക്കപ്പിശാച്
+  author: S.P. Sarath
+  genre: Novel
+  publisher: Manorama Books
+  isbn: '9789359593876'
+  lang: ml
+- title: Krishnaparunthu
+  ml_title: കൃഷ്ണപ്പരുന്ത്
+  author: P.V. Thampy
+  genre: Novel
+  publisher: Manorama Books
+  isbn: '9789359260419'
+  lang: ml
+- title: Oda
+  ml_title: ഒട
+  author: Jinsha Ganga
+  genre: Short stories
+  publisher: DC Books
+  isbn: '9789362540874'
+  lang: ml
+- title: The Village of Eight Graves
+  ml_title: ''
+  author: Seishi Yokomizo
+  genre: Crime fiction
+  publisher: Pushkin Press
+  isbn: '9781782277453'
+  lang: en
+- title: Anti-Clock
+  ml_title: ആന്റിക്ലോക്ക്
+  author: V.J. James
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789352821822'
+  lang: ml
+- title: The Metamorphosis
+  ml_title: ''
+  author: Franz Kafka
+  genre: Classic fiction
+  publisher: Fingerprint! Classics
+  isbn: '9788172345136'
+  lang: en
+- title: 50 Greatest Short Stories
+  ml_title: ''
+  author: Various
+  genre: Short story anthology
+  publisher: Rupa
+  isbn: '9788129137258'
+  lang: en
+- title: Ottakkaalan Kaakka
+  ml_title: ഒറ്റക്കാലൻ കാക്ക
+  author: V.J. James
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789352820047'
+  lang: ml
+- title: 'Sapiens: A Brief History of Humankind'
+  ml_title: ''
+  author: Yuval Noah Harari
+  genre: Popular science
+  publisher: Vintage
+  isbn: '9780099590088'
+  lang: en
+- title: Alphabet Soup for Lovers
+  ml_title: ''
+  author: Anita Nair
+  genre: Fiction
+  publisher: HarperCollins India
+  isbn: '9789351774822'
+  lang: en
+- title: Pretha Vettakkaran
+  ml_title: പ്രേതവേട്ടക്കാരൻ
+  author: G.R. Indugopan
+  genre: Experiences & stories
+  publisher: Mathrubhumi Books
+  isbn: '9789355498823'
+  lang: ml
+- title: The Mystery of Three Quarters
+  ml_title: ''
+  author: Sophie Hannah (Agatha Christie's Poirot)
+  genre: Crime fiction
+  publisher: HarperCollins
+  isbn: '9780008321291'
+  lang: en
+- title: Harry Potter and the Order of the Phoenix
+  ml_title: ''
+  author: J.K. Rowling
+  genre: Fantasy
+  publisher: Scholastic
+  isbn: '9780439358071'
+  lang: en
+- title: Thurangam
+  ml_title: തുരങ്കം
+  author: Deepu
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Mathavi
+  ml_title: മാതവി
+  author: Sreeparvathy
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Ouija Board
+  ml_title: ഓജോ ബോർഡ്
+  author: Akhil P. Dharmajan
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Ammacheenthukal
+  ml_title: അമ്മച്ചീന്തുകൾ
+  author: Echmukutty
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Three Men in a Boat
+  ml_title: ''
+  author: Jerome K. Jerome
+  genre: Classic fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Bhranthiman
+  ml_title: ഭ്രാന്തിമാൻ
+  author: Manoj Bharathi
+  genre: ''
+  publisher: ''
+  isbn: ''
+  lang: ml
+- title: Deham
+  ml_title: ദേഹം
+  author: Ajay P. Mangattu
+  genre: ''
+  publisher: Mathrubhumi Books
+  isbn: ''
+  lang: ml
+- title: Ayalkkar
+  ml_title: അയൽക്കാർ
+  author: P. Kesavadev
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Nakshathrangale Kaaval
+  ml_title: നക്ഷത്രങ്ങളേ കാവൽ
+  author: P. Padmarajan
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Puzhameenukale Kollunna Vidham
+  ml_title: പുഴമീനുകളെ കൊല്ലുന്ന വിധം
+  author: Benyamin
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Girl with the Dragon Tattoo
+  ml_title: ''
+  author: Stieg Larsson
+  genre: Crime fiction
+  publisher: Quercus
+  isbn: ''
+  lang: en
+- title: The Girl Who Played with Fire
+  ml_title: ''
+  author: Stieg Larsson
+  genre: Crime fiction
+  publisher: Quercus
+  isbn: ''
+  lang: en
+- title: The Girl Who Kicked the Hornets' Nest
+  ml_title: ''
+  author: Stieg Larsson
+  genre: Crime fiction
+  publisher: Quercus
+  isbn: ''
+  lang: en
+- title: The Girl in the Spider's Web
+  ml_title: ''
+  author: David Lagercrantz
+  genre: Crime fiction
+  publisher: MacLehose / Quercus
+  isbn: ''
+  lang: en
+- title: Sea of Poppies
+  ml_title: ''
+  author: Amitav Ghosh
+  genre: Fiction
+  publisher: Penguin
+  isbn: ''
+  lang: en
+- title: The Book Thief
+  ml_title: ''
+  author: Markus Zusak
+  genre: Fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: The Fountainhead
+  ml_title: ''
+  author: Ayn Rand
+  genre: Fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Thimingala Vetta
+  ml_title: തിമിംഗല വേട്ട
+  author: Anurag Gopinath
+  genre: Novel
+  publisher: Green Books
+  isbn: ''
+  lang: ml
+- title: The Palace of Illusions
+  ml_title: ''
+  author: Chitra Banerjee Divakaruni
+  genre: Fiction
+  publisher: Picador India
+  isbn: ''
+  lang: en
+- title: Aakashathile Paravakal
+  ml_title: ആകാശത്തിലെ പറവകൾ
+  author: Parappurathu
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Janmantharavagdanangal (Ancient Promises)
+  ml_title: ജന്മാന്തരവാഗ്ദാനങ്ങൾ
+  author: Jaishree Misra (Malayalam tr.)
+  genre: Novel (translation)
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Tattooist of Auschwitz
+  ml_title: ''
+  author: Heather Morris
+  genre: Fiction
+  publisher: Zaffre
+  isbn: ''
+  lang: en
+- title: 'Deep Focus: Reflections on Cinema'
+  ml_title: ''
+  author: Satyajit Ray
+  genre: Non-fiction (cinema)
+  publisher: HarperCollins
+  isbn: ''
+  lang: en
+- title: Valli
+  ml_title: വല്ലി
+  author: Sheela Tomy
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Manifest
+  ml_title: ''
+  author: Roxie Nafousi
+  genre: Self-help
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Sapiens (Malayalam)
+  ml_title: സാപിയൻസ്
+  author: Yuval Noah Harari (Malayalam tr.)
+  genre: Popular science
+  publisher: Manjul
+  isbn: ''
+  lang: ml
+- title: Adrishyamurivukal
+  ml_title: അദൃശ്യമുറിവുകൾ
+  author: Vishnulal Sudha
+  genre: ''
+  publisher: Manjul
+  isbn: ''
+  lang: ml
+- title: Onnam Forensic Adhyayam
+  ml_title: ഒന്നാം ഫോറൻസിക് അദ്ധ്യായം
+  author: Rajath R.
+  genre: Crime fiction
+  publisher: Green Books
+  isbn: ''
+  lang: ml
+- title: Sugandhi Enna Andal Devanayaki
+  ml_title: സുഗന്ധി എന്ന ആണ്ടാൾ ദേവനായകി
+  author: T.D. Ramakrishnan
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Bhadrasanam
+  ml_title: ഭദ്രാസനം
+  author: Sunil Parameswaran
+  genre: ''
+  publisher: Current Books
+  isbn: ''
+  lang: ml
+- title: The Best Japanese Short Stories
+  ml_title: ''
+  author: Various
+  genre: Short story anthology
+  publisher: Tuttle
+  isbn: ''
+  lang: en
+- title: Agocharam
+  ml_title: അഗോചരം
+  author: Nikhilesh Menon
+  genre: Novel
+  publisher: Green Books
+  isbn: ''
+  lang: ml
+- title: Don't Buy This Book Now!
+  ml_title: ''
+  author: John Perry
+  genre: Non-fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: The Communication Book
+  ml_title: ''
+  author: Mikael Krogerus & Roman Tschäppeler
+  genre: Business
+  publisher: Penguin
+  isbn: ''
+  lang: en
+- title: Grandma's Bag of Stories
+  ml_title: ''
+  author: Sudha Murty
+  genre: Children's
+  publisher: Puffin
+  isbn: ''
+  lang: en
+- title: Animal Farm
+  ml_title: ''
+  author: George Orwell
+  genre: Classic fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Pranayakathakal
+  ml_title: പ്രണയകഥകൾ
+  author: N. Mohanan
+  genre: Short stories
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Marupiravi
+  ml_title: മറുപിറവി
+  author: Sethu
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Wuthering Heights
+  ml_title: ''
+  author: Emily Brontë
+  genre: Classic fiction
+  publisher: Penguin
+  isbn: ''
+  lang: en
+- title: 'The Mahabharata Quest: The Alexander Secret'
+  ml_title: ''
+  author: Christopher C. Doyle
+  genre: Thriller
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Parakayam
+  ml_title: പരകായം
+  author: Asif
+  genre: ''
+  publisher: Manava Publication
+  isbn: ''
+  lang: ml
+- title: Atheetham
+  ml_title: അതീതം
+  author: Rajeev Sivasankar
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Greatest Goan Stories Ever Told
+  ml_title: ''
+  author: Manohar Shetty (ed.)
+  genre: Short story anthology
+  publisher: Aleph
+  isbn: ''
+  lang: en
+- title: Umanadu Venadu
+  ml_title: ഉമാനാട് വേണാട്
+  author: Prasanth Mithran
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Padinjare Kollam Chorakkalam
+  ml_title: പടിഞ്ഞാറെ കൊല്ലം ചോരക്കാലം
+  author: G.R. Indugopan
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Greatest Essays
+  ml_title: ''
+  author: Various
+  genre: Essays
+  publisher: Rupa
+  isbn: ''
+  lang: en
+- title: The Shining
+  ml_title: ''
+  author: Stephen King
+  genre: Horror
+  publisher: Hodder
+  isbn: ''
+  lang: en
+- title: Penmarattam
+  ml_title: പെൺമാറാട്ടം
+  author: Benyamin
+  genre: ''
+  publisher: Mathrubhumi Books
+  isbn: ''
+  lang: ml
+- title: Puttu
+  ml_title: പുറ്റ്
+  author: Vinoy Thomas
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Complete Adventures of Feluda, Vol. 2
+  ml_title: ''
+  author: Satyajit Ray
+  genre: Detective fiction
+  publisher: Penguin
+  isbn: ''
+  lang: en
+- title: The Institute
+  ml_title: ''
+  author: Stephen King
+  genre: Horror
+  publisher: Hodder & Stoughton
+  isbn: ''
+  lang: en
+- title: Tharakans Grandhavari
+  ml_title: തരകൻസ് ഗ്രന്ഥവരി
+  author: Benyamin
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Cheriya Manushyarum Valiya Lokavum
+  ml_title: ചെറിയ മനുഷ്യരും വലിയ ലോകവും
+  author: G. Aravindan
+  genre: Cartoon / graphic
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Wolf Hall
+  ml_title: ''
+  author: Hilary Mantel
+  genre: Historical fiction
+  publisher: Fourth Estate
+  isbn: ''
+  lang: en
+- title: Kapalam
+  ml_title: കപാലം
+  author: Dr. B. Umadathan
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Ramachi
+  ml_title: രാമച്ചി
+  author: Vinoy Thomas
+  genre: Short stories
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Acts of God
+  ml_title: ''
+  author: Kanan Gill
+  genre: Fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Oru Desathinte Katha
+  ml_title: ഒരു ദേശത്തിന്റെ കഥ
+  author: S.K. Pottekkatt
+  genre: Novel
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Gollancz Book of South Asian Science Fiction
+  ml_title: ''
+  author: Various
+  genre: Science fiction
+  publisher: Hachette India
+  isbn: ''
+  lang: en
+- title: The Essential Rumi
+  ml_title: ''
+  author: Rumi, tr. Coleman Barks
+  genre: Poetry
+  publisher: HarperOne
+  isbn: ''
+  lang: en
+- title: Damiante Athidhikal
+  ml_title: ദാമിയന്റെ അതിഥികൾ
+  author: Arun Arsha
+  genre: Novel
+  publisher: Green Books
+  isbn: ''
+  lang: ml
+- title: Karuthachan
+  ml_title: കറുത്തച്ചൻ
+  author: S.K. Harinath
+  genre: ''
+  publisher: Green Books
+  isbn: ''
+  lang: ml
+- title: Kambilikandathe Kalbharanikal
+  ml_title: കമ്പിളികണ്ടത്തെ കൽഭരണികൾ
+  author: Babu Abraham
+  genre: ''
+  publisher: Mathrubhumi Books
+  isbn: ''
+  lang: ml
+- title: The Forest of Enchantments
+  ml_title: ''
+  author: Chitra Banerjee Divakaruni
+  genre: Fiction
+  publisher: HarperCollins
+  isbn: ''
+  lang: en
+- title: Murder at the Bookstore
+  ml_title: ''
+  author: Sue Minix
+  genre: Crime fiction
+  publisher: Avon
+  isbn: ''
+  lang: en
+- title: Welcome to the Hyunam-dong Bookshop
+  ml_title: ''
+  author: Hwang Bo-reum
+  genre: Fiction
+  publisher: ''
+  isbn: ''
+  lang: en
+- title: Memories
+  ml_title: ''
+  author: Lang Leav
+  genre: Poetry
+  publisher: ''
+  isbn: ''
+  lang: en
