@@ -112,7 +112,9 @@ content:
           - { name: author, label: Author, type: string }
           - { name: genre, label: Genre, type: string }
           - { name: publisher, label: Publisher, type: string }
-          - { name: isbn, label: ISBN (optional — shows the real cover), type: string }
+          - { name: isbn, label: ISBN (optional — used to find the cover), type: string }
+          - { name: cover, label: Cover image link (optional), type: string }
+          - { name: asin, label: Amazon product code (optional), type: string }
           - name: lang
             label: Language
             type: select

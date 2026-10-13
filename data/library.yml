@@ -1,5 +1,6 @@
 # Books on my shelves. Add a book by copying a block below.
-# lang: ml (Malayalam) or en (English). isbn is optional — English ISBNs show the real cover.
+# lang: ml (Malayalam) or en (English).
+# Covers: 'cover' is a direct image link; otherwise the page tries Amazon (asin, or the ISBN) and Open Library, then draws one.
 books:
 - title: Codex Gigas
   ml_title: കോഡക്സ് ഗിഗാസ്
@@ -8,6 +9,7 @@ books:
   publisher: DC Books
   isbn: '9789357321938'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/o/1/j/codex-gigas-resized-original-imagurymbwhzfs84.jpeg
 - title: Panchakanyakakal
   ml_title: പഞ്ചകന്യകകൾ
   author: N.S. Madhavan
@@ -22,6 +24,7 @@ books:
   publisher: DC Books
   isbn: '9788126420933'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/q/j/q/postmortem-table-resized-original-imahp2fpbuyuzqck.jpeg
 - title: Mistress (Malayalam translation)
   ml_title: മിസ്ട്രസ്
   author: Anita Nair; tr. Johny M.L.
@@ -43,6 +46,7 @@ books:
   publisher: DC Books
   isbn: '9789353906689'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kfeamq80/regionalbooks/y/d/g/nisabda-sancharangal-original-imafvuqemzvkyhga.jpeg
 - title: Oru Rajashilpiyude Apprentice (The Architect's Apprentice)
   ml_title: ഒരു രാജശില്പിയുടെ അപ്രന്റീസ്
   author: Elif Shafak
@@ -57,6 +61,7 @@ books:
   publisher: DC Books
   isbn: '9788126450763'
   lang: ml
+  cover: https://d1af37c1pl2nfl.cloudfront.net/images/books/dcb/front/kali-gandaki.jpg
 - title: Meesha
   ml_title: മീശ
   author: S. Hareesh
@@ -64,6 +69,7 @@ books:
   publisher: DC Books
   isbn: '9788126477371'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/regionalbooks/a/b/s/meesha-resized-original-imag57tgcgkd2tk5.jpeg
 - title: The Things You Can See Only When You Slow Down
   ml_title: ''
   author: Haemin Sunim
@@ -71,6 +77,7 @@ books:
   publisher: Penguin
   isbn: '9780241340660'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/l/9/h/the-things-you-can-see-only-when-you-slow-down-original-imahrzzvhw6nyxy7.jpeg
 - title: Rendezvous with Rama
   ml_title: ''
   author: Arthur C. Clarke
@@ -78,6 +85,7 @@ books:
   publisher: Gollancz
   isbn: '9781407230078'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/w/t/r/rendezvous-with-rama-paperback-original-imah3nw9xyg7fgnn.jpeg
 - title: Harry Potter and the Philosopher's Stone
   ml_title: ''
   author: J.K. Rowling
@@ -92,6 +100,7 @@ books:
   publisher: Little, Brown
   isbn: '9780349141800'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/s/c/k/the-hundred-year-old-man-who-climbed-out-of-the-window-and-original-imagzyh6v2k5fknn.jpeg
 - title: Ponni
   ml_title: പൊന്നി
   author: Malayattoor Ramakrishnan
@@ -99,6 +108,7 @@ books:
   publisher: DC Books
   isbn: '9788171307234'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kcdp5zk0/regionalbooks/y/p/r/ponni-malayattoor-original-imaftg6m3upke5td.jpeg
 - title: Thiranjedutha Kathakal
   ml_title: തിരഞ്ഞെടുത്ത കഥകൾ
   author: Indu Menon
@@ -106,6 +116,7 @@ books:
   publisher: Manorama Books
   isbn: '9788195231997'
   lang: ml
+  asin: '8195231993'
 - title: Urakkappishachu
   ml_title: ഉറക്കപ്പിശാച്
   author: S.P. Sarath
@@ -113,6 +124,7 @@ books:
   publisher: Manorama Books
   isbn: '9789359593876'
   lang: ml
+  asin: '9359593877'
 - title: Krishnaparunthu
   ml_title: കൃഷ്ണപ്പരുന്ത്
   author: P.V. Thampy
@@ -120,6 +132,7 @@ books:
   publisher: Manorama Books
   isbn: '9789359260419'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/g/f/3/krishnapparunthu-original-imagwmh9fa2bx9zk.jpeg
 - title: Oda
   ml_title: ഒട
   author: Jinsha Ganga
@@ -127,6 +140,8 @@ books:
   publisher: DC Books
   isbn: '9789362540874'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/z/2/7/oda-original-imah2ffbhqv3pzub.jpeg
+  asin: B0D8BMZJC5
 - title: The Village of Eight Graves
   ml_title: ''
   author: Seishi Yokomizo
@@ -134,6 +149,7 @@ books:
   publisher: Pushkin Press
   isbn: '9781782277453'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/e/t/v/the-village-of-eight-graves-resized-original-imahgjhjzwduxp2w.jpeg
 - title: Anti-Clock
   ml_title: ആന്റിക്ലോക്ക്
   author: V.J. James
@@ -141,6 +157,7 @@ books:
   publisher: DC Books
   isbn: '9789352821822'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/k6l2vm80/regionalbooks/w/h/v/anti-clock-original-imaffwzmfcdzgqcx.jpeg
 - title: The Metamorphosis
   ml_title: ''
   author: Franz Kafka
@@ -148,6 +165,7 @@ books:
   publisher: Fingerprint! Classics
   isbn: '9788172345136'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/k9itgnk0/regionalbooks/y/5/b/metamorphosis-original-imafrawyycusys2p.jpeg
 - title: 50 Greatest Short Stories
   ml_title: ''
   author: Various
@@ -162,6 +180,7 @@ books:
   publisher: DC Books
   isbn: '9789352820047'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/juvjzbk0/book/0/4/7/ottakkalan-kakka-original-imaffwk7kepqbkky.jpeg
 - title: 'Sapiens: A Brief History of Humankind'
   ml_title: ''
   author: Yuval Noah Harari
@@ -176,6 +195,7 @@ books:
   publisher: HarperCollins India
   isbn: '9789351774822'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/k0plpjk0/book/6/0/3/alphabet-soup-for-lovers-original-imaffhp6ha87aa9d.jpeg
 - title: Pretha Vettakkaran
   ml_title: പ്രേതവേട്ടക്കാരൻ
   author: G.R. Indugopan
@@ -183,6 +203,7 @@ books:
   publisher: Mathrubhumi Books
   isbn: '9789355498823'
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kkh6zrk0/regionalbooks/t/a/k/pretha-vettakkaran-horror-stories-original-imafzszusfwtegph.jpeg
 - title: The Mystery of Three Quarters
   ml_title: ''
   author: Sophie Hannah (Agatha Christie's Poirot)
@@ -190,6 +211,7 @@ books:
   publisher: HarperCollins
   isbn: '9780008321291'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/jjd6aa80/book/2/9/1/the-mystery-of-three-quarters-original-imaf6yhyrzwbxa5e.jpeg
 - title: Harry Potter and the Order of the Phoenix
   ml_title: ''
   author: J.K. Rowling
@@ -197,6 +219,7 @@ books:
   publisher: Scholastic
   isbn: '9780439358071'
   lang: en
+  cover: https://rukminim2.flixcart.com/image/612/612/k0o69ow0/book/8/7/3/harry-potter-and-the-order-of-the-phoenix-book-5-original-imafkffpqwtvnghu.jpeg
 - title: Thurangam
   ml_title: തുരങ്കം
   author: Deepu
@@ -211,6 +234,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/regionalbooks/t/b/9/mathavi-by-sreeparvathy-original-imagvq2cadyy6wwb.jpeg
 - title: Ouija Board
   ml_title: ഓജോ ബോർഡ്
   author: Akhil P. Dharmajan
@@ -218,6 +242,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/l/9/e/ouija-board-original-imaheb5pzhgmxddz.jpeg
 - title: Ammacheenthukal
   ml_title: അമ്മച്ചീന്തുകൾ
   author: Echmukutty
@@ -225,6 +250,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kvifekw0/book/4/f/m/ammacheenthukal-ecmukkutty-echmukutty-original-imag8e98wcbb5t7j.jpeg
 - title: Three Men in a Boat
   ml_title: ''
   author: Jerome K. Jerome
@@ -232,6 +258,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '8176061298'
 - title: Bhranthiman
   ml_title: ഭ്രാന്തിമാൻ
   author: Manoj Bharathi
@@ -246,6 +273,7 @@ books:
   publisher: Mathrubhumi Books
   isbn: ''
   lang: ml
+  asin: '9359620858'
 - title: Ayalkkar
   ml_title: അയൽക്കാർ
   author: P. Kesavadev
@@ -260,6 +288,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kxgfzbk0/regionalbooks/d/t/7/nakshathrangale-kaval-p-padmarajan-original-imag9wuytr3dhcbm.jpeg
 - title: Puzhameenukale Kollunna Vidham
   ml_title: പുഴമീനുകളെ കൊല്ലുന്ന വിധം
   author: Benyamin
@@ -274,6 +303,7 @@ books:
   publisher: Quercus
   isbn: ''
   lang: en
+  asin: '1849162883'
 - title: The Girl Who Played with Fire
   ml_title: ''
   author: Stieg Larsson
@@ -281,6 +311,7 @@ books:
   publisher: Quercus
   isbn: ''
   lang: en
+  asin: '1847245579'
 - title: The Girl Who Kicked the Hornets' Nest
   ml_title: ''
   author: Stieg Larsson
@@ -288,6 +319,7 @@ books:
   publisher: Quercus
   isbn: ''
   lang: en
+  asin: '1849162751'
 - title: The Girl in the Spider's Web
   ml_title: ''
   author: David Lagercrantz
@@ -295,6 +327,7 @@ books:
   publisher: MacLehose / Quercus
   isbn: ''
   lang: en
+  asin: 0857059998
 - title: Sea of Poppies
   ml_title: ''
   author: Amitav Ghosh
@@ -302,6 +335,7 @@ books:
   publisher: Penguin
   isbn: ''
   lang: en
+  asin: 014342470X
 - title: The Book Thief
   ml_title: ''
   author: Markus Zusak
@@ -309,6 +343,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: 0552773891
 - title: The Fountainhead
   ml_title: ''
   author: Ayn Rand
@@ -316,6 +351,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: 0451191153
 - title: Thimingala Vetta
   ml_title: തിമിംഗല വേട്ട
   author: Anurag Gopinath
@@ -330,6 +366,7 @@ books:
   publisher: Picador India
   isbn: ''
   lang: en
+  asin: 0330458531
 - title: Aakashathile Paravakal
   ml_title: ആകാശത്തിലെ പറവകൾ
   author: Parappurathu
@@ -337,6 +374,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  asin: '8130011174'
 - title: Janmantharavagdanangal (Ancient Promises)
   ml_title: ജന്മാന്തരവാഗ്ദാനങ്ങൾ
   author: Jaishree Misra (Malayalam tr.)
@@ -344,6 +382,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/regionalbooks/v/z/z/janmanthara-vagdanangal-original-imaeq6ca3hcgcvbh.jpeg
 - title: The Tattooist of Auschwitz
   ml_title: ''
   author: Heather Morris
@@ -351,6 +390,7 @@ books:
   publisher: Zaffre
   isbn: ''
   lang: en
+  asin: '1785763679'
 - title: 'Deep Focus: Reflections on Cinema'
   ml_title: ''
   author: Satyajit Ray
@@ -358,6 +398,7 @@ books:
   publisher: HarperCollins
   isbn: ''
   lang: en
+  asin: '9351360016'
 - title: Valli
   ml_title: വല്ലി
   author: Sheela Tomy
@@ -365,6 +406,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kmp7ngw0/book/f/k/j/valli-original-imagfjzgacrjrdzf.jpeg
 - title: Manifest
   ml_title: ''
   author: Roxie Nafousi
@@ -372,6 +414,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: 0241539595
 - title: Sapiens (Malayalam)
   ml_title: സാപിയൻസ്
   author: Yuval Noah Harari (Malayalam tr.)
@@ -379,6 +422,7 @@ books:
   publisher: Manjul
   isbn: ''
   lang: ml
+  asin: B0DHCZKSP5
 - title: Adrishyamurivukal
   ml_title: അദൃശ്യമുറിവുകൾ
   author: Vishnulal Sudha
@@ -386,6 +430,7 @@ books:
   publisher: Manjul
   isbn: ''
   lang: ml
+  asin: B0DQSXB929
 - title: Onnam Forensic Adhyayam
   ml_title: ഒന്നാം ഫോറൻസിക് അദ്ധ്യായം
   author: Rajath R.
@@ -393,6 +438,8 @@ books:
   publisher: Green Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/k/j/w/onnam-forensic-adhyayam-resized-original-imahhktbwhfswg7c.jpeg
+  asin: '9390429774'
 - title: Sugandhi Enna Andal Devanayaki
   ml_title: സുഗന്ധി എന്ന ആണ്ടാൾ ദേവനായകി
   author: T.D. Ramakrishnan
@@ -400,6 +447,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kdj4xow0/regionalbooks/b/w/y/sugandhi-enna-andal-devanayaki-original-imafue7j6wzzgcwq.jpeg
 - title: Bhadrasanam
   ml_title: ഭദ്രാസനം
   author: Sunil Parameswaran
@@ -414,6 +462,7 @@ books:
   publisher: Tuttle
   isbn: ''
   lang: en
+  asin: '4805317299'
 - title: Agocharam
   ml_title: അഗോചരം
   author: Nikhilesh Menon
@@ -421,6 +470,7 @@ books:
   publisher: Green Books
   isbn: ''
   lang: ml
+  asin: B0927BCBTG
 - title: Don't Buy This Book Now!
   ml_title: ''
   author: John Perry
@@ -435,6 +485,7 @@ books:
   publisher: Penguin
   isbn: ''
   lang: en
+  asin: 0241982286
 - title: Grandma's Bag of Stories
   ml_title: ''
   author: Sudha Murty
@@ -442,6 +493,7 @@ books:
   publisher: Puffin
   isbn: ''
   lang: en
+  asin: '0143333623'
 - title: Animal Farm
   ml_title: ''
   author: George Orwell
@@ -449,6 +501,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '0143416316'
 - title: Pranayakathakal
   ml_title: പ്രണയകഥകൾ
   author: N. Mohanan
@@ -456,6 +509,8 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/9/v/f/pranayakathakal-original-imahyyym7pghsmh2.jpeg
+  asin: B0D4QQ6Z9T
 - title: Marupiravi
   ml_title: മറുപിറവി
   author: Sethu
@@ -463,6 +518,8 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kjabs7k0-0/book/c/v/z/marupiravi-original-imafyvuzxmzz2dzc.jpeg
+  asin: '8126430729'
 - title: Wuthering Heights
   ml_title: ''
   author: Emily Brontë
@@ -470,6 +527,7 @@ books:
   publisher: Penguin
   isbn: ''
   lang: en
+  asin: 0141439556
 - title: 'The Mahabharata Quest: The Alexander Secret'
   ml_title: ''
   author: Christopher C. Doyle
@@ -477,6 +535,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '9384030597'
 - title: Parakayam
   ml_title: പരകായം
   author: Asif
@@ -498,6 +557,7 @@ books:
   publisher: Aleph
   isbn: ''
   lang: en
+  asin: 939385212X
 - title: Umanadu Venadu
   ml_title: ഉമാനാട് വേണാട്
   author: Prasanth Mithran
@@ -512,6 +572,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/jxkpx8w0/book/2/1/9/padinjare-kollam-chorakkalam-original-imafgy2rnsr4ezyz.jpeg
 - title: Greatest Essays
   ml_title: ''
   author: Various
@@ -519,6 +580,7 @@ books:
   publisher: Rupa
   isbn: ''
   lang: en
+  asin: '9389967910'
 - title: The Shining
   ml_title: ''
   author: Stephen King
@@ -526,6 +588,7 @@ books:
   publisher: Hodder
   isbn: ''
   lang: en
+  asin: '1444720724'
 - title: Penmarattam
   ml_title: പെൺമാറാട്ടം
   author: Benyamin
@@ -533,6 +596,7 @@ books:
   publisher: Mathrubhumi Books
   isbn: ''
   lang: ml
+  asin: '8182677440'
 - title: Puttu
   ml_title: പുറ്റ്
   author: Vinoy Thomas
@@ -540,6 +604,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/kdbzqfk0/book/0/9/8/puttu-original-imafu9msf22dhyty.jpeg
 - title: The Complete Adventures of Feluda, Vol. 2
   ml_title: ''
   author: Satyajit Ray
@@ -547,6 +612,7 @@ books:
   publisher: Penguin
   isbn: ''
   lang: en
+  asin: 014303278X
 - title: The Institute
   ml_title: ''
   author: Stephen King
@@ -554,6 +620,7 @@ books:
   publisher: Hodder & Stoughton
   isbn: ''
   lang: en
+  asin: '1529355397'
 - title: Tharakans Grandhavari
   ml_title: തരകൻസ് ഗ്രന്ഥവരി
   author: Benyamin
@@ -561,6 +628,8 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/l4u7vrk0/book/w/c/w/tharakan-s-grandhavari-original-imagfn2pknykcf8f.jpeg
+  asin: B0B5BC161C
 - title: Cheriya Manushyarum Valiya Lokavum
   ml_title: ചെറിയ മനുഷ്യരും വലിയ ലോകവും
   author: G. Aravindan
@@ -568,6 +637,8 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/c/3/n/cheriya-manushyarum-valiya-lokavum-original-imah5wzfskew7huh.jpeg
+  asin: B0DFGWLJFH
 - title: Wolf Hall
   ml_title: ''
   author: Hilary Mantel
@@ -575,6 +646,7 @@ books:
   publisher: Fourth Estate
   isbn: ''
   lang: en
+  asin: 0007230184
 - title: Kapalam
   ml_title: കപാലം
   author: Dr. B. Umadathan
@@ -582,6 +654,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  asin: '9352828437'
 - title: Ramachi
   ml_title: രാമച്ചി
   author: Vinoy Thomas
@@ -589,6 +662,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/l/k/s/ramachi-original-imahq98fgynnbhgt.jpeg
 - title: Acts of God
   ml_title: ''
   author: Kanan Gill
@@ -596,6 +670,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '9356996822'
 - title: Oru Desathinte Katha
   ml_title: ഒരു ദേശത്തിന്റെ കഥ
   author: S.K. Pottekkatt
@@ -603,6 +678,7 @@ books:
   publisher: DC Books
   isbn: ''
   lang: ml
+  asin: '8171305709'
 - title: The Gollancz Book of South Asian Science Fiction
   ml_title: ''
   author: Various
@@ -610,6 +686,7 @@ books:
   publisher: Hachette India
   isbn: ''
   lang: en
+  asin: '9357312854'
 - title: The Essential Rumi
   ml_title: ''
   author: Rumi, tr. Coleman Barks
@@ -617,6 +694,7 @@ books:
   publisher: HarperOne
   isbn: ''
   lang: en
+  asin: 0062509594
 - title: Damiante Athidhikal
   ml_title: ദാമിയന്റെ അതിഥികൾ
   author: Arun Arsha
@@ -624,6 +702,7 @@ books:
   publisher: Green Books
   isbn: ''
   lang: ml
+  asin: '9389671167'
 - title: Karuthachan
   ml_title: കറുത്തച്ചൻ
   author: S.K. Harinath
@@ -631,6 +710,7 @@ books:
   publisher: Green Books
   isbn: ''
   lang: ml
+  asin: 939587872X
 - title: Kambilikandathe Kalbharanikal
   ml_title: കമ്പിളികണ്ടത്തെ കൽഭരണികൾ
   author: Babu Abraham
@@ -645,6 +725,7 @@ books:
   publisher: HarperCollins
   isbn: ''
   lang: en
+  asin: '9353025982'
 - title: Murder at the Bookstore
   ml_title: ''
   author: Sue Minix
@@ -652,6 +733,7 @@ books:
   publisher: Avon
   isbn: ''
   lang: en
+  asin: 0008584621
 - title: Welcome to the Hyunam-dong Bookshop
   ml_title: ''
   author: Hwang Bo-reum
@@ -659,6 +741,7 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '1526662280'
 - title: Memories
   ml_title: ''
   author: Lang Leav
@@ -666,3 +749,4 @@ books:
   publisher: ''
   isbn: ''
   lang: en
+  asin: '1681418509'
