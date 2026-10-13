@@ -20,6 +20,7 @@
       <button class="blog-pill" type="button" data-f="movies" aria-pressed="false">Movies</button>
       <button class="blog-pill" type="button" data-f="books" aria-pressed="false">Books</button>
       <button class="blog-pill" type="button" data-f="posts" aria-pressed="false">Writing</button>
+      <a class="blog-lib" href="/library/">My library <span aria-hidden="true">→</span></a>
     </div>
   </div>
 
@@ -55,6 +56,10 @@
   .blog-pills{display:flex; flex-wrap:wrap; gap:6px}
   .blog-pill{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--line);
     background:transparent; color:var(--ink-soft); cursor:pointer}
+  .blog-lib{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--accent);
+    color:var(--accent); text-decoration:none; box-shadow:none}
+  .blog-lib:hover{background:var(--accent); color:var(--paper)}
+  .blog-lib:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
   .blog-pill[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
   .blog-pill:focus-visible,.blog-tile:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
 

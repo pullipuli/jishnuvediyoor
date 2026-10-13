@@ -1,0 +1,397 @@
+{{ define "main" }}
+{{- /* Books come from data/library.yml (editable in Pages CMS). */ -}}
+{{- $books := site.Data.library.books | default slice }}
+{{- $ml := sort (where $books "lang" "ml") "author" }}
+{{- $en := sort (where $books "lang" "en") "author" }}
+{{- $bays := slice
+  (dict "id" "malayalam" "label" "മലയാളം" "sub" "Malayalam" "books" $ml)
+  (dict "id" "english" "label" "English" "sub" "Fiction, crime & ideas" "books" $en)
+}}
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Malayalam:wght@500;700&display=swap" rel="stylesheet">
+
+<div class="lib" id="lib">
+  <div class="lib-wall" aria-hidden="true"></div>
+
+  <!-- Hero: three layers drift at different speeds as you scroll -->
+  <header class="lib-hero">
+    <div class="lib-far" data-speed="0.55" aria-hidden="true"></div>
+    <div class="lib-glow" data-speed="0.3" aria-hidden="true"></div>
+    <div class="lib-hero-text" data-speed="0.35">
+      <div class="lib-eyebrow">Books on my shelves</div>
+      <h1 class="lib-title">The Library</h1>
+      <p class="lib-ml">എന്റെ പുസ്തകങ്ങൾ</p>
+      <p class="lib-stats">
+        <span><b>{{ len $books }}</b> books</span>
+        <span><b>{{ len $ml }}</b> Malayalam</span>
+        <span><b>{{ len $en }}</b> English</span>
+      </p>
+    </div>
+    <div class="lib-dust" data-speed="-0.25" aria-hidden="true">{{ range seq 18 }}<i style="--x:{{ mod (mul . 37) 100 }}%;--y:{{ mod (mul . 53) 100 }}%;--s:{{ add 2 (mod . 3) }}px;--t:{{ add 6 (mod (mul . 7) 9) }}s"></i>{{ end }}</div>
+    <a class="lib-cue" href="#shelves">Browse the shelves <span aria-hidden="true">↓</span></a>
+  </header>
+
+  <div class="lib-tools" id="shelves">
+    <label class="lib-search">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="6.5"/><path d="M16 16l4.5 4.5"/></svg>
+      <input id="lib-q" type="search" placeholder="Find a title or author" autocomplete="off" aria-label="Find a book">
+    </label>
+    <nav class="lib-jump" aria-label="Jump to shelf">
+      {{- range $bays }}<a href="#{{ .id }}">{{ .label }}</a>{{ end }}
+    </nav>
+    <span class="lib-count" id="lib-count" aria-live="polite"></span>
+  </div>
+
+  {{- range $bays }}
+  <section class="lib-bay" id="{{ .id }}" aria-label="{{ .sub }} shelf">
+    <div class="lib-plaque" data-speed="-0.06"><span>{{ .label }}</span><small>{{ .sub }} · {{ len .books }}</small></div>
+    <div class="lib-case">
+      <div class="lib-shelf">
+        {{- range .books }}
+          {{- $h := hash.FNV32a (printf "%s|%s" .title .author) }}
+          {{- $w := add 24 (mod (div $h 7) 21) }}
+          {{- $ht := add 80 (mod (div $h 131) 20) }}
+          {{- $names := split (trim (replaceRE `\s*(\(.*?\)|;.*$|,.*$)` "" (.author | default "")) " ") " " }}
+          {{- $short := index (last 1 $names) 0 }}
+          {{- if and (lt (len $short) 3) (gt (len $names) 1) }}{{ $short = index $names (sub (len $names) 2) }}{{ end }}
+          {{- $pub := .publisher | default "" }}
+        <div class="lib-slot{{ if eq (mod $h 19) 0 }} lean{{ end }}">
+          <button class="spine" type="button" data-c="{{ mod $h 12 }}" data-s="{{ mod (div $h 977) 4 }}"
+            style="--w:{{ $w }}px;--h:{{ $ht }}%"
+            data-title="{{ .title }}" data-ml="{{ .ml_title }}" data-author="{{ .author }}" data-genre="{{ .genre }}"
+            data-pub="{{ $pub }}" data-isbn="{{ .isbn }}" data-lang="{{ .lang }}"
+            aria-label="{{ .title }}{{ with .author }} by {{ . }}{{ end }}">
+            <span class="sp-t{{ if and (eq .lang "ml") .ml_title }} ml{{ end }}">{{ if and (eq .lang "ml") .ml_title }}{{ .ml_title }}{{ else }}{{ .title }}{{ end }}</span>
+            <span class="sp-a">{{ $short }}</span>
+            {{- with $pub }}<span class="sp-p" aria-hidden="true">{{ substr . 0 1 }}</span>{{ end }}
+          </button>
+        </div>
+        {{- end }}
+      </div>
+    </div>
+  </section>
+  {{- end }}
+
+  <p class="lib-foot">Tap a spine to take the book off the shelf.</p>
+</div>
+
+<dialog class="lib-dlg" id="lib-dlg" aria-labelledby="dlg-title">
+  <div class="dlg-in">
+    <div class="dlg-cover" id="dlg-cover">
+      <div class="cv-gen" id="cv-gen">
+        <span class="cv-pub" id="cv-pub"></span>
+        <span class="cv-title" id="cv-title"></span>
+        <span class="cv-rule"></span>
+        <span class="cv-author" id="cv-author"></span>
+      </div>
+      <img id="cv-img" alt="" hidden>
+    </div>
+    <div class="dlg-info">
+      <div class="dlg-eyebrow" id="dlg-genre"></div>
+      <h2 id="dlg-title"></h2>
+      <p class="dlg-ml" id="dlg-ml"></p>
+      <p class="dlg-author" id="dlg-author"></p>
+      <dl class="dlg-meta">
+        <div><dt>Publisher</dt><dd id="dlg-pub"></dd></div>
+        <div id="dlg-isbn-row"><dt>ISBN</dt><dd id="dlg-isbn"></dd></div>
+      </dl>
+      <div class="dlg-nav">
+        <button type="button" id="dlg-prev" aria-label="Previous book">←</button>
+        <button type="button" id="dlg-next" aria-label="Next book">→</button>
+        <button type="button" id="dlg-close" class="dlg-close">Put it back</button>
+      </div>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  html,body{overflow-x:clip}
+  .lib{
+    --wood-dk:#1E1510; --wood:#3B2819; --wood-lt:#6B4A2E; --plank:#7A5434; --plank-top:#A87B4F;
+    --brass:#C9A15A; --cream:#F1E7D2; --ink:#17161C; --accent:#BD7C34;
+    --H:250px; --G:22px; --ease:cubic-bezier(.2,.75,.2,1);
+    position:relative; width:100vw; margin-left:calc(50% - 50vw); margin-top:calc(-1 * var(--gap, 24px));
+    background:var(--wood-dk); color:var(--cream); font-family:'IBM Plex Sans',sans-serif; overflow:hidden; padding-bottom:60px;
+  }
+  @media (max-width:600px){ .lib{--H:214px; --G:18px} .spine .sp-p{display:none} .spine{padding-bottom:10px} }
+  /* Panelled wall behind everything; its pattern drifts slower than the page */
+  .lib-wall{position:absolute; inset:0; pointer-events:none; opacity:.55;
+    background:
+      repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 180px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.015) 0 1px, transparent 1px 7px),
+      linear-gradient(180deg, #2A1C13, #1A120D 60%, #120C08);}
+
+  /* ---------- hero ---------- */
+  .lib-hero{position:relative; height:min(88vh, 760px); min-height:480px; display:grid; place-items:center; overflow:hidden; isolation:isolate}
+  .lib-far{position:absolute; inset:-30% -5% -10%; z-index:-2; opacity:.5; filter:blur(1.5px) saturate(.8) brightness(.55);
+    background:
+      repeating-linear-gradient(180deg, transparent 0 118px, #0E0906 118px 140px),
+      repeating-linear-gradient(90deg, #6E2A22 0 15px, #24382C 15px 27px, #7A5A22 27px 35px, #1F2840 35px 54px, #4A2033 54px 63px,
+        #5A4630 63px 83px, #2E4A4A 83px 95px, #8A3B24 95px 104px, #1A1A22 104px 124px, #6B5B3A 124px 133px);}
+  .lib-glow{position:absolute; width:900px; height:900px; left:50%; top:40%; translate:-50% -50%; z-index:-1;
+    background:radial-gradient(closest-side, rgba(233,170,90,.38), rgba(233,170,90,.10) 45%, transparent 70%)}
+  .lib-hero::after{content:""; position:absolute; inset:0; z-index:-1;
+    background:linear-gradient(180deg, rgba(18,12,8,.55), transparent 35%, transparent 60%, var(--wood-dk))}
+  .lib-hero-text{text-align:center; padding:0 20px}
+  .lib-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--brass)}
+  .lib-title{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:clamp(52px,12vw,128px); line-height:.92; margin:10px 0 6px;
+    letter-spacing:-.02em; color:var(--cream); text-shadow:0 6px 40px rgba(0,0,0,.6)}
+  .lib-ml{font-family:'Noto Serif Malayalam',serif; font-size:clamp(18px,3vw,24px); color:#E2C99A; margin:0 0 22px}
+  .lib-stats{display:flex; gap:10px; justify-content:center; flex-wrap:wrap; margin:0}
+  .lib-stats span{font-family:'IBM Plex Mono',monospace; font-size:13px; color:#CDBB9B; padding:6px 12px; border:1px solid rgba(201,161,90,.35); border-radius:999px; background:rgba(0,0,0,.25)}
+  .lib-stats b{color:var(--cream); font-weight:600}
+  .lib-dust{position:absolute; inset:0; pointer-events:none}
+  .lib-dust i{position:absolute; left:var(--x); top:var(--y); width:var(--s); height:var(--s); border-radius:50%; background:#F3D9A8; opacity:.0;
+    box-shadow:0 0 8px #F3D9A8; animation:dust var(--t) ease-in-out infinite alternate}
+  @keyframes dust{0%{opacity:0; transform:translate(0,0)} 40%{opacity:.55} 100%{opacity:.1; transform:translate(18px,-40px)}}
+  .lib-cue{position:absolute; bottom:112px; left:50%; translate:-50% 0; font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.08em;
+    color:#CDBB9B; text-decoration:none; box-shadow:none}
+  .lib-cue span{display:inline-block; animation:cue 1.8s var(--ease) infinite}
+  @keyframes cue{50%{transform:translateY(5px)}}
+
+  /* ---------- tools ---------- */
+  .lib-tools{position:relative; max-width:1120px; margin:0 auto 18px; padding:0 20px; display:flex; flex-wrap:wrap; gap:10px; align-items:center; scroll-margin-top:20px}
+  .lib-search{flex:1 1 260px; display:flex; align-items:center; gap:8px; padding:0 14px; height:42px; border-radius:999px;
+    background:rgba(0,0,0,.35); border:1px solid rgba(201,161,90,.3)}
+  .lib-search svg{width:17px; height:17px; fill:none; stroke:#CDBB9B; stroke-width:1.8; stroke-linecap:round; flex:none}
+  .lib-search input{flex:1; min-width:0; background:none; border:0; outline:0; color:var(--cream); font:inherit; font-size:15px}
+  .lib-search input::placeholder{color:#9A8B73}
+  .lib-search:focus-within{border-color:var(--brass)}
+  .lib-jump{display:flex; gap:6px}
+  .lib-jump a{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:9px 14px; border-radius:999px; color:#E2C99A; text-decoration:none;
+    border:1px solid rgba(201,161,90,.3); box-shadow:none}
+  .lib-jump a:first-child{font-family:'Noto Serif Malayalam',serif; font-size:13px; padding-block:7px}
+  .lib-jump a:hover{background:rgba(201,161,90,.15)}
+  .lib-count{font-family:'IBM Plex Mono',monospace; font-size:12px; color:#9A8B73; min-width:80px}
+
+  /* ---------- bookcase ---------- */
+  .lib-bay{position:relative; max-width:1120px; margin:0 auto 54px; padding:0 20px; scroll-margin-top:16px}
+  .lib-plaque{position:relative; z-index:2; display:flex; align-items:baseline; gap:12px; width:max-content; margin:0 auto -14px; padding:8px 22px;
+    border-radius:6px; color:#2A1C10; background:linear-gradient(180deg,#E3C27F,#B88A40 55%,#9C7232);
+    box-shadow:0 6px 16px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.55), inset 0 -2px 0 rgba(0,0,0,.2)}
+  .lib-plaque span{font-family:'Noto Serif Malayalam','Bricolage Grotesque',serif; font-weight:700; font-size:20px}
+  #english .lib-plaque span{font-family:'Bricolage Grotesque',sans-serif}
+  .lib-plaque small{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.06em; opacity:.8}
+  .lib-case{position:relative; padding:28px 18px 0; border-radius:4px;
+    background:linear-gradient(90deg, #4A3221, #6B4A2E 2%, #4A3221 4%, transparent 4.2%, transparent 95.8%, #4A3221 96%, #6B4A2E 98%, #4A3221),
+      linear-gradient(180deg, #5A3D26, #3B2819 22px, #3B2819);
+    box-shadow:0 30px 60px rgba(0,0,0,.55), inset 0 0 0 1px rgba(0,0,0,.4)}
+  @media (max-width:600px){ .lib-case{padding:24px 10px 0} }
+  /* Each row of books is exactly --H tall; a plank is painted into every --G gap below it */
+  .lib-shelf{display:flex; flex-wrap:wrap; align-items:flex-end; column-gap:2px; row-gap:var(--G); padding:0 10px var(--G);
+    background:
+      repeating-linear-gradient(180deg,
+        transparent 0 var(--H),
+        var(--plank-top) var(--H) calc(var(--H) + 3px),
+        var(--plank) calc(var(--H) + 3px) calc(var(--H) + var(--G) - 5px),
+        #4A3221 calc(var(--H) + var(--G) - 5px) calc(var(--H) + var(--G))),
+      linear-gradient(180deg, rgba(0,0,0,.35), transparent 30%),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.02) 0 1px, transparent 1px 9px),
+      #24170F;
+    margin:0 -10px; box-shadow:inset 0 10px 24px rgba(0,0,0,.6)}
+  .lib-slot{height:var(--H); display:flex; align-items:flex-end; padding-top:14px}
+  .lib-slot.lean{padding-left:16px}
+  .lib-slot.lean .spine{transform:rotate(-7deg); transform-origin:100% 100%}
+
+  /* ---------- spines ---------- */
+  .spine{--bg:#5A1E1E; --fg:#F3E6CC; --band:#C9A15A;
+    position:relative; width:var(--w); height:var(--h); padding:10px 0 8px; border:0; border-radius:2px 2px 1px 1px; cursor:pointer;
+    display:flex; flex-direction:column; align-items:center; gap:8px; overflow:hidden; color:var(--fg);
+    background:
+      linear-gradient(90deg, rgba(0,0,0,.32), rgba(255,255,255,.14) 16%, rgba(255,255,255,.03) 40%, transparent 60%, rgba(0,0,0,.28)),
+      var(--bg);
+    box-shadow:2px 0 0 rgba(0,0,0,.25), 0 -1px 0 rgba(255,255,255,.08) inset, 0 6px 6px -4px rgba(0,0,0,.6);
+    transition:transform .35s var(--ease), filter .3s, opacity .3s; -webkit-tap-highlight-color:transparent}
+  .spine:hover{transform:translateY(-10px)}
+  .lib-slot.lean .spine:hover{transform:rotate(-7deg) translateY(-10px)}
+  .spine:focus-visible{outline:2px solid var(--brass); outline-offset:3px}
+  .spine .sp-t,.spine .sp-a{writing-mode:vertical-rl; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .spine .sp-t{flex:1 1 auto; min-height:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:12.5px; letter-spacing:.02em}
+  .spine .sp-t.ml{font-family:'Noto Serif Malayalam',serif; font-size:12px; font-weight:700}
+  .spine .sp-a{flex:none; max-height:27%; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.06em; text-transform:uppercase; opacity:.8}
+  .spine .sp-p{flex:none; width:15px; height:15px; border-radius:50%; display:grid; place-items:center; font:600 8px 'IBM Plex Mono',monospace;
+    border:1px solid currentColor; opacity:.75}
+  /* Four spine styles: gilt bands, label block, top cap, plain */
+  .spine[data-s="0"]::before,.spine[data-s="0"]::after{content:""; position:absolute; left:0; right:0; height:3px;
+    border-top:1px solid var(--band); border-bottom:1px solid var(--band); opacity:.8}
+  .spine[data-s="0"]::before{top:5px} .spine[data-s="0"]::after{bottom:28px}
+  .spine[data-s="1"] .sp-t{background:var(--fg); color:var(--bg); padding:6px 3px; border-radius:1px; flex:0 1 auto}
+  .spine[data-s="2"]::before{content:""; position:absolute; top:0; left:0; right:0; height:16%; background:rgba(0,0,0,.28); border-bottom:2px solid var(--band)}
+  .spine[data-s="2"] .sp-t{margin-top:14%}
+  /* Palette: cloth, paper and leather bindings */
+  .spine[data-c="0"]{--bg:#7A2620; --fg:#F4E5C8; --band:#E0B866}
+  .spine[data-c="1"]{--bg:#21364A; --fg:#E9E2D0; --band:#C9A15A}
+  .spine[data-c="2"]{--bg:#2F4A33; --fg:#EFE6CF; --band:#D8B46A}
+  .spine[data-c="3"]{--bg:#D9C8A3; --fg:#2B2018; --band:#8A3B24}
+  .spine[data-c="4"]{--bg:#1C1A20; --fg:#E8D7B0; --band:#BD7C34}
+  .spine[data-c="5"]{--bg:#B5652B; --fg:#FFF3DE; --band:#3A2414}
+  .spine[data-c="6"]{--bg:#4B2238; --fg:#F2DFC8; --band:#D6A75E}
+  .spine[data-c="7"]{--bg:#C9A33E; --fg:#2A1F10; --band:#5A1E1E}
+  .spine[data-c="8"]{--bg:#2E5257; --fg:#F0E8D6; --band:#E0B866}
+  .spine[data-c="9"]{--bg:#EDE4D1; --fg:#7A2620; --band:#21364A}
+  .spine[data-c="10"]{--bg:#8E3B4F; --fg:#FBEAD9; --band:#E9C98D}
+  .spine[data-c="11"]{--bg:#3D3A33; --fg:#F1E2BF; --band:#B98A45}
+  .spine.dim{opacity:.13; filter:grayscale(1)}
+  .spine.hit{transform:translateY(-12px); box-shadow:0 0 0 2px var(--brass), 0 10px 18px rgba(0,0,0,.6)}
+  .spine.out{transform:translateY(-110%); opacity:0}
+  /* Books slide onto the shelf when a bookcase scrolls into view */
+  .lib-bay.pending .spine{transform:translateY(-24px); opacity:0}
+  .lib-bay.in .spine{animation:place .6s var(--ease) var(--d,0ms) both}
+  @keyframes place{from{transform:translateY(-28px); opacity:0} to{transform:none; opacity:1}}
+  .lib-bay.in .lib-slot.lean .spine{animation-name:place-lean}
+  @keyframes place-lean{from{transform:translateY(-28px) rotate(0); opacity:0} to{transform:rotate(-7deg); opacity:1}}
+  .lib-foot{text-align:center; font-family:'IBM Plex Mono',monospace; font-size:12px; color:#9A8B73; margin:0}
+
+  /* ---------- the book you took out ---------- */
+  .lib-dlg [hidden]{display:none !important}
+  .lib-dlg{border:0; padding:0; background:transparent; max-width:min(760px, calc(100vw - 24px)); width:100%; color:var(--ink, #17161C)}
+  .lib-dlg::backdrop{background:rgba(12,8,5,.72); backdrop-filter:blur(6px)}
+  .lib-dlg[open] .dlg-in{animation:dlg-in .5s var(--ease, cubic-bezier(.2,.75,.2,1)) both}
+  @keyframes dlg-in{from{opacity:0; transform:translateY(30px) scale(.96)} to{opacity:1; transform:none}}
+  .dlg-in{display:grid; grid-template-columns:minmax(0,240px) 1fr; gap:28px; align-items:center; padding:28px; border-radius:16px;
+    background:#F6F1E6; box-shadow:0 40px 90px rgba(0,0,0,.5)}
+  @media (max-width:560px){ .dlg-in{grid-template-columns:1fr; gap:18px; padding:20px} .dlg-cover{width:62%; margin:0 auto} }
+  .dlg-cover{position:relative; aspect-ratio:2/3; border-radius:3px 8px 8px 3px; overflow:hidden; perspective:900px;
+    box-shadow:-6px 0 0 -2px rgba(0,0,0,.25) inset, 0 18px 34px rgba(0,0,0,.35); animation:tilt .9s var(--ease, ease) both}
+  @keyframes tilt{from{transform:rotateY(-35deg) translateX(-20px)} to{transform:none}}
+  .cv-gen{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:12px; padding:22px 18px; text-align:center;
+    color:var(--fg); background:linear-gradient(90deg, rgba(0,0,0,.28), rgba(255,255,255,.08) 6%, transparent 14%), var(--bg)}
+  .cv-gen::before{content:""; position:absolute; inset:10px; border:1px solid var(--band); opacity:.7; pointer-events:none}
+  .cv-title{font-family:'Bricolage Grotesque',sans-serif; font-weight:800; font-size:24px; line-height:1.1}
+  .cv-title.ml{font-family:'Noto Serif Malayalam',serif; font-size:22px; line-height:1.4}
+  .cv-rule{width:40px; height:2px; background:var(--band)}
+  .cv-author{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; opacity:.85}
+  .cv-pub{position:absolute; bottom:20px; font-family:'IBM Plex Mono',monospace; font-size:9px; letter-spacing:.12em; text-transform:uppercase; opacity:.6}
+  #cv-img{position:absolute; inset:0; width:100%; height:100%; object-fit:cover; margin:0; border-radius:0}
+  .dlg-eyebrow{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:#8A6A3C}
+  .dlg-info h2{font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:clamp(24px,4vw,32px); line-height:1.1; margin:6px 0 4px; color:#17161C}
+  .dlg-ml{font-family:'Noto Serif Malayalam',serif; font-size:18px; color:#5C4630; margin:0 0 6px}
+  .dlg-ml:empty{display:none}
+  .dlg-author{font-size:16px; color:#5C5A63; margin:0 0 18px}
+  .dlg-meta{display:grid; gap:8px; margin:0 0 22px; padding:14px 0 0; border-top:1px solid #E0D6C2}
+  .dlg-meta div{display:flex; gap:12px} .dlg-meta dt{width:84px; flex:none; font-family:'IBM Plex Mono',monospace; font-size:11px; color:#8A867D; padding-top:2px}
+  .dlg-meta dd{margin:0; font-size:14px; color:#17161C}
+  .dlg-nav{display:flex; gap:8px; flex-wrap:wrap}
+  .dlg-nav button{font:500 14px 'IBM Plex Sans',sans-serif; padding:10px 16px; border-radius:999px; border:1px solid #D9CDB6; background:transparent; color:#17161C; cursor:pointer}
+  .dlg-nav button:hover{background:#EDE4D1}
+  .dlg-nav .dlg-close{margin-left:auto; background:#17161C; color:#F6F1E6; border-color:#17161C}
+  .dlg-nav .dlg-close:hover{background:#2B2930}
+  .dlg-nav button:focus-visible{outline:2px solid #BD7C34; outline-offset:2px}
+
+  @media (prefers-reduced-motion:reduce){
+    .lib-dust i,.lib-cue span{animation:none} .lib-bay.pending .spine{transform:none; opacity:1}
+    .lib-bay.in .spine,.dlg-cover,.lib-dlg[open] .dlg-in{animation:none} .spine{transition:none}
+  }
+</style>
+
+<script>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const lib = document.getElementById('lib');
+
+  /* Vertical parallax: layers move at their own speed relative to the scroll */
+  const layers = [...lib.querySelectorAll('[data-speed]')];
+  const wall = lib.querySelector('.lib-wall');
+  let ticking = false;
+  function paint() {
+    ticking = false;
+    const top = lib.getBoundingClientRect().top;
+    const y = -top;
+    layers.forEach(el => {
+      const box = el.closest('.lib-bay') || el.closest('.lib-hero');
+      const local = box ? -box.getBoundingClientRect().top : y;
+      el.style.transform = `translate3d(0, ${(local * parseFloat(el.dataset.speed)).toFixed(1)}px, 0)`;
+    });
+    wall.style.backgroundPosition = `${0}px ${(y * 0.25).toFixed(1)}px`;
+    const fade = Math.max(0, 1 - y / (innerHeight * 0.7));
+    lib.querySelector('.lib-hero-text').style.opacity = fade;
+  }
+  if (!reduce) {
+    addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(paint); } }, { passive: true });
+    addEventListener('resize', paint);
+    paint();
+  }
+
+  /* Books are placed on each shelf when it scrolls into view */
+  const bays = [...lib.querySelectorAll('.lib-bay')];
+  if (!reduce && 'IntersectionObserver' in window) {
+    bays.forEach(b => b.classList.add('pending'));
+    const io = new IntersectionObserver(es => es.forEach(e => {
+      if (!e.isIntersecting) return;
+      const b = e.target; io.unobserve(b);
+      b.querySelectorAll('.spine').forEach((s, i) => s.style.setProperty('--d', Math.min(i * 22, 1400) + 'ms'));
+      b.classList.remove('pending'); b.classList.add('in');
+      setTimeout(() => { b.classList.remove('in'); }, 2200);
+    }), { rootMargin: '0px 0px -12% 0px' });
+    bays.forEach(b => io.observe(b));
+  }
+
+  /* Search: everything else fades back, matches lift slightly */
+  const spines = [...lib.querySelectorAll('.spine')];
+  const q = document.getElementById('lib-q'), count = document.getElementById('lib-count');
+  const text = s => [s.dataset.title, s.dataset.ml, s.dataset.author, s.dataset.genre, s.dataset.pub].join(' ').toLowerCase();
+  function filter() {
+    const v = q.value.trim().toLowerCase();
+    let n = 0;
+    spines.forEach(s => {
+      const hit = !v || text(s).includes(v);
+      s.classList.toggle('dim', !hit); s.classList.toggle('hit', !!v && hit);
+      if (hit) n++;
+    });
+    count.textContent = v ? `${n} of ${spines.length}` : `${spines.length} books`;
+    if (v && n) { const first = spines.find(s => !s.classList.contains('dim')); first.scrollIntoView({ block: 'center', behavior: reduce ? 'auto' : 'smooth' }); }
+  }
+  let t; q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(filter, 180); });
+  filter();
+
+  /* Taking a book off the shelf */
+  const dlg = document.getElementById('lib-dlg');
+  const $ = id => document.getElementById(id);
+  let current = null;
+  function show(s) {
+    current = s;
+    const d = s.dataset, cs = getComputedStyle(s);
+    const cover = $('dlg-cover');
+    ['--bg', '--fg', '--band'].forEach(k => cover.style.setProperty(k, cs.getPropertyValue(k)));
+    const useMl = d.lang === 'ml' && d.ml;
+    $('cv-title').textContent = useMl ? d.ml : d.title;
+    $('cv-title').classList.toggle('ml', !!useMl);
+    $('cv-author').textContent = d.author || '';
+    $('cv-pub').textContent = d.pub || '';
+    $('dlg-genre').textContent = [d.genre, d.lang === 'ml' ? 'Malayalam' : 'English'].filter(Boolean).join(' · ');
+    $('dlg-title').textContent = d.title;
+    $('dlg-ml').textContent = d.ml || '';
+    $('dlg-author').textContent = d.author ? 'by ' + d.author : '';
+    $('dlg-pub').textContent = d.pub || '—';
+    $('dlg-isbn').textContent = d.isbn || '';
+    $('dlg-isbn-row').hidden = !d.isbn;
+    // Real cover from Open Library when it has one; the drawn cover stays underneath otherwise
+    const img = $('cv-img'); img.hidden = true; img.removeAttribute('src');
+    if (d.isbn) {
+      img.onload = () => { if (img.naturalWidth > 20) img.hidden = false; };
+      img.onerror = () => { img.hidden = true; };
+      img.src = `https://covers.openlibrary.org/b/isbn/${d.isbn}-L.jpg?default=false`;
+    }
+    cover.style.animation = 'none'; void cover.offsetWidth; cover.style.animation = '';
+  }
+  function open(s) {
+    spines.forEach(x => x.classList.remove('out'));
+    s.classList.add('out');
+    show(s);
+    if (!dlg.open) dlg.showModal();
+  }
+  function step(dir) {
+    const list = spines.filter(s => !s.classList.contains('dim'));
+    const i = list.indexOf(current);
+    const next = list[(i + dir + list.length) % list.length];
+    if (next) { current.classList.remove('out'); next.classList.add('out'); show(next); }
+  }
+  spines.forEach(s => s.addEventListener('click', () => open(s)));
+  $('dlg-prev').addEventListener('click', () => step(-1));
+  $('dlg-next').addEventListener('click', () => step(1));
+  $('dlg-close').addEventListener('click', () => dlg.close());
+  dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', e => { if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
+  dlg.addEventListener('close', () => { if (current) { current.classList.remove('out'); current.focus({ preventScroll: true }); } });
+})();
+</script>
+{{ end }}

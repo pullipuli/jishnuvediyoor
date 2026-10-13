@@ -96,3 +96,25 @@ content:
         fields:
           - { name: name, label: Client name, type: string, required: true }
           - { name: logo, label: Logo, type: image, required: true }
+
+  - name: library
+    label: Library (books I own)
+    type: file
+    path: data/library.yml
+    fields:
+      - name: books
+        label: Books
+        type: object
+        list: true
+        fields:
+          - { name: title, label: Title (English), type: string, required: true }
+          - { name: ml_title, label: Title in Malayalam, type: string }
+          - { name: author, label: Author, type: string }
+          - { name: genre, label: Genre, type: string }
+          - { name: publisher, label: Publisher, type: string }
+          - { name: isbn, label: ISBN (optional — shows the real cover), type: string }
+          - name: lang
+            label: Language
+            type: select
+            default: ml
+            options: { values: [ { value: ml, label: Malayalam }, { value: en, label: English } ] }
