@@ -38,6 +38,10 @@
     <nav class="lib-jump" aria-label="Jump to shelf">
       {{- range $bays }}<a href="#{{ .id }}">{{ .label }}</a>{{ end }}
     </nav>
+    <div class="lib-view" role="group" aria-label="Show books as">
+      <button type="button" data-v="spines" aria-pressed="true">Spines</button>
+      <button type="button" data-v="covers" aria-pressed="false">Covers</button>
+    </div>
     <span class="lib-count" id="lib-count" aria-live="polite"></span>
   </div>
 
@@ -58,11 +62,13 @@
           <button class="spine" type="button" data-c="{{ mod $h 12 }}" data-s="{{ mod (div $h 977) 4 }}"
             style="--w:{{ $w }}px;--h:{{ $ht }}%"
             data-title="{{ .title }}" data-ml="{{ .ml_title }}" data-author="{{ .author }}" data-genre="{{ .genre }}"
-            data-pub="{{ $pub }}" data-isbn="{{ .isbn }}" data-lang="{{ .lang }}"
+            data-pub="{{ $pub }}" data-isbn="{{ .isbn }}" data-lang="{{ .lang }}" data-cover="{{ .cover }}" data-asin="{{ .asin }}"
             aria-label="{{ .title }}{{ with .author }} by {{ . }}{{ end }}">
             <span class="sp-t{{ if and (eq .lang "ml") .ml_title }} ml{{ end }}">{{ if and (eq .lang "ml") .ml_title }}{{ .ml_title }}{{ else }}{{ .title }}{{ end }}</span>
             <span class="sp-a">{{ $short }}</span>
             {{- with $pub }}<span class="sp-p" aria-hidden="true">{{ substr . 0 1 }}</span>{{ end }}
+            <span class="sp-front" aria-hidden="true"><b{{ if and (eq .lang "ml") .ml_title }} class="ml"{{ end }}>{{ if and (eq .lang "ml") .ml_title }}{{ .ml_title }}{{ else }}{{ .title }}{{ end }}</b><i>{{ .author }}</i></span>
+            <img class="sp-cv" alt="" referrerpolicy="no-referrer" decoding="async" hidden>
           </button>
         </div>
         {{- end }}
@@ -71,7 +77,7 @@
   </section>
   {{- end }}
 
-  <p class="lib-foot">Tap a spine to take the book off the shelf.</p>
+  <p class="lib-foot">Tap a book to take it off the shelf.</p>
 </div>
 
 <dialog class="lib-dlg" id="lib-dlg" aria-labelledby="dlg-title">
@@ -83,7 +89,7 @@
         <span class="cv-rule"></span>
         <span class="cv-author" id="cv-author"></span>
       </div>
-      <img id="cv-img" alt="" hidden>
+      <img id="cv-img" alt="" referrerpolicy="no-referrer" hidden>
     </div>
     <div class="dlg-info">
       <div class="dlg-eyebrow" id="dlg-genre"></div>
@@ -231,6 +237,27 @@
   .spine[data-c="10"]{--bg:#8E3B4F; --fg:#FBEAD9; --band:#E9C98D}
   .spine[data-c="11"]{--bg:#3D3A33; --fg:#F1E2BF; --band:#B98A45}
   .spine.dim{opacity:.13; filter:grayscale(1)}
+  /* Face-out view: the same books, turned to show their covers */
+  .spine .sp-front,.spine .sp-cv{display:none}
+  .lib.covers{--H:206px}
+  @media (max-width:600px){ .lib.covers{--H:152px} }
+  .lib.covers .lib-shelf{column-gap:8px; padding-inline:14px}
+  .lib.covers .spine{width:calc(var(--H) * .62); height:92%; padding:0; border-radius:2px 5px 5px 2px; gap:0;
+    box-shadow:inset 3px 0 0 rgba(0,0,0,.25), 0 8px 10px -4px rgba(0,0,0,.65)}
+  .lib.covers .spine::before,.lib.covers .spine::after,.lib.covers .sp-t,.lib.covers .sp-a,.lib.covers .sp-p{display:none}
+  .lib.covers .lib-slot.lean{padding-left:0}
+  .lib.covers .lib-slot.lean .spine,.lib.covers .lib-slot.lean .spine:hover{transform:none}
+  .lib.covers .lib-slot.lean .spine:hover{transform:translateY(-10px)}
+  .lib.covers .sp-front{position:absolute; inset:6px; display:flex; flex-direction:column; justify-content:center; align-items:center; gap:8px; padding:8px;
+    text-align:center; border:1px solid var(--band); opacity:.95}
+  .lib.covers .sp-front b{font:700 13px/1.15 'Bricolage Grotesque',sans-serif; display:-webkit-box; -webkit-line-clamp:5; -webkit-box-orient:vertical; overflow:hidden}
+  .lib.covers .sp-front b.ml{font:700 12px/1.45 'Noto Serif Malayalam',serif}
+  .lib.covers .sp-front i{font:normal 8px 'IBM Plex Mono',monospace; letter-spacing:.08em; text-transform:uppercase; opacity:.8; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden}
+  .lib.covers .sp-cv:not([hidden]){display:block; position:absolute; inset:0; width:100%; height:100%; object-fit:cover; margin:0; border-radius:inherit}
+  .lib-view{display:flex; padding:3px; border-radius:999px; border:1px solid rgba(201,161,90,.3); background:rgba(0,0,0,.25)}
+  .lib-view button{font:500 12px 'IBM Plex Mono',monospace; padding:6px 12px; border-radius:999px; border:0; background:none; color:#CDBB9B; cursor:pointer}
+  .lib-view button[aria-pressed="true"]{background:var(--brass); color:#2A1C10}
+  .lib-view button:focus-visible{outline:2px solid var(--brass); outline-offset:2px}
   .spine.hit{transform:translateY(-12px); box-shadow:0 0 0 2px var(--brass), 0 10px 18px rgba(0,0,0,.6)}
   .spine.out{transform:translateY(-110%); opacity:0}
   /* Books slide onto the shelf when a bookcase scrolls into view */
@@ -343,6 +370,66 @@
   let t; q.addEventListener('input', () => { clearTimeout(t); t = setTimeout(filter, 180); });
   filter();
 
+  /* Real covers: try the book's own cover link, then Amazon (by product code or ISBN), then Open Library */
+  const isbn10 = raw => {
+    const i = (raw || '').replace(/[^0-9Xx]/g, '');
+    if (i.length === 10) return i.toUpperCase();
+    if (i.length !== 13 || !i.startsWith('978')) return '';
+    const c = i.slice(3, 12); let sum = 0;
+    for (let k = 0; k < 9; k++) sum += (10 - k) * +c[k];
+    const r = (11 - sum % 11) % 11;
+    return c + (r === 10 ? 'X' : r);
+  };
+  const amazon = code => `https://m.media-amazon.com/images/P/${code}.01.LZZZZZZZ.jpg`;
+  function coverSources(d) {
+    const list = [];
+    if (d.cover) list.push(d.cover);
+    if (d.asin) list.push(amazon(d.asin));
+    const i10 = isbn10(d.isbn);
+    if (i10 && i10 !== d.asin) list.push(amazon(i10));
+    if (d.isbn) list.push(`https://covers.openlibrary.org/b/isbn/${d.isbn.replace(/[^0-9Xx]/g, '')}-L.jpg?default=false`);
+    return list;
+  }
+  const found = new Map();
+  function resolveCover(s) {
+    if (found.has(s)) return found.get(s);
+    const list = coverSources(s.dataset);
+    const p = new Promise(done => {
+      const attempt = i => {
+        if (i >= list.length) return done(null);
+        const im = new Image();
+        im.referrerPolicy = 'no-referrer';
+        im.onload = () => (im.naturalWidth > 20 && im.naturalHeight > 20) ? done(list[i]) : attempt(i + 1);
+        im.onerror = () => attempt(i + 1);
+        im.src = list[i];
+      };
+      attempt(0);
+    });
+    found.set(s, p);
+    return p;
+  }
+
+  /* Spines or covers */
+  const viewBtns = [...lib.querySelectorAll('.lib-view button')];
+  let coverIO = null;
+  function setView(v) {
+    lib.classList.toggle('covers', v === 'covers');
+    viewBtns.forEach(b => b.setAttribute('aria-pressed', b.dataset.v === v));
+    try { localStorage.setItem('lib-view', v); } catch (e) {}
+    if (v === 'covers' && !coverIO) {
+      coverIO = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        const s = e.target; coverIO.unobserve(s);
+        resolveCover(s).then(url => { if (url) { const im = s.querySelector('.sp-cv'); im.src = url; im.hidden = false; } });
+      }), { rootMargin: '300px 0px' });
+      spines.forEach(s => coverIO.observe(s));
+    }
+  }
+  viewBtns.forEach(b => b.addEventListener('click', () => setView(b.dataset.v)));
+  let savedView = 'spines';
+  try { savedView = localStorage.getItem('lib-view') || 'spines'; } catch (e) {}
+  setView(savedView === 'covers' ? 'covers' : 'spines');
+
   /* Taking a book off the shelf */
   const dlg = document.getElementById('lib-dlg');
   const $ = id => document.getElementById(id);
@@ -364,13 +451,9 @@
     $('dlg-pub').textContent = d.pub || '—';
     $('dlg-isbn').textContent = d.isbn || '';
     $('dlg-isbn-row').hidden = !d.isbn;
-    // Real cover from Open Library when it has one; the drawn cover stays underneath otherwise
+    // The real cover when one of the sources has it; the drawn cover stays underneath otherwise
     const img = $('cv-img'); img.hidden = true; img.removeAttribute('src');
-    if (d.isbn) {
-      img.onload = () => { if (img.naturalWidth > 20) img.hidden = false; };
-      img.onerror = () => { img.hidden = true; };
-      img.src = `https://covers.openlibrary.org/b/isbn/${d.isbn}-L.jpg?default=false`;
-    }
+    resolveCover(s).then(url => { if (url && current === s) { img.src = url; img.hidden = false; } });
     cover.style.animation = 'none'; void cover.offsetWidth; cover.style.animation = '';
   }
   function open(s) {
