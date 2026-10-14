@@ -150,6 +150,35 @@ books:
   isbn: '9781782277453'
   lang: en
   cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/e/t/v/the-village-of-eight-graves-resized-original-imahgjhjzwduxp2w.jpeg
+- title: Pathiraleela
+  ml_title: പാതിരാലീല
+  author: K.N. Prasanth
+  genre: Short stories
+  publisher: DC Books
+  isbn: '9789357321693'
+  lang: ml
+- title: Neboyile Neelapusthakam (The Blue Book of Nebo)
+  ml_title: നെബോയിലെ നീലപുസ്തകം
+  author: Manon Steffan Ros (Malayalam tr.)
+  genre: Novel (translation)
+  publisher: DC Books
+  isbn: '9789370981393'
+  lang: ml
+- title: Vishakanyaka
+  ml_title: വിഷകന്യക
+  author: S.K. Pottekkatt
+  genre: Novel
+  publisher: DC Books
+  isbn: '9788126409914'
+  lang: ml
+- title: Thamovedam
+  ml_title: തമോവേദം
+  author: Rajeev Sivasankar
+  genre: Novel
+  publisher: DC Books
+  isbn: '9788126441020'
+  lang: ml
+  asin: 812644102X
 - title: Anti-Clock
   ml_title: ആന്റിക്ലോക്ക്
   author: V.J. James
@@ -166,6 +195,13 @@ books:
   isbn: '9788172345136'
   lang: en
   cover: https://rukminim2.flixcart.com/image/612/612/k9itgnk0/regionalbooks/y/5/b/metamorphosis-original-imafrawyycusys2p.jpeg
+- title: Thapomayiyude Achan
+  ml_title: തപോമയിയുടെ അച്ഛൻ
+  author: E. Santhoshkumar
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789356435599'
+  lang: ml
 - title: 50 Greatest Short Stories
   ml_title: ''
   author: Various
@@ -196,6 +232,13 @@ books:
   isbn: '9789351774822'
   lang: en
   cover: https://rukminim2.flixcart.com/image/612/612/k0plpjk0/book/6/0/3/alphabet-soup-for-lovers-original-imaffhp6ha87aa9d.jpeg
+- title: Sanjayan Kathakal – Chiriyude Pusthakam
+  ml_title: സഞ്ജയൻ കഥകൾ
+  author: Sanjayan
+  genre: Humour
+  publisher: Tamara / Indulekha
+  isbn: '9789385992032'
+  lang: ml
 - title: Pretha Vettakkaran
   ml_title: പ്രേതവേട്ടക്കാരൻ
   author: G.R. Indugopan
@@ -359,6 +402,13 @@ books:
   publisher: Green Books
   isbn: ''
   lang: ml
+- title: Adrishya Sandarshakar
+  ml_title: അദൃശ്യസന്ദർശകർ
+  author: Sanjoy K. Roy
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
 - title: The Palace of Illusions
   ml_title: ''
   author: Chitra Banerjee Divakaruni
@@ -407,6 +457,13 @@ books:
   isbn: ''
   lang: ml
   cover: https://rukminim2.flixcart.com/image/612/612/kmp7ngw0/book/f/k/j/valli-original-imagfjzgacrjrdzf.jpeg
+- title: Oru Kasargodan Ramayanam
+  ml_title: ഒരു കാസർകോടൻ രാമായണം
+  author: V. Harish
+  genre: ''
+  publisher: ''
+  isbn: ''
+  lang: ml
 - title: Manifest
   ml_title: ''
   author: Roxie Nafousi
@@ -440,6 +497,14 @@ books:
   lang: ml
   cover: https://rukminim2.flixcart.com/image/612/612/xif0q/book/k/j/w/onnam-forensic-adhyayam-resized-original-imahhktbwhfswg7c.jpeg
   asin: '9390429774'
+- title: Friday Forensic Club
+  ml_title: ഫ്രൈഡേ ഫൊറൻസിക് ക്ലബ്
+  author: Rajath R.
+  genre: Crime fiction
+  publisher: ''
+  isbn: ''
+  lang: ml
+  asin: B0DVC7FG61
 - title: Sugandhi Enna Andal Devanayaki
   ml_title: സുഗന്ധി എന്ന ആണ്ടാൾ ദേവനായകി
   author: T.D. Ramakrishnan
@@ -750,3 +815,81 @@ books:
   isbn: ''
   lang: en
   asin: '1681418509'
+- title: Koda
+  ml_title: കോട
+  author: Vinu Abraham
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: Bastet
+  ml_title: ബാസ്റ്റെത്
+  author: Nazeem Muhammed
+  genre: Novel
+  publisher: Mankind
+  isbn: ''
+  lang: ml
+- title: Khadeeja
+  ml_title: ഖദീജ
+  author: Naseef Kalayath
+  genre: ''
+  publisher: Sedora
+  isbn: ''
+  lang: ml
+- title: Kumaran
+  ml_title: കുമരൻ
+  author: S.K. Harinath
+  genre: ''
+  publisher: ''
+  isbn: ''
+  lang: ml
+  asin: '9334249056'
+- title: Kakkakalude Rathri
+  ml_title: കാക്കകളുടെ രാത്രി
+  author: Mohanachandran
+  genre: Novel
+  publisher: ''
+  isbn: ''
+  lang: ml
+- title: Kalika
+  ml_title: കലിക
+  author: Mohanachandran
+  genre: Novel
+  publisher: ''
+  isbn: ''
+  lang: ml
+- title: Mathiyas
+  ml_title: മത്തിയാസ്
+  author: M.R. Vishnuprasad
+  genre: ''
+  publisher: DC Books
+  isbn: ''
+  lang: ml
+- title: The Polymer Clay Sourcebook
+  ml_title: ''
+  author: Suzann Thompson
+  genre: Craft
+  publisher: Hamlyn
+  isbn: ''
+  lang: en
+- title: Perspective
+  ml_title: ''
+  author: Milind Mulick
+  genre: Art
+  publisher: Jyotsna Prakashan
+  isbn: ''
+  lang: en
+- title: 100 Pasta Recipes
+  ml_title: ''
+  author: Antonio Carluccio
+  genre: Cookery
+  publisher: Quadrille
+  isbn: ''
+  lang: en
+- title: Five Minute Bread
+  ml_title: ''
+  author: Jeff Hertzberg & Zoë François
+  genre: Cookery
+  publisher: Ebury Press
+  isbn: ''
+  lang: en
