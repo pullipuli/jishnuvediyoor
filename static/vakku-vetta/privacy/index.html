@@ -10,15 +10,15 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
 <style>
-@font-face{font-family:"Manjari";font-weight:400;src:url(../fonts/manjari-400.woff2) format("woff2")}
-@font-face{font-family:"Manjari";font-weight:700;src:url(../fonts/manjari-700.woff2) format("woff2")}
-:root{--bg:#e8f6ef;--surface:#fff;--ink:#123a30;--muted:#5b7a70;--leaf:#1b8a5a}
+@import url('https://smc.org.in/fonts/anjalioldlipi.css');
+@font-face{font-family:"AnjaliOldLipi";font-weight:400;src:url(../fonts/anjalioldlipi-regular.woff2) format("woff2")}
+:root{--bg:#fff;--surface:#fff;--ink:#000;--muted:#555;--leaf:#000}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.65 "Manjari",system-ui,sans-serif;
+body{margin:0;background:var(--bg);color:var(--ink);font:400 17px/1.7 "AnjaliOldLipi","Anjalioldlipi",system-ui,sans-serif;font-synthesis:none;
   padding:32px max(16px,env(safe-area-inset-right,0px)) calc(96px + env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
-main{max-width:680px;margin:0 auto;background:var(--surface);border-radius:20px;padding:28px 26px}
-h1{font-size:28px;line-height:1.2;margin:0 0 4px;color:var(--leaf)}
-h2{font-size:19px;margin:26px 0 6px}
+main{max-width:680px;margin:0 auto;background:var(--surface);border:2px solid #000;border-radius:4px;box-shadow:7px 7px 0 #000;padding:28px 26px}
+h1{font-size:32px;font-weight:400;line-height:1.25;margin:0 0 4px;color:var(--ink)}
+h2{font-size:22px;font-weight:400;margin:26px 0 6px}
 .date{color:var(--muted);font-size:14px;margin:0 0 18px}
 ul{padding-left:20px}
 li{margin:4px 0}
@@ -34,7 +34,7 @@ main a{color:var(--leaf)}
 .navdock a:hover{color:#EDE9DF}
 .navdock a:focus-visible{outline:2px solid #BD7C34;outline-offset:2px}
 .navdock a.active{color:#EDE9DF;background:rgba(255,255,255,.1)}
-.navdock a.active::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#BD7C34;margin-right:7px;vertical-align:middle}
+.navdock a.active::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#fff;margin-right:7px;vertical-align:middle}
 @media (max-width:900px){.navdock{left:12px;right:12px;transform:none;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;bottom:calc(14px + env(safe-area-inset-bottom,0px))}
   .navdock::-webkit-scrollbar{display:none}.navdock a{padding:8px 14px;font-size:13px}}
 .sitefoot{text-align:center;font-size:13px;color:var(--muted);padding:18px 0 0}
