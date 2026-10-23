@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="theme-color" content="#ffffff">
+<meta name="theme-color" content="#f3f7f4">
 <meta name="description" content="വാക്ക് വേട്ട – a Malayalam word-search game for kids. 3 levels, 11 themes, English meanings, leaderboard.">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -23,9 +23,10 @@ html { font-family: 'Anjalioldlipi', sans-serif; }
 :root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}
 </style>
 <style>
-/* Layout: one-screen kids' game, printed-paper look in black and white. Home = brand + tools, level switch, theme cards, dedication, footer; Game = top bar, ruled letter table that fills the free space, word chips, help + hint. Popups: how to play, leaderboard (lined table), win. */
+/* Layout: one-screen kids' game, printed-paper look: black ink and ruled lines, minimal pastel fills; the letter grid itself stays black and white. Home = brand + tools, level switch, theme cards, dedication, footer; Game = top bar, ruled letter table that fills the free space, word chips, help + hint. Popups: how to play, leaderboard (lined table), win. */
 :root{
-  --bg:#ffffff; --surface:#ffffff; --ink:#000000; --muted:#555555; --faint:#8a8a8a; --line:#000000; --hair:#bdbdbd; --soft:#f2f2f2; --sel:#1a1a1a;
+  --bg:#f3f7f4; --surface:#ffffff; --ink:#000000; --muted:#555555; --faint:#8a8a8a; --line:#000000; --hair:#bdbdbd; --soft:#f2f2f2; --sel:#1a1a1a;
+  --mint:#cfeadb; --butter:#fbe7a6; --blush:#fbdbe4; --sky:#d8e9fb; --star:#e5ab2e; --c:#ffffff;
   --font:"AnjaliOldLipi","Anjali Old Lipi","Manjari",system-ui,sans-serif;
   --mono:ui-monospace,"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
   --paper:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .09 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -51,12 +52,12 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
   display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;background:rgba(14,13,15,.78);
   backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
   border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 34px rgba(0,0,0,.28);max-width:calc(100% - 24px)}
-.navdock a{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#a8a8a8;text-decoration:none;
+.navdock a{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#9C988E;text-decoration:none;
   padding:10px 18px;border-radius:999px;white-space:nowrap;flex:none}
-.navdock a:hover{color:#fff}
-.navdock a:focus-visible{outline:2px solid #fff;outline-offset:2px}
-.navdock a.active{color:#fff;background:rgba(255,255,255,.12)}
-.navdock a.active::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#fff;margin-right:7px;vertical-align:middle}
+.navdock a:hover{color:#EDE9DF}
+.navdock a:focus-visible{outline:2px solid #BD7C34;outline-offset:2px}
+.navdock a.active{color:#EDE9DF;background:rgba(255,255,255,.1)}
+.navdock a.active::before{content:"";display:inline-block;width:5px;height:5px;border-radius:50%;background:#BD7C34;margin-right:7px;vertical-align:middle}
 @media (max-width:900px){.navdock{left:12px;right:12px;transform:none;max-width:none;justify-content:flex-start;overflow-x:auto;scrollbar-width:none;bottom:calc(10px + env(safe-area-inset-bottom,0px))}
   .navdock::-webkit-scrollbar{display:none}.navdock a{padding:8px 14px;font-size:13px}}
 body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
@@ -65,8 +66,6 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .sitefoot a{color:var(--ink);text-decoration:none;display:inline-block;padding:10px 4px}
 .sitefoot a:hover{text-decoration:underline}
 
-/* emoji pictures follow the black-and-white look */
-.em,.ic,.iconbtn,.btn,.panel h2,.empty{filter:grayscale(1) contrast(1.1)}
 
 /* home */
 .brandrow{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:2px solid #000;padding-bottom:12px}
@@ -74,7 +73,8 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .logo .tiles{display:grid;grid-template-columns:repeat(2,24px);border:1.5px solid #000;flex:none}
 .logo .tiles span{width:24px;height:24px;display:grid;place-items:center;font:400 12px/1 var(--font);border-right:1px solid #000;border-bottom:1px solid #000}
 .logo .tiles span:nth-child(2n){border-right:0}.logo .tiles span:nth-child(n+3){border-bottom:0}
-.logo .tiles span.on{background:#000;color:#fff}
+.logo .tiles span.on{background:var(--butter)}
+.logo .tiles span:nth-child(4).on{background:var(--mint)}
 .logo h1{margin:0;font:400 clamp(30px,8vw,46px)/1.15 var(--font);letter-spacing:.01em}
 .logo p{margin:0;font-size:14px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 .tools{display:flex;gap:8px;margin-left:auto}
@@ -85,8 +85,8 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .levels button:last-child{border-right:0}
 .levels b{font-size:clamp(15px,4.4vw,18px);white-space:nowrap;line-height:1.35}
 .levels small{font-size:12px;color:var(--muted);letter-spacing:.05em;text-transform:uppercase}
-.levels button[aria-pressed="true"]{background:#000;color:#fff}
-.levels button[aria-pressed="true"] small{color:#cfcfcf}
+.levels button[aria-pressed="true"]{background:var(--mint);box-shadow:inset 0 -3px 0 #000}
+.levels button[aria-pressed="true"] small{color:#000}
 .levelnote{margin:-4px 0 0;font-size:14px;line-height:1.55;color:var(--muted);text-align:center}
 .total{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .total h2{margin:0;font-size:22px}
@@ -96,11 +96,13 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .card{border:1.5px solid #000;border-radius:4px;box-shadow:var(--shadow);padding:12px 14px 10px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:2px;position:relative;min-width:0}
 .card .em{font-size:28px;line-height:1}
 .card .ml{font:400 19px/1.35 var(--font);margin-top:8px}
-.card .en{font-size:13px;color:var(--muted);letter-spacing:.03em}
-.card .st{font-size:15px;letter-spacing:2px;color:#c9c9c9;margin-top:4px;border-top:1px dashed var(--hair);padding-top:6px}
-.card .st i{font-style:normal;color:#000}
+.card .en{font-size:13px;color:#3d3d3d;letter-spacing:.03em}
+.card.paper,.toast.paper,.chip.found{background-color:var(--c)}
+.card .st{font-size:15px;letter-spacing:2px;color:rgba(0,0,0,.18);margin-top:4px;border-top:1px dashed rgba(0,0,0,.25);padding-top:6px}
+.card .st i{font-style:normal;color:var(--star)}
 .card:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
-.dedication{margin:6px 0 4px;padding:14px 16px 12px;border:1.5px dashed #000;text-align:center;font-size:16px;line-height:1.6}
+.dedication{margin:6px 0 4px;padding:14px 16px 12px;border:1.5px dashed #000;background:var(--blush);text-align:center;font-size:16px;line-height:1.6}
+.dedication .heart{color:#d9547a}
 .dedication a{display:inline-block;padding:8px 2px 4px;margin:-8px 0 -4px;color:#000;text-decoration-thickness:1.5px;text-underline-offset:4px}
 .foot{font-size:13px;color:var(--muted);text-align:center;margin:0;padding-bottom:6px;line-height:1.55}
 
@@ -110,7 +112,7 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 .topbar .t{flex:1;min-width:0}
 .topbar .t b{display:block;font-size:clamp(16px,4.6vw,21px);line-height:1.3;overflow-wrap:normal}
 .topbar .t small{color:var(--muted);font-size:12.5px;display:block;line-height:1.3}
-.pill{background:#fff;border:1.5px solid #000;border-radius:4px;padding:6px 10px;font:500 13.5px/1.2 var(--mono);white-space:nowrap;flex:none}
+.pill{background:var(--butter);border:1.5px solid #000;border-radius:4px;padding:6px 10px;font:500 13.5px/1.2 var(--mono);white-space:nowrap;flex:none}
 .pill b{font-weight:700}
 .boardwrap{flex:1;min-height:120px;container-type:size;display:grid;place-items:center}
 .board{position:relative;width:min(100cqw,100cqh);aspect-ratio:1;max-width:100%;border:4px double #000;background:#fff;padding:3px}
@@ -127,13 +129,13 @@ body.web .screen{padding-bottom:calc(84px + env(safe-area-inset-bottom,0px))}
 svg.marks{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 6px);z-index:2;pointer-events:none;mix-blend-mode:multiply}
 .words{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:760px;margin:0 auto;width:100%}
 .chip{border:1.5px solid #000;border-radius:3px;padding:4px 9px 3px;font-size:clamp(14px,3.9vw,16px);line-height:1.35;text-align:center;max-width:100%;overflow-wrap:anywhere}
-.chip.found{background:#000;color:#fff}
+.chip.found{color:#000}
 .chip.found .w{text-decoration:line-through;text-decoration-thickness:1px}
-.chip.found small{display:block;font-size:11px;opacity:.85}
+.chip.found small{display:block;font-size:11px;color:#3d3d3d}
 .chip small{display:none}
 .chip.cue{outline:3px solid #000;outline-offset:2px}
 .bottom{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
-.btn{border:1.5px solid #000;border-radius:4px;background:#000;color:#fff;padding:10px 18px 9px;font:400 17px/1.3 var(--font);cursor:pointer;box-shadow:var(--shadow)}
+.btn{border:1.5px solid #000;border-radius:4px;background:var(--mint);color:#000;padding:10px 18px 9px;font:400 17px/1.3 var(--font);cursor:pointer;box-shadow:var(--shadow)}
 .btn.alt{background:#fff;color:#000}
 .btn:active{transform:translate(2px,2px);box-shadow:1px 1px 0 #000}
 .btn:disabled{opacity:.4}
@@ -148,7 +150,7 @@ svg.marks{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 
 .toast span{color:var(--muted);font-size:15px;display:block}
 
 /* popups */
-.overlay{position:fixed;inset:0;background:rgba(0,0,0,.55);display:grid;place-items:center;z-index:10;overflow-y:auto;
+.overlay{position:fixed;inset:0;background:rgba(30,45,38,.5);display:grid;place-items:center;z-index:10;overflow-y:auto;
   padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px))}
 .panel{position:relative;border:2px solid #000;border-radius:4px;box-shadow:7px 7px 0 #000;padding:22px 20px 18px;width:min(440px,100%);display:flex;flex-direction:column;gap:12px;max-height:100%;overflow-y:auto}
 .panel h2{margin:0;font-size:28px;line-height:1.25;padding-right:44px}
@@ -168,10 +170,10 @@ svg.marks{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 
 .demo span.on{background:#000;color:#fff}
 .win{text-align:center}
 .bigstars{font-size:42px;letter-spacing:6px;color:#cfcfcf;line-height:1}
-.bigstars i{font-style:normal;color:#000}
+.bigstars i{font-style:normal;color:var(--star)}
 .win p{margin:0;color:var(--muted);font-size:15px;line-height:1.55}
 .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.nameform{display:flex;flex-direction:column;gap:8px;border:1.5px dashed #000;padding:12px}
+.nameform{display:flex;flex-direction:column;gap:8px;border:1.5px dashed #000;padding:12px;background:var(--sky)}
 .nameform label{font-size:15px}
 .nameform .row{flex-wrap:nowrap}
 .nameform input{flex:1;min-width:0;border:1.5px solid #000;border-radius:4px;padding:9px 12px 8px;font-size:17px;background:#fff}
@@ -183,13 +185,13 @@ svg.marks{position:absolute;inset:3px;width:calc(100% - 6px);height:calc(100% - 
 .lbtable{width:100%;border-collapse:collapse;border:1.5px solid #000;table-layout:fixed;font-size:15px}
 .lbtable th,.lbtable td{border:1px solid #000;padding:8px 8px 7px;text-align:left;vertical-align:middle}
 .lbtable td{background-color:#fff;background-image:var(--fibre),var(--paper)}
-.lbtable th{background:#000;color:#fff;font:600 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.lbtable th{background:var(--mint);color:#000;font:600 11px/1.2 var(--mono);letter-spacing:.08em;text-transform:uppercase}
 .lbtable .rk{width:44px;text-align:center;font-family:var(--mono)}
-.lbtable .sr{width:62px;text-align:center;font-family:var(--mono);letter-spacing:1px}
+.lbtable .sr{width:62px;text-align:center;font-family:var(--mono);letter-spacing:1px;color:var(--star)}
 .lbtable .tm{width:66px;text-align:right;font-family:var(--mono)}
 .lbtable td.nm{overflow-wrap:normal;line-height:1.3}
-.lbtable tr.me td{background:#000;color:#fff}
-.empty{margin:0;padding:16px;border:1.5px dashed #000;color:var(--muted);text-align:center;font-size:15px;line-height:1.55}
+.lbtable tr.me td{background:var(--butter)}
+.empty{margin:0;padding:16px;border:1.5px dashed #000;background:var(--sky);color:var(--muted);text-align:center;font-size:15px;line-height:1.55}
 .note{margin:0;font-size:12.5px;color:var(--muted);text-align:center;line-height:1.5}
 canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
 @media (max-height:760px){.chip.found small{display:none}}
@@ -310,17 +312,17 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
 
 <script>
 const THEMES=[
- {id:"fruits",ml:"പഴങ്ങൾ",en:"Fruits",icon:"🥭",c:"#ff9f1c",w:[["വാ|ഴ|പ്പ|ഴം","Banana","🍌"],["പ|പ്പാ|യ","Papaya","🧡"],["മു|ന്തി|രി","Grapes","🍇"],["ഓ|റ|ഞ്ച്","Orange","🍊"],["പേ|ര|യ്ക്ക","Guava","🍐"],["നാ|ര|ങ്ങ","Lemon","🍋"],["കൈ|ത|ച്ച|ക്ക","Pineapple","🍍"],["ത|ണ്ണി|മ|ത്തൻ","Watermelon","🍉"],["ച|ക്ക","Jackfruit","🟢"],["മാ|ങ്ങ","Mango","🥭"]]},
- {id:"animals",ml:"മൃഗങ്ങൾ",en:"Animals",icon:"🐘",c:"#8d6cf2",w:[["ആ|ന","Elephant","🐘"],["ക|ടു|വ","Tiger","🐅"],["സിം|ഹം","Lion","🦁"],["കു|ര|ങ്ങൻ","Monkey","🐒"],["പൂ|ച്ച","Cat","🐈"],["മു|യൽ","Rabbit","🐇"],["ഒ|ട്ട|കം","Camel","🐫"],["ക|ര|ടി","Bear","🐻"],["കു|തി|ര","Horse","🐎"],["പ|ശു","Cow","🐄"]]},
- {id:"colours",ml:"നിറങ്ങൾ",en:"Colours",icon:"🎨",c:"#ff5d8f",w:[["ചു|വ|പ്പ്","Red","🔴"],["പ|ച്ച","Green","🟢"],["മ|ഞ്ഞ","Yellow","🟡"],["നീ|ല","Blue","🔵"],["ക|റു|പ്പ്","Black","⚫"],["വെ|ള്ള","White","⚪"],["ഓ|റ|ഞ്ച്","Orange","🟠"],["പി|ങ്ക്","Pink","🩷"],["ത|വി|ട്ട്","Brown","🟤"],["വ|യ|ല|റ്റ്","Violet","🟣"]]},
- {id:"body",ml:"ശരീരഭാഗങ്ങൾ",en:"Body parts",icon:"🖐️",c:"#20a4c9",w:[["ക|ണ്ണ്","Eye","👁️"],["മൂ|ക്ക്","Nose","👃"],["ചെ|വി","Ear","👂"],["വാ|യ","Mouth","👄"],["ക|ഴു|ത്ത്","Neck","🧣"],["കാൽ|മു|ട്ട്","Knee","🦵"],["ത|ല","Head","🙂"],["വി|രൽ","Finger","☝️"],["മു|ടി","Hair","💇"],["പ|ല്ല്","Tooth","🦷"]]},
- {id:"food",ml:"നാടൻ ഭക്ഷണം",en:"Kerala food",icon:"🍛",c:"#e8772e",w:[["പു|ട്ട്","Puttu (steamed rice cake)","🍚"],["അ|പ്പം","Appam (rice pancake)","🥞"],["ദോ|ശ","Dosa","🫓"],["ഇ|ഡ്ഡ|ലി","Idli","⚪"],["സാ|മ്പാർ","Sambar","🍲"],["അ|വി|യൽ","Aviyal (mixed vegetable curry)","🥕"],["പാ|യ|സം","Payasam (sweet pudding)","🍮"],["ബി|രി|യാ|ണി","Biryani","🍛"],["ഉ|പ്പു|മാ|വ്","Upma","🥣"],["പ|പ്പ|ടം","Pappadam","🟡"]]},
- {id:"birds",ml:"പക്ഷികൾ",en:"Birds",icon:"🦚",c:"#1b8a5a",w:[["മ|രം|കൊ|ത്തി","Woodpecker","🪵"],["വേ|ഴാ|മ്പൽ","Hornbill","🐦"],["ഓ|ലേ|ഞ്ഞാ|ലി","Treepie","🐦"],["പൊ|ന്മാൻ","Kingfisher","🐟"],["കു|രു|വി","Sparrow","🐤"],["പ|രു|ന്ത്","Kite (bird)","🦅"],["മ|യിൽ","Peacock","🦚"],["കു|യിൽ","Koel (cuckoo)","🎶"],["മൂ|ങ്ങ","Owl","🦉"],["കൊ|ക്ക്","Egret","🤍"]]},
- {id:"veg",ml:"പച്ചക്കറികൾ",en:"Vegetables",icon:"🥕",c:"#5aa832",w:[["വെ|ണ്ട|യ്ക്ക","Okra","🫛"],["വ|ഴു|ത|ന|ങ്ങ","Brinjal","🍆"],["പാ|വ|യ്ക്ക","Bitter gourd","🥒"],["മ|ത്ത|ങ്ങ","Pumpkin","🎃"],["കു|മ്പ|ള|ങ്ങ","Ash gourd","🍈"],["ഉ|രു|ള|ക്കി|ഴ|ങ്ങ്","Potato","🥔"],["ചേ|ന","Yam","🟤"],["മു|രി|ങ്ങ|ക്കാ|യ","Drumstick","🌿"],["പ|ട|വ|ല|ങ്ങ","Snake gourd","🐍"],["കോ|വ|യ്ക്ക","Ivy gourd","🌱"]]},
- {id:"music",ml:"വാദ്യോപകരണങ്ങൾ",en:"Instruments",icon:"🥁",c:"#c2410c",w:[["ചെ|ണ്ട","Chenda (drum)","🥁"],["മ|ദ്ദ|ളം","Maddalam (drum)","🥁"],["ഇ|ട|യ്ക്ക","Idakka (drum)","🥁"],["തി|മി|ല","Timila (drum)","🥁"],["വീ|ണ","Veena","🎶"],["മൃ|ദം|ഗം","Mridangam","🥁"],["പു|ല്ലാ|ങ്കു|ഴൽ","Flute","🎵"],["നാ|ഗ|സ്വ|രം","Nadaswaram","🎺"],["ഇ|ല|ത്താ|ളം","Cymbals","🔔"],["കൊ|മ്പ്","Kombu (horn)","📯"]]},
- {id:"arts",ml:"കലകളും ആഘോഷങ്ങളും",en:"Arts & festivals",icon:"🎭",c:"#d6457d",w:[["ക|ഥ|ക|ളി","Kathakali","🎭"],["മോ|ഹി|നി|യാ|ട്ടം","Mohiniyattam","💃"],["തി|രു|വാ|തി|ര","Thiruvathira","🌕"],["കൂ|ടി|യാ|ട്ടം","Koodiyattam","🎭"],["ഓ|ട്ടൻ|തു|ള്ളൽ","Ottamthullal","🎤"],["വ|ള്ളം|ക|ളി","Boat race","🚣"],["പു|ലി|ക്ക|ളി","Tiger dance","🐯"],["ചെ|ണ്ട|മേ|ളം","Drum ensemble","🥁"],["തെ|യ്യം","Theyyam","🔥"],["ഒ|പ്പ|ന","Oppana","👏"]]},
- {id:"districts",ml:"കേരളത്തിലെ ജില്ലകൾ",en:"Kerala districts",icon:"🗺️",c:"#3a86ff",w:[["തി|രു|വ|ന|ന്ത|പു|രം","Thiruvananthapuram","📍"],["പ|ത്ത|നം|തി|ട്ട","Pathanamthitta","📍"],["ആ|ല|പ്പു|ഴ","Alappuzha","📍"],["കോ|ട്ട|യം","Kottayam","📍"],["ഇ|ടു|ക്കി","Idukki","📍"],["എ|റ|ണാ|കു|ളം","Ernakulam","📍"],["പാ|ല|ക്കാ|ട്","Palakkad","📍"],["മ|ല|പ്പു|റം","Malappuram","📍"],["കോ|ഴി|ക്കോ|ട്","Kozhikode","📍"],["കാ|സർ|കോ|ട്","Kasaragod","📍"]]},
- {id:"rivers",ml:"കേരളത്തിലെ നദികൾ",en:"Kerala rivers",icon:"🏞️",c:"#0fa3b1",w:[["പെ|രി|യാർ","Periyar","🌊"],["ഭാ|ര|ത|പ്പു|ഴ","Bharathappuzha","🌊"],["പ|മ്പ","Pamba","🌊"],["ചാ|ലി|യാർ","Chaliyar","🌊"],["ചാ|ല|ക്കു|ടി|പ്പു|ഴ","Chalakudy river","🌊"],["ക|ബ|നി","Kabini","🌊"],["മീ|ന|ച്ചി|ലാർ","Meenachil river","🌊"],["അ|ച്ചൻ|കോ|വി|ലാർ","Achankovil river","🌊"],["മൂ|വാ|റ്റു|പു|ഴ","Muvattupuzha river","🌊"],["വ|ള|പ|ട്ട|ണം","Valapattanam river","🌊"]]}
+ {id:"fruits",ml:"പഴങ്ങൾ",en:"Fruits",icon:"🥭",c:"#ffe1bd",w:[["വാ|ഴ|പ്പ|ഴം","Banana","🍌"],["പ|പ്പാ|യ","Papaya","🧡"],["മു|ന്തി|രി","Grapes","🍇"],["ഓ|റ|ഞ്ച്","Orange","🍊"],["പേ|ര|യ്ക്ക","Guava","🍐"],["നാ|ര|ങ്ങ","Lemon","🍋"],["കൈ|ത|ച്ച|ക്ക","Pineapple","🍍"],["ത|ണ്ണി|മ|ത്തൻ","Watermelon","🍉"],["ച|ക്ക","Jackfruit","🟢"],["മാ|ങ്ങ","Mango","🥭"]]},
+ {id:"animals",ml:"മൃഗങ്ങൾ",en:"Animals",icon:"🐘",c:"#e4dcff",w:[["ആ|ന","Elephant","🐘"],["ക|ടു|വ","Tiger","🐅"],["സിം|ഹം","Lion","🦁"],["കു|ര|ങ്ങൻ","Monkey","🐒"],["പൂ|ച്ച","Cat","🐈"],["മു|യൽ","Rabbit","🐇"],["ഒ|ട്ട|കം","Camel","🐫"],["ക|ര|ടി","Bear","🐻"],["കു|തി|ര","Horse","🐎"],["പ|ശു","Cow","🐄"]]},
+ {id:"colours",ml:"നിറങ്ങൾ",en:"Colours",icon:"🎨",c:"#ffd9e4",w:[["ചു|വ|പ്പ്","Red","🔴"],["പ|ച്ച","Green","🟢"],["മ|ഞ്ഞ","Yellow","🟡"],["നീ|ല","Blue","🔵"],["ക|റു|പ്പ്","Black","⚫"],["വെ|ള്ള","White","⚪"],["ഓ|റ|ഞ്ച്","Orange","🟠"],["പി|ങ്ക്","Pink","🩷"],["ത|വി|ട്ട്","Brown","🟤"],["വ|യ|ല|റ്റ്","Violet","🟣"]]},
+ {id:"body",ml:"ശരീരഭാഗങ്ങൾ",en:"Body parts",icon:"🖐️",c:"#d3ecfa",w:[["ക|ണ്ണ്","Eye","👁️"],["മൂ|ക്ക്","Nose","👃"],["ചെ|വി","Ear","👂"],["വാ|യ","Mouth","👄"],["ക|ഴു|ത്ത്","Neck","🧣"],["കാൽ|മു|ട്ട്","Knee","🦵"],["ത|ല","Head","🙂"],["വി|രൽ","Finger","☝️"],["മു|ടി","Hair","💇"],["പ|ല്ല്","Tooth","🦷"]]},
+ {id:"food",ml:"നാടൻ ഭക്ഷണം",en:"Kerala food",icon:"🍛",c:"#ffe4cc",w:[["പു|ട്ട്","Puttu (steamed rice cake)","🍚"],["അ|പ്പം","Appam (rice pancake)","🥞"],["ദോ|ശ","Dosa","🫓"],["ഇ|ഡ്ഡ|ലി","Idli","⚪"],["സാ|മ്പാർ","Sambar","🍲"],["അ|വി|യൽ","Aviyal (mixed vegetable curry)","🥕"],["പാ|യ|സം","Payasam (sweet pudding)","🍮"],["ബി|രി|യാ|ണി","Biryani","🍛"],["ഉ|പ്പു|മാ|വ്","Upma","🥣"],["പ|പ്പ|ടം","Pappadam","🟡"]]},
+ {id:"birds",ml:"പക്ഷികൾ",en:"Birds",icon:"🦚",c:"#d4f0dd",w:[["മ|രം|കൊ|ത്തി","Woodpecker","🪵"],["വേ|ഴാ|മ്പൽ","Hornbill","🐦"],["ഓ|ലേ|ഞ്ഞാ|ലി","Treepie","🐦"],["പൊ|ന്മാൻ","Kingfisher","🐟"],["കു|രു|വി","Sparrow","🐤"],["പ|രു|ന്ത്","Kite (bird)","🦅"],["മ|യിൽ","Peacock","🦚"],["കു|യിൽ","Koel (cuckoo)","🎶"],["മൂ|ങ്ങ","Owl","🦉"],["കൊ|ക്ക്","Egret","🤍"]]},
+ {id:"veg",ml:"പച്ചക്കറികൾ",en:"Vegetables",icon:"🥕",c:"#e2f2cb",w:[["വെ|ണ്ട|യ്ക്ക","Okra","🫛"],["വ|ഴു|ത|ന|ങ്ങ","Brinjal","🍆"],["പാ|വ|യ്ക്ക","Bitter gourd","🥒"],["മ|ത്ത|ങ്ങ","Pumpkin","🎃"],["കു|മ്പ|ള|ങ്ങ","Ash gourd","🍈"],["ഉ|രു|ള|ക്കി|ഴ|ങ്ങ്","Potato","🥔"],["ചേ|ന","Yam","🟤"],["മു|രി|ങ്ങ|ക്കാ|യ","Drumstick","🌿"],["പ|ട|വ|ല|ങ്ങ","Snake gourd","🐍"],["കോ|വ|യ്ക്ക","Ivy gourd","🌱"]]},
+ {id:"music",ml:"വാദ്യോപകരണങ്ങൾ",en:"Instruments",icon:"🥁",c:"#fbd9cf",w:[["ചെ|ണ്ട","Chenda (drum)","🥁"],["മ|ദ്ദ|ളം","Maddalam (drum)","🥁"],["ഇ|ട|യ്ക്ക","Idakka (drum)","🥁"],["തി|മി|ല","Timila (drum)","🥁"],["വീ|ണ","Veena","🎶"],["മൃ|ദം|ഗം","Mridangam","🥁"],["പു|ല്ലാ|ങ്കു|ഴൽ","Flute","🎵"],["നാ|ഗ|സ്വ|രം","Nadaswaram","🎺"],["ഇ|ല|ത്താ|ളം","Cymbals","🔔"],["കൊ|മ്പ്","Kombu (horn)","📯"]]},
+ {id:"arts",ml:"കലകളും ആഘോഷങ്ങളും",en:"Arts & festivals",icon:"🎭",c:"#f5d6ec",w:[["ക|ഥ|ക|ളി","Kathakali","🎭"],["മോ|ഹി|നി|യാ|ട്ടം","Mohiniyattam","💃"],["തി|രു|വാ|തി|ര","Thiruvathira","🌕"],["കൂ|ടി|യാ|ട്ടം","Koodiyattam","🎭"],["ഓ|ട്ടൻ|തു|ള്ളൽ","Ottamthullal","🎤"],["വ|ള്ളം|ക|ളി","Boat race","🚣"],["പു|ലി|ക്ക|ളി","Tiger dance","🐯"],["ചെ|ണ്ട|മേ|ളം","Drum ensemble","🥁"],["തെ|യ്യം","Theyyam","🔥"],["ഒ|പ്പ|ന","Oppana","👏"]]},
+ {id:"districts",ml:"കേരളത്തിലെ ജില്ലകൾ",en:"Kerala districts",icon:"🗺️",c:"#dbe5ff",w:[["തി|രു|വ|ന|ന്ത|പു|രം","Thiruvananthapuram","📍"],["പ|ത്ത|നം|തി|ട്ട","Pathanamthitta","📍"],["ആ|ല|പ്പു|ഴ","Alappuzha","📍"],["കോ|ട്ട|യം","Kottayam","📍"],["ഇ|ടു|ക്കി","Idukki","📍"],["എ|റ|ണാ|കു|ളം","Ernakulam","📍"],["പാ|ല|ക്കാ|ട്","Palakkad","📍"],["മ|ല|പ്പു|റം","Malappuram","📍"],["കോ|ഴി|ക്കോ|ട്","Kozhikode","📍"],["കാ|സർ|കോ|ട്","Kasaragod","📍"]]},
+ {id:"rivers",ml:"കേരളത്തിലെ നദികൾ",en:"Kerala rivers",icon:"🏞️",c:"#cfefed",w:[["പെ|രി|യാർ","Periyar","🌊"],["ഭാ|ര|ത|പ്പു|ഴ","Bharathappuzha","🌊"],["പ|മ്പ","Pamba","🌊"],["ചാ|ലി|യാർ","Chaliyar","🌊"],["ചാ|ല|ക്കു|ടി|പ്പു|ഴ","Chalakudy river","🌊"],["ക|ബ|നി","Kabini","🌊"],["മീ|ന|ച്ചി|ലാർ","Meenachil river","🌊"],["അ|ച്ചൻ|കോ|വി|ലാർ","Achankovil river","🌊"],["മൂ|വാ|റ്റു|പു|ഴ","Muvattupuzha river","🌊"],["വ|ള|പ|ട്ട|ണം","Valapattanam river","🌊"]]}
 ];
 const LEVELS={
  easy:{ml:"എളുപ്പം",en:"Easy",n:10,note:"10 × 10 കളം · വാക്കുകൾ ഇടത്തുനിന്ന് വലത്തേക്കും മുകളിൽനിന്ന് താഴേക്കും മാത്രം",dirs:[[0,1],[1,0]],straight:10,own:.15,decoys:0},
@@ -450,7 +452,7 @@ const starStr=n=>"<i>"+"★".repeat(n)+"</i>"+"★".repeat(3-n);
 function renderHome(){
   document.querySelectorAll("#levels button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===level));
   $("levelNote").textContent=LEVELS[level].note;
-  $("themes").innerHTML=THEMES.map(t=>`<button class="card paper" data-id="${t.id}">
+  $("themes").innerHTML=THEMES.map(t=>`<button class="card paper" data-id="${t.id}" style="--c:${t.c}">
     <span class="em" aria-hidden="true">${t.icon}</span><span class="ml">${t.ml}</span><span class="en">${t.en}</span>
     <span class="st" aria-label="${starsOf(level,t.id)} of 3 stars">${starStr(starsOf(level,t.id))}</span></button>`).join("");
   const total=Object.values(progress).reduce((a,b)=>a+b,0);
@@ -510,7 +512,7 @@ function startGame(ti){
   const grid=$("grid");grid.style.setProperty("--n",G.N);grid.innerHTML="";$("marks").innerHTML="";
   G.g.forEach((row,r)=>row.forEach((ch,c)=>{const d=document.createElement("div");d.className="cell"+(c===G.N-1?" lastc":"")+(r===G.N-1?" lastr":"");d.textContent=ch;d.dataset.r=r;d.dataset.c=c;grid.appendChild(d)}));
   $("gTitle").textContent=theme.ml;$("gLevel").textContent=LEVELS[level].ml+" · "+theme.en;
-  $("words").innerHTML=theme.w.map((w,i)=>`<div class="chip paper" data-i="${i}"><span class="w">${w[0].replace(/\|/g,"")}</span><small>${w[1]}</small></div>`).join("");
+  $("words").innerHTML=theme.w.map((w,i)=>`<div class="chip paper" data-i="${i}" style="--c:${theme.c}"><span class="w">${w[0].replace(/\|/g,"")}</span><small>${w[1]}</small></div>`).join("");
   $("gCount").textContent=0;$("hintLeft").textContent=3;$("hintBtn").disabled=false;$("win").hidden=true;
   clearInterval(timer);tick();timer=setInterval(tick,1000);
   show("game");fit($("gTitle"),12.5);fitCells();
@@ -563,7 +565,7 @@ function mark(p){
   for(let j=0;j<p.len;j++){const e=cellEl(p.r+dr*j,p.c+dc*j);e.classList.remove("pop","hint");void e.offsetWidth;e.classList.add("pop")}
   document.querySelector(`.chip[data-i="${p.i}"]`).classList.add("found");
   $("gCount").textContent=G.found.size;
-  $("tEm").textContent=w[2];$("tMl").textContent=w[0].replace(/\|/g,"");$("tEn").textContent=w[1];
+  $("toast").style.setProperty("--c",G.theme.c);$("tEm").textContent=w[2];$("tMl").textContent=w[0].replace(/\|/g,"");$("tEn").textContent=w[1];
   $("toast").classList.add("show");fit($("tMl"),14);clearTimeout(toastT);toastT=setTimeout(()=>$("toast").classList.remove("show"),1900);
   tone([784,1046]);buzz(20);
   if(G.found.size===G.theme.w.length)setTimeout(finish,700);
@@ -604,7 +606,7 @@ function goHome(){clearInterval(timer);$("win").hidden=true;openPopup=null;G=nul
 function confetti(){
   if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
   const cv=$("confetti"),ctx=cv.getContext("2d");cv.hidden=false;
-  const W=cv.width=innerWidth,H=cv.height=innerHeight,cols=["#000","#333","#777","#aaa","#d4d4d4"];
+  const W=cv.width=innerWidth,H=cv.height=innerHeight,cols=["#cfeadb","#fbe7a6","#fbdbe4","#d8e9fb","#e4dcff","#000"];
   const ps=Array.from({length:120},()=>({x:W/2,y:H*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,s:4+Math.random()*6,c:pick(cols),a:Math.random()*6}));
   let f=0;(function step(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore()});
     if(++f<110)requestAnimationFrame(step);else{ctx.clearRect(0,0,W,H);cv.hidden=true}})();
