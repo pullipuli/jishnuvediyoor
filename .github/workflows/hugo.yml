@@ -45,6 +45,7 @@ jobs:
           submodules: recursive
       - name: Shrink large images and strip GPS location
         run: |
+          sudo apt-get update -qq
           sudo apt-get install -y -qq libimage-exiftool-perl imagemagick
           # Published copies only: cap at 2000px on the long side (originals stay in git)
           find static/images -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -size +500k -exec mogrify -resize '2000x2000>' -quality 85 {} + || true
