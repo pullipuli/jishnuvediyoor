@@ -1,4 +1,3 @@
-{{- $onBlog := eq page.RelPermalink "/blog/" }}
 <nav class="navdock" aria-label="Site">
   <a href="/">Home</a>
   <a href="/#about">About</a>
@@ -6,13 +5,20 @@
   <a href="/#education">Education</a>
   <a href="/#skills">Skills</a>
   <a href="/#contact">Contact</a>
-  <a href="/blog/" class="active"{{ if $onBlog }} aria-current="page"{{ end }}>Blog</a>
-  <a href="/vakku-vetta/">Puzzle</a>
+  <a href="/blog/" data-section="blog">Blog</a>
+  <a href="/projects/" data-section="projects">Projects</a>
 </nav>
 <script>
-  // On narrow screens the dock scrolls sideways; bring Blog into view, as the homepage does for its current section.
+  // This partial is cached across pages by the theme, so the current section is marked here rather than in the template:
+  // Projects (and the project pages) light up Projects; every other page lights up Blog.
+  // On narrow screens the dock scrolls sideways; bring the current section into view, as the homepage does.
   (() => {
-    const dock = document.querySelector('.navdock'), current = dock && dock.querySelector('.active');
+    const dock = document.querySelector('.navdock');
+    if (!dock) return;
+    const path = location.pathname, inProjects = path.startsWith('/projects/');
+    const current = dock.querySelector(inProjects ? '[data-section="projects"]' : '[data-section="blog"]');
+    current.classList.add('active');
+    if (path === current.getAttribute('href')) current.setAttribute('aria-current', 'page');
     if (current) dock.scrollLeft = current.offsetLeft - (dock.clientWidth - current.offsetWidth) / 2;
   })();
 </script>
