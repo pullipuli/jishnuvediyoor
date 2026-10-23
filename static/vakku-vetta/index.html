@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="ml">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="theme-color" content="#e8f6ef">
+<meta name="description" content="വാക്ക് വേട്ട – a Malayalam word-search game for kids. 3 levels, 11 themes, English meanings.">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>വാക്ക് വേട്ട</title>
+
+<style>
+@font-face{font-family:"Manjari";font-weight:400;font-display:swap;src:url(fonts/manjari-400.woff2) format("woff2")}
+@font-face{font-family:"Manjari";font-weight:700;font-display:swap;src:url(fonts/manjari-700.woff2) format("woff2")}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);box-sizing:border-box;height:100%}
+</style>
+<style>
+/* Layout: one-screen kids' game. Home = level switch + theme cards; Game = top bar, square board that fills the free space, word chips, hint. */
+:root{
+  --bg:#e8f6ef; --surface:#ffffff; --ink:#123a30; --muted:#5b7a70; --line:#cfe6dc;
+  --leaf:#1b8a5a; --turmeric:#ffc23d; --coral:#ff6a4d; --sel:#ffd75e; --shadow:0 3px 0 #b9dccd;
+  --font:"Manjari","Noto Sans Malayalam",system-ui,sans-serif;
+  color-scheme:light;
+}
+[hidden]{display:none!important}
+html,body{height:100%}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);margin:0;overflow:hidden;-webkit-tap-highlight-color:transparent}
+button{font-family:inherit;color:inherit}
+button:focus-visible{outline:3px solid var(--coral);outline-offset:2px}
+.screen{height:100%;display:flex;flex-direction:column;box-sizing:border-box;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:14px 12px}
+#home{overflow-y:auto;gap:18px}
+.inner{max-width:760px;width:100%;margin:0 auto;display:flex;flex-direction:column;gap:18px}
+
+/* home */
+.brandrow{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.logo{display:flex;align-items:center;gap:12px}
+.logo .tiles{display:grid;grid-template-columns:repeat(2,22px);gap:3px}
+.logo .tiles span{width:22px;height:22px;border-radius:6px;background:var(--surface);border:2px solid var(--leaf);display:grid;place-items:center;font:700 12px var(--font)}
+.logo .tiles span.on{background:var(--turmeric);border-color:var(--turmeric)}
+.logo h1{margin:0;font:700 clamp(28px,7vw,40px)/1.05 var(--font);color:var(--leaf)}
+.logo p{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.iconbtn{width:44px;height:44px;border-radius:14px;border:2px solid var(--line);background:var(--surface);font-size:20px;cursor:pointer;flex:none;display:grid;place-items:center}
+.levels{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;background:var(--surface);padding:6px;border-radius:18px;border:2px solid var(--line)}
+.levels button{border:0;background:transparent;border-radius:13px;padding:10px 4px 7px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:1px}
+.levels b{font-size:17px}
+.levels small{font-size:12px;color:var(--muted)}
+.levels button[aria-pressed="true"]{background:var(--leaf);color:#fff}
+.levels button[aria-pressed="true"] small{color:#d5f2e4}
+.levelnote{margin:-6px 0 0;font-size:13.5px;color:var(--muted);text-align:center}
+.total{display:flex;justify-content:space-between;align-items:baseline}
+.total h2{margin:0;font-size:19px}
+.total span{font-size:15px;color:var(--muted)}
+.total b{color:var(--ink)}
+.themes{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;padding-bottom:12px}
+.card{border:0;border-radius:20px;background:var(--surface);box-shadow:var(--shadow);padding:14px 14px 12px;text-align:left;cursor:pointer;display:flex;flex-direction:column;gap:4px;position:relative;overflow:hidden}
+.card::after{content:"";position:absolute;right:-18px;top:-18px;width:70px;height:70px;border-radius:50%;background:var(--c);opacity:.18}
+.card .em{font-size:30px;line-height:1}
+.card .ml{font:700 18px/1.25 var(--font);margin-top:6px}
+.card .en{font-size:13px;color:var(--muted)}
+.card .st{font-size:15px;letter-spacing:2px;color:#d9dfdc;margin-top:4px}
+.card .st i{font-style:normal;color:var(--turmeric)}
+.card:active{transform:translateY(2px);box-shadow:0 1px 0 #b9dccd}
+.foot{font-size:12px;color:var(--muted);text-align:center;padding-bottom:4px}
+
+/* game */
+#game{gap:10px}
+.topbar{display:flex;align-items:center;gap:10px}
+.topbar .t{flex:1;min-width:0}
+.topbar .t b{display:block;font-size:19px;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.topbar .t small{color:var(--muted);font-size:13px}
+.pill{background:var(--surface);border:2px solid var(--line);border-radius:999px;padding:6px 12px 3px;font-size:15px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.pill b{color:var(--leaf)}
+.boardwrap{flex:1;min-height:0;container-type:size;display:grid;place-items:center}
+.board{position:relative;width:min(100cqw,100cqh);aspect-ratio:1;max-width:100%;background:var(--surface);border-radius:18px;box-shadow:0 0 0 3px var(--turmeric),0 6px 0 #c9a02e;box-sizing:border-box;padding:1.5%}
+.grid{position:relative;z-index:1;display:grid;width:100%;height:100%;grid-template-columns:repeat(var(--n),1fr);touch-action:none;user-select:none;-webkit-user-select:none}
+.cell{display:grid;place-items:center;font-weight:700;font-size:calc(min(100cqw,100cqh) / var(--n) * .42);line-height:1;white-space:nowrap;border-radius:50%;cursor:pointer}
+.cell.sel{background:var(--sel)}
+.cell.hint{animation:hint 1s ease-in-out 3;background:#ffe9a6}
+@keyframes hint{50%{background:var(--coral);color:#fff;transform:scale(1.15)}}
+.cell.pop{animation:pop .5s}
+@keyframes pop{50%{transform:scale(1.3)}}
+svg.marks{position:absolute;inset:1.5%;width:97%;height:97%;z-index:0;pointer-events:none}
+.words{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:760px;margin:0 auto}
+.chip{background:var(--surface);border:2px solid var(--line);border-radius:12px;padding:5px 10px 2px;font-size:15px;line-height:1.3;text-align:center}
+.chip.found{background:var(--c);border-color:var(--c);color:#fff}
+.chip.found small{display:block;font-size:11px;opacity:.9}
+.chip small{display:none}
+.bottom{display:flex;justify-content:center;gap:10px}
+.btn{border:0;border-radius:16px;background:var(--leaf);color:#fff;padding:12px 20px 9px;font:700 17px var(--font);cursor:pointer;box-shadow:0 3px 0 #0f5e3c}
+.btn.alt{background:var(--surface);color:var(--ink);box-shadow:var(--shadow);border:2px solid var(--line)}
+.btn:disabled{opacity:.45}
+
+/* word card + win */
+.toast{position:fixed;left:50%;top:calc(76px + env(safe-area-inset-top,0px));transform:translate(-50%,-20px);opacity:0;pointer-events:none;
+  background:var(--surface);border-radius:20px;padding:12px 20px 10px;box-shadow:0 8px 24px rgba(18,58,48,.22);display:flex;align-items:center;gap:14px;transition:.25s;z-index:5;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+.toast .em{font-size:38px}
+.toast b{font-size:22px;display:block}
+.toast span{color:var(--muted);font-size:15px}
+.overlay{position:fixed;inset:0;background:rgba(18,58,48,.55);display:grid;place-items:center;z-index:10;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.panel{background:var(--surface);border-radius:26px;padding:26px 22px 20px;text-align:center;width:min(360px,100%);box-sizing:border-box;display:flex;flex-direction:column;gap:10px}
+.panel h2{margin:0;font-size:30px;color:var(--leaf)}
+.bigstars{font-size:44px;letter-spacing:6px;color:#dfe5e2}
+.bigstars i{font-style:normal;color:var(--turmeric)}
+.panel p{margin:0;color:var(--muted);font-size:15px}
+.panel .row{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-top:6px}
+canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
+@media (prefers-reduced-motion:reduce){.cell.hint,.cell.pop{animation:none}.toast{transition:none}}
+</style>
+</head>
+<body>
+
+
+<section id="home" class="screen">
+  <div class="inner">
+    <div class="brandrow">
+      <div class="logo">
+        <div class="tiles" aria-hidden="true"><span class="on">വാ</span><span>ക</span><span>ല</span><span class="on">ക്ക്</span></div>
+        <div><h1>വാക്ക് വേട്ട</h1><p>Malayalam word hunt</p></div>
+      </div>
+      <button class="iconbtn" id="soundBtn" aria-label="Sound on or off">🔊</button>
+    </div>
+    <div class="levels" role="group" aria-label="Level">
+      <button data-l="easy"><b>എളുപ്പം</b><small>Easy</small></button>
+      <button data-l="medium"><b>ഇടത്തരം</b><small>Medium</small></button>
+      <button data-l="hard"><b>കഠിനം</b><small>Hard</small></button>
+    </div>
+    <p class="levelnote" id="levelNote"></p>
+    <div class="total"><h2>വിഷയങ്ങൾ</h2><span>നക്ഷത്രങ്ങൾ <b id="starTotal">0</b> / <b id="starMax">0</b></span></div>
+    <div class="themes" id="themes"></div>
+    <p class="foot">ഓരോ വാക്കും കണ്ടെത്തുമ്പോൾ അതിന്റെ ഇംഗ്ലീഷ് അർത്ഥം കാണാം.</p>
+  </div>
+</section>
+
+<section id="game" class="screen" hidden>
+  <div class="topbar">
+    <button class="iconbtn" id="backBtn" aria-label="Back to themes">←</button>
+    <div class="t"><b id="gTitle"></b><small id="gLevel"></small></div>
+    <div class="pill"><b id="gCount">0</b>/10</div>
+    <div class="pill" id="gTime">0:00</div>
+  </div>
+  <div class="boardwrap"><div class="board"><svg class="marks" id="marks" viewBox="0 0 100 100" preserveAspectRatio="none"></svg><div class="grid" id="grid"></div></div></div>
+  <div class="words" id="words"></div>
+  <div class="bottom"><button class="btn alt" id="hintBtn">💡 സൂചന (<span id="hintLeft">3</span>)</button></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"><div class="em" id="tEm"></div><div><b id="tMl"></b><span id="tEn"></span></div></div>
+</section>
+
+<div class="overlay" id="win" hidden>
+  <div class="panel">
+    <div class="bigstars" id="winStars"></div>
+    <h2 id="winTitle">കൊള്ളാം!</h2>
+    <p id="winText"></p>
+    <div class="row">
+      <button class="btn" id="nextBtn">അടുത്തത് →</button>
+      <button class="btn alt" id="againBtn">വീണ്ടും</button>
+      <button class="btn alt" id="homeBtn">ഹോം</button>
+    </div>
+  </div>
+</div>
+<canvas id="confetti" hidden></canvas>
+
+<script>
+const THEMES=[
+ {id:"fruits",ml:"പഴങ്ങൾ",en:"Fruits",icon:"🥭",c:"#ff9f1c",w:[["വാ|ഴ|പ്പ|ഴം","Banana","🍌"],["പ|പ്പാ|യ","Papaya","🧡"],["മു|ന്തി|രി","Grapes","🍇"],["ഓ|റ|ഞ്ച്","Orange","🍊"],["പേ|ര|യ്ക്ക","Guava","🍐"],["നാ|ര|ങ്ങ","Lemon","🍋"],["കൈ|ത|ച്ച|ക്ക","Pineapple","🍍"],["ത|ണ്ണി|മ|ത്തൻ","Watermelon","🍉"],["ച|ക്ക","Jackfruit","🟢"],["മാ|ങ്ങ","Mango","🥭"]]},
+ {id:"animals",ml:"മൃഗങ്ങൾ",en:"Animals",icon:"🐘",c:"#8d6cf2",w:[["ആ|ന","Elephant","🐘"],["ക|ടു|വ","Tiger","🐅"],["സിം|ഹം","Lion","🦁"],["കു|ര|ങ്ങൻ","Monkey","🐒"],["പൂ|ച്ച","Cat","🐈"],["മു|യൽ","Rabbit","🐇"],["ഒ|ട്ട|കം","Camel","🐫"],["ക|ര|ടി","Bear","🐻"],["കു|തി|ര","Horse","🐎"],["പ|ശു","Cow","🐄"]]},
+ {id:"colours",ml:"നിറങ്ങൾ",en:"Colours",icon:"🎨",c:"#ff5d8f",w:[["ചു|വ|പ്പ്","Red","🔴"],["പ|ച്ച","Green","🟢"],["മ|ഞ്ഞ","Yellow","🟡"],["നീ|ല","Blue","🔵"],["ക|റു|പ്പ്","Black","⚫"],["വെ|ള്ള","White","⚪"],["ഓ|റ|ഞ്ച്","Orange","🟠"],["പി|ങ്ക്","Pink","🩷"],["ത|വി|ട്ട്","Brown","🟤"],["വ|യ|ല|റ്റ്","Violet","🟣"]]},
+ {id:"body",ml:"ശരീരഭാഗങ്ങൾ",en:"Body parts",icon:"🖐️",c:"#20a4c9",w:[["ക|ണ്ണ്","Eye","👁️"],["മൂ|ക്ക്","Nose","👃"],["ചെ|വി","Ear","👂"],["വാ|യ","Mouth","👄"],["ക|ഴു|ത്ത്","Neck","🧣"],["കാൽ|മു|ട്ട്","Knee","🦵"],["ത|ല","Head","🙂"],["വി|രൽ","Finger","☝️"],["മു|ടി","Hair","💇"],["പ|ല്ല്","Tooth","🦷"]]},
+ {id:"food",ml:"നാടൻ ഭക്ഷണം",en:"Kerala food",icon:"🍛",c:"#e8772e",w:[["പു|ട്ട്","Puttu (steamed rice cake)","🍚"],["അ|പ്പം","Appam (rice pancake)","🥞"],["ദോ|ശ","Dosa","🫓"],["ഇ|ഡ്ഡ|ലി","Idli","⚪"],["സാ|മ്പാർ","Sambar","🍲"],["അ|വി|യൽ","Aviyal (mixed vegetable curry)","🥕"],["പാ|യ|സം","Payasam (sweet pudding)","🍮"],["ബി|രി|യാ|ണി","Biryani","🍛"],["ഉ|പ്പു|മാ|വ്","Upma","🥣"],["പ|പ്പ|ടം","Pappadam","🟡"]]},
+ {id:"birds",ml:"പക്ഷികൾ",en:"Birds",icon:"🦚",c:"#1b8a5a",w:[["മ|രം|കൊ|ത്തി","Woodpecker","🪵"],["വേ|ഴാ|മ്പൽ","Hornbill","🐦"],["ഓ|ലേ|ഞ്ഞാ|ലി","Treepie","🐦"],["പൊ|ന്മാൻ","Kingfisher","🐟"],["കു|രു|വി","Sparrow","🐤"],["പ|രു|ന്ത്","Kite (bird)","🦅"],["മ|യിൽ","Peacock","🦚"],["കു|യിൽ","Koel (cuckoo)","🎶"],["മൂ|ങ്ങ","Owl","🦉"],["കൊ|ക്ക്","Egret","🤍"]]},
+ {id:"veg",ml:"പച്ചക്കറികൾ",en:"Vegetables",icon:"🥕",c:"#5aa832",w:[["വെ|ണ്ട|യ്ക്ക","Okra","🫛"],["വ|ഴു|ത|ന|ങ്ങ","Brinjal","🍆"],["പാ|വ|യ്ക്ക","Bitter gourd","🥒"],["മ|ത്ത|ങ്ങ","Pumpkin","🎃"],["കു|മ്പ|ള|ങ്ങ","Ash gourd","🍈"],["ഉ|രു|ള|ക്കി|ഴ|ങ്ങ്","Potato","🥔"],["ചേ|ന","Yam","🟤"],["മു|രി|ങ്ങ|ക്കാ|യ","Drumstick","🌿"],["പ|ട|വ|ല|ങ്ങ","Snake gourd","🐍"],["കോ|വ|യ്ക്ക","Ivy gourd","🌱"]]},
+ {id:"music",ml:"വാദ്യോപകരണങ്ങൾ",en:"Instruments",icon:"🥁",c:"#c2410c",w:[["ചെ|ണ്ട","Chenda (drum)","🥁"],["മ|ദ്ദ|ളം","Maddalam (drum)","🥁"],["ഇ|ട|യ്ക്ക","Idakka (drum)","🥁"],["തി|മി|ല","Timila (drum)","🥁"],["വീ|ണ","Veena","🎶"],["മൃ|ദം|ഗം","Mridangam","🥁"],["പു|ല്ലാ|ങ്കു|ഴൽ","Flute","🎵"],["നാ|ഗ|സ്വ|രം","Nadaswaram","🎺"],["ഇ|ല|ത്താ|ളം","Cymbals","🔔"],["കൊ|മ്പ്","Kombu (horn)","📯"]]},
+ {id:"arts",ml:"കലകളും ആഘോഷങ്ങളും",en:"Arts & festivals",icon:"🎭",c:"#d6457d",w:[["ക|ഥ|ക|ളി","Kathakali","🎭"],["മോ|ഹി|നി|യാ|ട്ടം","Mohiniyattam","💃"],["തി|രു|വാ|തി|ര","Thiruvathira","🌕"],["കൂ|ടി|യാ|ട്ടം","Koodiyattam","🎭"],["ഓ|ട്ടൻ|തു|ള്ളൽ","Ottamthullal","🎤"],["വ|ള്ളം|ക|ളി","Boat race","🚣"],["പു|ലി|ക്ക|ളി","Tiger dance","🐯"],["ചെ|ണ്ട|മേ|ളം","Drum ensemble","🥁"],["തെ|യ്യം","Theyyam","🔥"],["ഒ|പ്പ|ന","Oppana","👏"]]},
+ {id:"districts",ml:"കേരളത്തിലെ ജില്ലകൾ",en:"Kerala districts",icon:"🗺️",c:"#3a86ff",w:[["തി|രു|വ|ന|ന്ത|പു|രം","Thiruvananthapuram","📍"],["പ|ത്ത|നം|തി|ട്ട","Pathanamthitta","📍"],["ആ|ല|പ്പു|ഴ","Alappuzha","📍"],["കോ|ട്ട|യം","Kottayam","📍"],["ഇ|ടു|ക്കി","Idukki","📍"],["എ|റ|ണാ|കു|ളം","Ernakulam","📍"],["പാ|ല|ക്കാ|ട്","Palakkad","📍"],["മ|ല|പ്പു|റം","Malappuram","📍"],["കോ|ഴി|ക്കോ|ട്","Kozhikode","📍"],["കാ|സർ|കോ|ട്","Kasaragod","📍"]]},
+ {id:"rivers",ml:"കേരളത്തിലെ നദികൾ",en:"Kerala rivers",icon:"🏞️",c:"#0fa3b1",w:[["പെ|രി|യാർ","Periyar","🌊"],["ഭാ|ര|ത|പ്പു|ഴ","Bharathappuzha","🌊"],["പ|മ്പ","Pamba","🌊"],["ചാ|ലി|യാർ","Chaliyar","🌊"],["ചാ|ല|ക്കു|ടി|പ്പു|ഴ","Chalakudy river","🌊"],["ക|ബ|നി","Kabini","🌊"],["മീ|ന|ച്ചി|ലാർ","Meenachil river","🌊"],["അ|ച്ചൻ|കോ|വി|ലാർ","Achankovil river","🌊"],["മൂ|വാ|റ്റു|പു|ഴ","Muvattupuzha river","🌊"],["വ|ള|പ|ട്ട|ണം","Valapattanam river","🌊"]]}
+];
+const LEVELS={
+ easy:{ml:"എളുപ്പം",n:10,note:"10 × 10 കളം · വാക്കുകൾ ഇടത്തുനിന്ന് വലത്തേക്കും മുകളിൽനിന്ന് താഴേക്കും മാത്രം",dirs:[[0,1],[1,0]],straight:10,own:.15,decoys:0},
+ medium:{ml:"ഇടത്തരം",n:12,note:"12 × 12 കളം · ചരിഞ്ഞ വാക്കുകളും ഉണ്ട്",dirs:[[0,1],[1,0],[1,1],[-1,1]],straight:5,own:.35,decoys:5},
+ hard:{ml:"കഠിനം",n:14,note:"14 × 14 കളം · പിന്നോട്ടും ചരിഞ്ഞും · പാതി വാക്കുകൾ കെണിയാകും",dirs:[[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]],straight:2,own:.6,decoys:14}
+};
+const ALLD=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
+const POOL="ക|ത|ന|മ|പ|ര|ല|വ|സ|അ|ആ|ഇ|ഉ|എ|ഒ|കാ|കി|കു|ടി|ച്ച|ല്ല|മ്മ|ങ്ങ|യി|രു|ഴ|ള|ശ|ദ|ഗ|ണ|നാ|മാ|പാ|ലി|വി|ത്ത|ക്ക|പ്പ|ട്ട|രി|നി|ചെ|തെ|കോ|യ|ട|റ|ജ|ബ|ഹ|ഷ".split("|");
+const $=id=>document.getElementById(id);
+const rnd=n=>Math.random()*n|0, pick=a=>a[rnd(a.length)];
+
+/* ---------- storage (best effort) ---------- */
+const store={get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+let progress=store.get("vv-progress",{}), level=store.get("vv-level","easy"), sound=store.get("vv-sound",true);
+if(!LEVELS[level]) level="easy";
+
+/* ---------- puzzle generator ---------- */
+function occurrences(g,w,N){
+  const out=[],L=w.length;
+  for(let r=0;r<N;r++)for(let c=0;c<N;c++)for(const[dr,dc]of ALLD){
+    const er=r+dr*(L-1),ec=c+dc*(L-1);
+    if(er<0||er>=N||ec<0||ec>=N)continue;
+    let ok=true;for(let i=0;i<L;i++)if(g[r+dr*i][c+dc*i]!==w[i]){ok=false;break}
+    if(ok)out.push({r,c,er,ec});
+  }
+  return out;
+}
+function place(g,w,dirs,N,overlap){
+  const L=w.length;let best=null;
+  for(let t=0;t<700;t++){
+    const[dr,dc]=pick(dirs),r=rnd(N),c=rnd(N),er=r+dr*(L-1),ec=c+dc*(L-1);
+    if(er<0||er>=N||ec<0||ec>=N)continue;
+    let fit=true,ov=0;
+    for(let i=0;i<L;i++){const x=g[r+dr*i][c+dc*i];if(x&&x!==w[i]){fit=false;break}if(x)ov++}
+    if(!fit)continue;
+    if(!best||ov>best.ov)best={ov,r,c,dr,dc,er,ec};
+    if(!overlap||ov)break;
+  }
+  if(!best)return null;
+  for(let i=0;i<L;i++)g[best.r+best.dr*i][best.c+best.dc*i]=w[i];
+  return best;
+}
+function generate(theme,lv){
+  const L=LEVELS[lv],N=L.n,words=theme.w.map(x=>x[0].split("|"));
+  const straightDirs=[[0,1],[1,0]];
+  for(let attempt=0;attempt<400;attempt++){
+    const g=Array.from({length:N},()=>Array(N).fill(null)),placed=[];
+    const order=words.map((_,i)=>i).sort((a,b)=>words[b].length-words[a].length);
+    // spread the "straight" quota evenly through the placement order
+    const straightSet=new Set();for(let k=0;k<L.straight;k++)straightSet.add(Math.floor(k*10/Math.max(L.straight,1))+(lv==="hard"?3:0));
+    let ok=true;
+    for(let k=0;k<order.length;k++){
+      const i=order[k],dirs=lv==="easy"?L.dirs:(straightSet.has(k)?straightDirs:L.dirs);
+      const p=place(g,words[i],dirs,N,lv==="hard");
+      if(!p){ok=false;break}
+      placed[i]=p;
+    }
+    if(!ok)continue;
+    const locked=new Set();
+    placed.forEach((p,i)=>{for(let j=0;j<words[i].length;j++)locked.add((p.r+p.dr*j)*N+p.c+p.dc*j)});
+    const longer=words.filter(w=>w.length>=3);
+    for(let d=0;d<L.decoys;d++){const w=pick(longer);place(g,w.slice(0,2+rnd(w.length-2)),ALLD,N,false)}
+    const own=words.flat(),safe=POOL.filter(x=>!own.includes(x));
+    for(const row of g)for(let j=0;j<N;j++)if(!row[j])row[j]=Math.random()<L.own?pick(own):pick(L.own<.3?safe:POOL);
+    // remove accidental second copies
+    let clean=false;
+    for(let fix=0;fix<500;fix++){
+      let extra=null;
+      for(let i=0;i<words.length&&!extra;i++){
+        const p=placed[i];
+        for(const o of occurrences(g,words[i],N)){
+          const same=(o.r===p.r&&o.c===p.c&&o.er===p.er&&o.ec===p.ec);
+          if(!same){extra={o,len:words[i].length};break}
+        }
+      }
+      if(!extra){clean=true;break}
+      const{o,len}=extra,dr=Math.sign(o.er-o.r),dc=Math.sign(o.ec-o.c),free=[];
+      for(let j=0;j<len;j++){const r=o.r+dr*j,c=o.c+dc*j;if(!locked.has(r*N+c))free.push([r,c])}
+      if(!free.length)break;
+      const[fr,fc]=pick(free);g[fr][fc]=pick(safe);
+    }
+    if(clean)return{g,N,placed:placed.map((p,i)=>({i,r:p.r,c:p.c,er:p.er,ec:p.ec,len:words[i].length}))};
+  }
+  throw new Error("could not build puzzle");
+}
+
+/* ---------- sound ---------- */
+let actx=null;
+function tone(freqs,dur=.12,gap=.09){
+  if(!sound)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    freqs.forEach((f,k)=>{
+      const o=actx.createOscillator(),g=actx.createGain(),t=actx.currentTime+k*gap;
+      o.type="triangle";o.frequency.value=f;g.gain.setValueAtTime(.0001,t);g.gain.exponentialRampToValueAtTime(.18,t+.02);g.gain.exponentialRampToValueAtTime(.0001,t+dur);
+      o.connect(g).connect(actx.destination);o.start(t);o.stop(t+dur+.02);
+    });
+  }catch(e){}
+}
+const buzz=ms=>{try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}};
+
+/* ---------- home ---------- */
+const starsOf=(lv,id)=>progress[lv+":"+id]||0;
+const starStr=n=>"<i>"+"★".repeat(n)+"</i>"+"★".repeat(3-n);
+function renderHome(){
+  document.querySelectorAll(".levels button").forEach(b=>b.setAttribute("aria-pressed",b.dataset.l===level));
+  $("levelNote").textContent=LEVELS[level].note;
+  $("themes").innerHTML=THEMES.map(t=>`<button class="card" data-id="${t.id}" style="--c:${t.c}">
+    <span class="em" aria-hidden="true">${t.icon}</span><span class="ml">${t.ml}</span><span class="en">${t.en}</span>
+    <span class="st" aria-label="${starsOf(level,t.id)} of 3 stars">${starStr(starsOf(level,t.id))}</span></button>`).join("");
+  const total=Object.values(progress).reduce((a,b)=>a+b,0);
+  $("starTotal").textContent=total;$("starMax").textContent=THEMES.length*3*3;
+  $("soundBtn").textContent=sound?"🔊":"🔇";
+}
+document.querySelector(".levels").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;level=b.dataset.l;store.set("vv-level",level);renderHome()});
+$("themes").addEventListener("click",e=>{const b=e.target.closest(".card");if(b)startGame(THEMES.findIndex(t=>t.id===b.dataset.id))});
+$("soundBtn").onclick=()=>{sound=!sound;store.set("vv-sound",sound);renderHome();tone([660])};
+
+/* ---------- game ---------- */
+let G=null,timer=null,sel=null,tapStart=null,toastT=null;
+function show(id){["home","game"].forEach(s=>$(s).hidden=s!==id)}
+function startGame(ti){
+  const theme=THEMES[ti],p=generate(theme,level);
+  G={ti,theme,...p,found:new Set(),hints:3,used:0,start:Date.now(),done:false};
+  const grid=$("grid");grid.style.setProperty("--n",G.N);grid.innerHTML="";$("marks").innerHTML="";
+  G.g.forEach((row,r)=>row.forEach((ch,c)=>{const d=document.createElement("div");d.className="cell";d.textContent=ch;d.dataset.r=r;d.dataset.c=c;grid.appendChild(d)}));
+  $("gTitle").textContent=theme.ml;$("gLevel").textContent=LEVELS[level].ml+" · "+theme.en;
+  $("words").innerHTML=theme.w.map((w,i)=>`<div class="chip" data-i="${i}" style="--c:${theme.c}">${w[0].replace(/\|/g,"")}<small>${w[1]}</small></div>`).join("");
+  $("gCount").textContent=0;$("hintLeft").textContent=3;$("hintBtn").disabled=false;$("win").hidden=true;
+  clearInterval(timer);tick();timer=setInterval(tick,1000);
+  show("game");
+}
+function tick(){if(!G)return;const s=(Date.now()-G.start)/1000|0;$("gTime").textContent=`${s/60|0}:${String(s%60).padStart(2,"0")}`}
+const cellEl=(r,c)=>$("grid").children[r*G.N+c];
+function cellAt(x,y){const el=document.elementFromPoint(x,y);return el&&el.classList&&el.classList.contains("cell")?el:null}
+function lineCells(r0,c0,r1,c1){
+  const dr=r1-r0,dc=c1-c0;if(!(dr===0||dc===0||Math.abs(dr)===Math.abs(dc)))return null;
+  const n=Math.max(Math.abs(dr),Math.abs(dc)),sr=Math.sign(dr),sc=Math.sign(dc),out=[];
+  for(let i=0;i<=n;i++)out.push([r0+sr*i,c0+sc*i]);return out;
+}
+function paint(cells){document.querySelectorAll(".cell.sel").forEach(e=>e.classList.remove("sel"));(cells||[]).forEach(([r,c])=>cellEl(r,c).classList.add("sel"))}
+function check(r0,c0,r1,c1){
+  const hit=G.placed.find(p=>!G.found.has(p.i)&&((p.r===r0&&p.c===c0&&p.er===r1&&p.ec===c1)||(p.r===r1&&p.c===c1&&p.er===r0&&p.ec===c0)));
+  if(hit){mark(hit);return true}
+  return false;
+}
+const grid=$("grid");
+grid.addEventListener("pointerdown",e=>{
+  if(!G||G.done)return;const c=cellAt(e.clientX,e.clientY);if(!c)return;
+  sel={r:+c.dataset.r,c:+c.dataset.c,cells:[[+c.dataset.r,+c.dataset.c]],moved:false};
+  if(tapStart){const l=lineCells(tapStart.r,tapStart.c,sel.r,sel.c);if(l)paint(l)}else paint(sel.cells);
+  try{grid.setPointerCapture(e.pointerId)}catch(err){}
+});
+grid.addEventListener("pointermove",e=>{
+  if(!sel)return;const c=cellAt(e.clientX,e.clientY);if(!c)return;
+  const r=+c.dataset.r,cc=+c.dataset.c;if(r===sel.r&&cc===sel.c&&!sel.moved)return;
+  const l=lineCells(sel.r,sel.c,r,cc);if(l){sel.cells=l;sel.moved=true;tapStart=null;paint(l)}
+});
+function endSel(){
+  if(!sel)return;const s=sel;sel=null;
+  if(s.moved&&s.cells.length>1){const a=s.cells[0],b=s.cells[s.cells.length-1];if(!check(a[0],a[1],b[0],b[1]))buzz(30);paint(null);return}
+  // tap-tap selection: first tap marks a start, second tap finishes the line
+  if(tapStart){
+    const a=tapStart;tapStart=null;
+    if(!(a.r===s.r&&a.c===s.c)&&!check(a.r,a.c,s.r,s.c))buzz(30);
+    paint(null);
+  }else{tapStart={r:s.r,c:s.c};paint([[s.r,s.c]])}
+}
+grid.addEventListener("pointerup",endSel);
+grid.addEventListener("pointercancel",()=>{sel=null;tapStart=null;paint(null)});
+
+function mark(p){
+  G.found.add(p.i);tapStart=null;
+  const w=G.theme.w[p.i],u=100/G.N,ns="http://www.w3.org/2000/svg",ln=document.createElementNS(ns,"line");
+  ln.setAttribute("x1",(p.c+.5)*u);ln.setAttribute("y1",(p.r+.5)*u);ln.setAttribute("x2",(p.ec+.5)*u);ln.setAttribute("y2",(p.er+.5)*u);
+  ln.setAttribute("stroke",G.theme.c);ln.setAttribute("stroke-opacity",".35");ln.setAttribute("stroke-width",u*.8);ln.setAttribute("stroke-linecap","round");ln.setAttribute("fill","none");
+  $("marks").appendChild(ln);
+  const dr=Math.sign(p.er-p.r),dc=Math.sign(p.ec-p.c);
+  for(let j=0;j<p.len;j++){const e=cellEl(p.r+dr*j,p.c+dc*j);e.classList.remove("pop","hint");void e.offsetWidth;e.classList.add("pop")}
+  document.querySelector(`.chip[data-i="${p.i}"]`).classList.add("found");
+  $("gCount").textContent=G.found.size;
+  $("tEm").textContent=w[2];$("tMl").textContent=w[0].replace(/\|/g,"");$("tEn").textContent=w[1];
+  $("toast").classList.add("show");clearTimeout(toastT);toastT=setTimeout(()=>$("toast").classList.remove("show"),1900);
+  tone([784,1046]);buzz(20);
+  if(G.found.size===G.theme.w.length)setTimeout(finish,700);
+}
+$("hintBtn").onclick=()=>{
+  if(!G||G.hints<=0||G.done)return;
+  const left=G.placed.filter(p=>!G.found.has(p.i));if(!left.length)return;
+  const p=pick(left),e=cellEl(p.r,p.c);e.classList.remove("hint");void e.offsetWidth;e.classList.add("hint");
+  const chip=document.querySelector(`.chip[data-i="${p.i}"]`);chip.style.borderColor=G.theme.c;setTimeout(()=>chip.style.borderColor="",3000);
+  G.hints--;G.used++;$("hintLeft").textContent=G.hints;if(!G.hints)$("hintBtn").disabled=true;tone([523]);
+};
+function finish(){
+  G.done=true;clearInterval(timer);
+  const stars=G.used===0?3:G.used<=2?2:1,key=level+":"+G.theme.id;
+  if(stars>(progress[key]||0)){progress[key]=stars;store.set("vv-progress",progress)}
+  $("winStars").innerHTML=starStr(stars);
+  $("winTitle").textContent=stars===3?"അടിപൊളി!":stars===2?"കൊള്ളാം!":"നന്നായി!";
+  $("winText").textContent=`10 വാക്കുകളും ${$("gTime").textContent}-ൽ കണ്ടെത്തി`+(G.used?` · ${G.used} സൂചന`:" · സൂചനയില്ലാതെ!");
+  $("win").hidden=false;tone([523,659,784,1046],.18,.11);confetti();
+}
+$("nextBtn").onclick=()=>startGame((G.ti+1)%THEMES.length);
+$("againBtn").onclick=()=>startGame(G.ti);
+$("homeBtn").onclick=goHome;$("backBtn").onclick=goHome;
+function goHome(){clearInterval(timer);$("win").hidden=true;G=null;tapStart=null;renderHome();show("home")}
+
+/* ---------- confetti ---------- */
+function confetti(){
+  if(matchMedia("(prefers-reduced-motion: reduce)").matches)return;
+  const cv=$("confetti"),ctx=cv.getContext("2d");cv.hidden=false;
+  const W=cv.width=innerWidth,H=cv.height=innerHeight,cols=["#ffc23d","#ff6a4d","#1b8a5a","#3a86ff","#d6457d"];
+  const ps=Array.from({length:120},()=>({x:W/2,y:H*.35,vx:(Math.random()-.5)*12,vy:-Math.random()*12-4,s:4+Math.random()*6,c:pick(cols),a:Math.random()*6}));
+  let f=0;(function step(){ctx.clearRect(0,0,W,H);ps.forEach(p=>{p.vy+=.35;p.x+=p.vx;p.y+=p.vy;p.a+=.2;ctx.save();ctx.translate(p.x,p.y);ctx.rotate(p.a);ctx.fillStyle=p.c;ctx.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);ctx.restore()});
+    if(++f<110)requestAnimationFrame(step);else{ctx.clearRect(0,0,W,H);cv.hidden=true}})();
+}
+
+/* ---------- Android back button (inside the app) ---------- */
+try{const App=window.Capacitor&&window.Capacitor.Plugins&&window.Capacitor.Plugins.App;
+  if(App)App.addListener("backButton",()=>{if(!$("game").hidden)goHome();else App.exitApp()})}catch(e){}
+
+window.__vv={THEMES,LEVELS,generate,occurrences};
+renderHome();
+</script>
+
+</body>
+</html>
