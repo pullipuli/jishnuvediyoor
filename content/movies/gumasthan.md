@@ -7,4 +7,8 @@ poster: /images/uploads/mv5bntmxodmwntytnddlns00nmexlwixnwytm2ixyznhotk1njy5xkey
 rating: 2
 genre:
   - Crime
+  - Triller
+plot: Cunning clerk exploits legal loopholes to murder wife, evading suspicion.
+  As public and police close in, they race to outwit his intellect and unravel
+  the mysteries shrouding his crime and home.
 ---
