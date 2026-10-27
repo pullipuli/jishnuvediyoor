@@ -893,3 +893,10 @@ books:
   publisher: Ebury Press
   isbn: ''
   lang: en
+- title: Khasakkinte Ithihasam
+  ml_title: ഖസാക്കിന്റെ ഇതിഹാസം
+  author: O.V. Vijayan
+  genre: Novel
+  publisher: DC Books
+  isbn: '9789356433144'
+  lang: ml
