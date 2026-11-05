@@ -25,7 +25,7 @@
   </div>
 
   <div class="blog-grid" id="blog-grid">
-    {{- range $items }}
+    {{- range $i, $p := $items }}
       {{- $type := .Section }}
       {{- $img := "" }}
       {{- if eq $type "gallery" }}{{ $img = .Params.image }}{{ end }}
@@ -34,7 +34,8 @@
       {{- if eq $type "posts" }}{{ with .Params.cover }}{{ $img = .image }}{{ end }}{{ end }}
     <a class="blog-tile" href="{{ .RelPermalink }}" data-type="{{ $type }}" aria-label="{{ .Title }}">
       {{- if $img }}
-      <img src="{{ $img }}" alt="" loading="lazy" decoding="async">
+      {{- partial "img.html" (dict "src" $img "alt" "" "widths" (slice 240 360 480 720) "lazy" (ge $i 4)
+            "sizes" "(min-width: 1040px) 250px, (min-width: 900px) 24vw, (min-width: 600px) 32vw, 48vw") }}
       {{- else }}
       <div class="blog-note"><span class="blog-q" aria-hidden="true">&ldquo;</span><p>{{ .Summary | plainify | truncate 140 }}</p></div>
       {{- end }}
@@ -46,7 +47,7 @@
 
 <style>
   .blog{
-    --paper:#F6F4EE; --card:#EFEAE0; --line:#E0DACB; --ink:#17161C; --ink-soft:#5C5A63; --ink-faint:#8A867D; --accent:#BD7C34;
+    --paper:#F6F4EE; --card:#EFEAE0; --line:#E0DACB; --ink:#17161C; --ink-soft:#5C5A63; --ink-faint:#6B6861; --accent:#BD7C34; --accent-deep:#8F5A22;
     --ease:cubic-bezier(.2,.75,.2,1);
     max-width:1040px; margin:0 auto; padding-block:12px 40px; color:var(--ink); font-family:'IBM Plex Sans',sans-serif;
   }
@@ -57,8 +58,8 @@
   .blog-pill{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--line);
     background:transparent; color:var(--ink-soft); cursor:pointer}
   .blog-lib{font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 13px; border-radius:999px; border:1px solid var(--accent);
-    color:var(--accent); text-decoration:none; box-shadow:none}
-  .blog-lib:hover{background:var(--accent); color:var(--paper)}
+    color:var(--accent-deep); text-decoration:none; box-shadow:none}
+  .blog-lib:hover{background:var(--accent-deep); border-color:var(--accent-deep); color:var(--paper)}
   .blog-lib:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
   .blog-pill[aria-pressed="true"]{background:var(--ink); border-color:var(--ink); color:var(--paper)}
   .blog-pill:focus-visible,.blog-tile:focus-visible{outline:2px solid var(--accent); outline-offset:3px}

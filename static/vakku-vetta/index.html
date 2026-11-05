@@ -2,17 +2,15 @@
 <html lang="ml">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#f3f7f4">
 <meta name="description" content="വാക്ക് വേട്ട – a Malayalam word-search game for kids. 3 levels, 11 themes, English meanings, leaderboard.">
+<link rel="canonical" href="https://jishnuvediyoor.com/vakku-vetta/">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
 <style>
-@import url('https://smc.org.in/fonts/anjalioldlipi.css');
-html { font-family: 'Anjalioldlipi', sans-serif; }
+/* Navbar font, self-hosted with the rest of the site (see /fonts/). */
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:500;font-display:swap;src:url(/fonts/ibm-plex-sans-latin-500-normal.woff2) format("woff2")}
 </style>
 <title>വാക്ക് വേട്ട</title>
 
@@ -37,11 +35,12 @@ html { font-family: 'Anjalioldlipi', sans-serif; }
 [hidden]{display:none!important}
 *{box-sizing:border-box}
 html,body{height:100%}
-body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:400;font-synthesis:none;margin:0;overflow:hidden;-webkit-tap-highlight-color:transparent}
+body{background:var(--bg);color:var(--ink);font-family:var(--font);font-weight:400;font-synthesis:none;margin:0;overflow:hidden;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
 b,strong,h1,h2,label{font-weight:400}
 button,input,select{font-family:inherit;color:inherit;font-weight:400}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #000;outline-offset:3px}
 .paper{background-color:#fff;background-image:var(--fibre),var(--paper)}
+.app{height:100%}
 .screen{height:100%;display:flex;flex-direction:column;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px}
 #home{overflow-y:auto}
@@ -49,10 +48,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{ou
 
 /* website navbar + footer (web only), same floating dock as jishnuvediyoor.com */
 .navdock{position:fixed;left:50%;bottom:calc(16px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:8;
-  display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;background:rgba(14,13,15,.78);
+  display:flex;align-items:center;gap:2px;padding:6px;border-radius:999px;background:rgba(14,13,15,.80);
   backdrop-filter:blur(18px) saturate(150%);-webkit-backdrop-filter:blur(18px) saturate(150%);
   border:1px solid rgba(255,255,255,.08);box-shadow:0 12px 34px rgba(0,0,0,.28);max-width:calc(100% - 24px)}
-.navdock a{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#9C988E;text-decoration:none;
+.navdock a{font-family:"IBM Plex Sans",system-ui,sans-serif;font-size:14px;font-weight:500;line-height:1.5;color:#B5B1A7;text-decoration:none;
   padding:10px 18px;border-radius:999px;white-space:nowrap;flex:none}
 .navdock a:hover{color:#EDE9DF}
 .navdock a:focus-visible{outline:2px solid #BD7C34;outline-offset:2px}
@@ -202,6 +201,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
 <body>
 
 
+<main class="app">
 <section id="home" class="screen">
   <div class="inner">
     <div class="brandrow">
@@ -243,6 +243,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
   </div>
   <div class="toast paper" id="toast" role="status" aria-live="polite"><div class="em" id="tEm"></div><div><b id="tMl"></b><span id="tEn"></span></div></div>
 </section>
+</main>
 
 <div class="overlay" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="panel paper">
@@ -331,7 +332,7 @@ const LEVELS={
 };
 const ALLD=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
 const POOL="ക|ത|ന|മ|പ|ര|ല|വ|സ|അ|ആ|ഇ|ഉ|എ|ഒ|കാ|കി|കു|ടി|ച്ച|ല്ല|മ്മ|ങ്ങ|യി|രു|ഴ|ള|ശ|ദ|ഗ|ണ|നാ|മാ|പാ|ലി|വി|ത്ത|ക്ക|പ്പ|ട്ട|രി|നി|ചെ|തെ|കോ|യ|ട|റ|ജ|ബ|ഹ|ഷ".split("|");
-const DEDICATION={name:"Anusree Pillai",url:"https://www.instagram.com/anusreespillaii?srtk=YjZtMG8yeWQ2NzF5"};
+const DEDICATION={name:"Anusree Pillai",url:"https://www.instagram.com/anusreespillaii"};
 const $=id=>document.getElementById(id);
 const rnd=n=>Math.random()*n|0, pick=a=>a[rnd(a.length)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));

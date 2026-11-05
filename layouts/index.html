@@ -8,16 +8,54 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="canonical" href="{{ .Site.BaseURL }}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jishnu Vediyoor — Manager, Digital Design">
-<meta property="og:description" content="Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands.">
-<meta property="og:url" content="{{ .Site.BaseURL }}">
-<meta property="og:image" content="{{ "images/jishnuvediyoor.jpeg" | absURL }}">
+{{- $title := "Jishnu Vediyoor — Manager, Digital Design" }}
+{{- $desc := "Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands." }}
+{{- $photo := "images/jishnuvediyoor.jpeg" | absURL }}
+<meta name="robots" content="index, follow">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ site.Home.Permalink }}">
+<link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | absURL }}" title="{{ site.Title }}">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ site.Home.Permalink }}">
+<meta property="og:image" content="{{ $photo }}">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Portrait of Jishnu Vediyoor">
+<meta property="profile:first_name" content="Jishnu">
+<meta property="profile:last_name" content="Vediyoor">
 <meta name="twitter:card" content="summary">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $photo }}">
+<script type="application/ld+json">
+{{- $sameAs := slice }}{{ range site.Params.socialIcons }}{{ $sameAs = $sameAs | append .url }}{{ end }}
+{{- dict
+  "@context" "https://schema.org"
+  "@graph" (slice
+    (dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" site.Home.Permalink)
+      "url" site.Home.Permalink
+      "name" site.Title
+      "inLanguage" "en"
+      "publisher" (dict "@id" (printf "%s#person" site.Home.Permalink)))
+    (dict
+      "@type" "Person"
+      "@id" (printf "%s#person" site.Home.Permalink)
+      "name" "Jishnu Vediyoor"
+      "url" site.Home.Permalink
+      "image" $photo
+      "jobTitle" "Manager, Digital Design"
+      "worksFor" (dict "@type" "Organization" "name" "AXA Global Business Services")
+      "address" (dict "@type" "PostalAddress" "addressLocality" "Bengaluru" "addressRegion" "Karnataka" "addressCountry" "IN")
+      "sameAs" $sameAs))
+  | jsonify | safeJS }}
+</script>
+{{ partial "fonts.html" . }}
 <style>
   :root{
     --paper:#F6F4EE;
@@ -25,20 +63,21 @@
     --card-line:#E0DACB;
     --ink:#17161C;
     --ink-soft:#5C5A63;
-    --ink-faint:#98958E;
+    --ink-faint:#6B6861; /* was #98958E (2.7:1 on paper); now 5:1 for WCAG AA */
     --accent:#BD7C34;
     --accent-deep:#8F5A22;
     --line:#DEDACE;
-    --nav-bg:rgba(14,13,15,0.68);
+    --nav-bg:rgba(14,13,15,0.80); /* was .68; with --nav-text-dim keeps nav links at 4.5:1+ over light pages */
     --nav-bg-strong:rgba(10,9,11,0.86);
     --nav-text:#EDE9DF;
-    --nav-text-dim:#9C988E;
+    --nav-text-dim:#B5B1A7;
     --radius:18px;
     --maxw:760px;
   }
 
   *{box-sizing:border-box;}
-  html{scroll-behavior:smooth; scroll-padding-top:40px;}
+  html{scroll-padding-top:40px;}
+  @media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth;} }
   body{
     margin:0;
     overflow-x:hidden;
@@ -129,6 +168,7 @@
   }
   .social-btn:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); transform:translateY(-2px); }
   .social-btn svg{ width:18px; height:18px; }
+  .social-btn:focus-visible{ outline:2px solid var(--accent-deep); outline-offset:3px; }
   .hero-photo{
     display:flex;
     justify-content:center;
@@ -262,6 +302,7 @@
     font-weight:700;
     font-size:19px;
     letter-spacing:-0.005em;
+    margin:0;
   }
   .card-title .role{
     font-family:'IBM Plex Sans', sans-serif;
@@ -282,7 +323,7 @@
     margin-bottom:14px;
     display:inline-block;
   }
-  .entry.current .timecode{ color:var(--accent); }
+  .entry.current .timecode{ color:var(--accent-deep); font-weight:600; }
   /* earlier roles fold away behind a toggle */
   .more-roles > summary{
     list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
@@ -371,7 +412,7 @@
   .skill-num{
     font-family:'IBM Plex Mono', monospace;
     font-size:11px;
-    color:var(--accent);
+    color:var(--accent-deep);
     letter-spacing:.08em;
     margin-bottom:10px;
     display:block;
@@ -470,6 +511,7 @@
     white-space:nowrap;
   }
   .navdock a:hover{ color:var(--nav-text); }
+  .navdock a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
   .navdock a.active{
     color:var(--nav-text);
     background:rgba(255,255,255,0.1);
@@ -540,6 +582,11 @@
     .navdock a{ padding:8px 14px; font-size:13px; flex:none; }
     .card{ padding:20px; }
   }
+
+  @media (prefers-reduced-motion:reduce){
+    *, *::before, *::after{ transition:none !important; }
+    .social-btn:hover, .cf-send:hover{ transform:none; }
+  }
 </style>
 </head>
 <body>
@@ -557,20 +604,21 @@
         <p class="loc-line">BANGALORE, IN</p>
         <div class="socials">
           <a class="social-btn" href="https://www.linkedin.com/in/jishnuvediyoor/" aria-label="LinkedIn" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
           </a>
           <a class="social-btn" href="mailto:mail@jishnuvediyoor.com" aria-label="Email mail@jishnuvediyoor.com">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
           </a>
           <a class="social-btn" href="https://www.instagram.com/thisconfusedguy/" aria-label="Instagram" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.25-3.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.25-3.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
           </a>
         </div>
       </div>
 
-      <div class="hero-photo" aria-label="Profile photo">
+      <div class="hero-photo">
         <div class="hero-photo-card">
-          <img src="/images/jishnuvediyoor.jpeg" alt="Portrait of Jishnu Vediyoor">
+          {{- partial "img.html" (dict "src" "/images/jishnuvediyoor.jpeg" "alt" "Portrait of Jishnu Vediyoor" "widths" (slice 400 600 800) "eager" true
+                "sizes" "(max-width: 1024px) 100vw, 336px") }}
         </div>
       </div>
     </header>
@@ -600,7 +648,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">AXA Global Business Services (AXA GBS) <span class="role">| Manager, Digital Design</span></div>
+              <h3 class="card-title">AXA Global Business Services (AXA GBS) <span class="role">| Manager, Digital Design</span></h3>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">MAY 2025 &nbsp;→&nbsp; PRESENT</div>
@@ -612,7 +660,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Standard Chartered GBS <span class="role">| Manager, Video Services | Design Studio</span></div>
+              <h3 class="card-title">Standard Chartered GBS <span class="role">| Manager, Video Services | Design Studio</span></h3>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">DEC 2023 &nbsp;→&nbsp; MAY 2025</div>
@@ -624,7 +672,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Carelon Global Solutions India <span class="role">| Senior Associate - Branding and Communications</span></div>
+              <h3 class="card-title">Carelon Global Solutions India <span class="role">| Senior Associate - Branding and Communications</span></h3>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">FEB 2020 &nbsp;→&nbsp; NOV 2023</div>
@@ -636,7 +684,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Artistory Media Labs <span class="role">| Founder</span></div>
+              <h3 class="card-title">Artistory Media Labs <span class="role">| Founder</span></h3>
             </div>
             <div class="meta-row">Kochi, Kerala, India</div>
             <div class="timecode">MAY 2017 &nbsp;→&nbsp; MAR 2022</div>
@@ -651,7 +699,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Lowe's India <span class="role">| Creative Design Consultant, via People360D Consulting</span></div>
+              <h3 class="card-title">Lowe's India <span class="role">| Creative Design Consultant, via People360D Consulting</span></h3>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">APR 2019 &nbsp;→&nbsp; JAN 2020</div>
@@ -663,7 +711,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Buzzstop Integrated Communications Pvt. Ltd. <span class="role">| Digital Technologist</span></div>
+              <h3 class="card-title">Buzzstop Integrated Communications Pvt. Ltd. <span class="role">| Digital Technologist</span></h3>
             </div>
             <div class="meta-row">Kochi, Kerala, India</div>
             <div class="timecode">MAR 2018 &nbsp;→&nbsp; AUG 2018</div>
@@ -675,7 +723,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Winningwayz <span class="role">| Senior Digital Visualizer</span></div>
+              <h3 class="card-title">Winningwayz <span class="role">| Senior Digital Visualizer</span></h3>
             </div>
             <div class="meta-row">Kochi, Kerala, India</div>
             <div class="timecode">APR 2014 &nbsp;→&nbsp; JAN 2017</div>
@@ -687,7 +735,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Smursh Media <span class="role">| Digital Visualizer</span></div>
+              <h3 class="card-title">Smursh Media <span class="role">| Digital Visualizer</span></h3>
             </div>
             <div class="meta-row">Mumbai, Maharashtra, India</div>
             <div class="timecode">JUN 2013 &nbsp;→&nbsp; MAR 2014</div>
@@ -699,7 +747,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">The Links India Pvt Ltd <span class="role">| Visual Director Junior</span></div>
+              <h3 class="card-title">The Links India Pvt Ltd <span class="role">| Visual Director Junior</span></h3>
             </div>
             <div class="meta-row">Kerala, Kerala, India</div>
             <div class="timecode">SEP 2011 &nbsp;→&nbsp; MAR 2013</div>
@@ -711,7 +759,7 @@
           <span class="dot"></span>
           <div class="card">
             <div class="card-top">
-              <div class="card-title">Indiavibes Web TV – India's First Web TV <span class="role">| Cinematographer – Social Marketing</span></div>
+              <h3 class="card-title">Indiavibes Web TV – India's First Web TV <span class="role">| Cinematographer – Social Marketing</span></h3>
             </div>
             <div class="meta-row">India</div>
             <div class="timecode">DEC 2010 &nbsp;→&nbsp; MAR 2013</div>
@@ -722,12 +770,12 @@
         </details>
       </div>
 
-      {{- with site.Data.clients.clients }}
+      {{- with hugo.Data.clients.clients }}
       <div class="clients">
         <span class="sec-tc">SELECTED CLIENTS</span>
         <ul class="client-logos">
           {{- range . }}
-          <li><img src="{{ .logo }}" alt="{{ .name }}" title="{{ .name }}" loading="lazy" decoding="async"></li>
+          <li>{{ partial "img.html" (dict "src" .logo "alt" .name "widths" (slice 180 360) "sizes" "180px") }}</li>
           {{- end }}
         </ul>
       </div>
@@ -848,15 +896,17 @@
       </form>
     </section>
 
-    <footer>
-      <span class="foot-tc">JISHNU VEDIYOOR — BANGALORE, IN · <a href="mailto:mail@jishnuvediyoor.com">MAIL@JISHNUVEDIYOOR.COM</a></span>
-    </footer>
-
   </div>
 </main>
 
-<nav class="navdock" id="navdock">
-  <a href="#home" class="active">Home</a>
+<footer>
+  <div class="wrap">
+    <span class="foot-tc">JISHNU VEDIYOOR — BANGALORE, IN · <a href="mailto:mail@jishnuvediyoor.com">MAIL@JISHNUVEDIYOOR.COM</a></span>
+  </div>
+</footer>
+
+<nav class="navdock" id="navdock" aria-label="Site">
+  <a href="#home" class="active" aria-current="location">Home</a>
   <a href="#about">About</a>
   <a href="#work">Work</a>
   <a href="#education">Education</a>
@@ -867,24 +917,37 @@
 </nav>
 
 <script>
-  const links = document.querySelectorAll('#navdock a');
-  const inPageLinks = Array.from(links).filter(l => l.getAttribute('href').startsWith('#'));
-  const sections = inPageLinks.map(l => document.querySelector(l.getAttribute('href')));
+  // Highlight the section being read in the nav dock. Runs at most once per frame, and only
+  // touches the DOM when the section changes. On narrow screens the dock scrolls sideways, so the
+  // current link is centred by scrolling the dock itself (scrollIntoView here used to fire on every
+  // scroll event and could cut short the page's own smooth scroll to an anchor).
+  (() => {
+    const dock = document.getElementById('navdock');
+    if (!dock) return;
+    const inPageLinks = [...dock.querySelectorAll('a[href^="#"]')];
+    const sections = inPageLinks.map(l => document.querySelector(l.getAttribute('href')));
+    let current = -1, ticking = false;
 
-  function setActive(){
-    let idx = 0;
-    const y = window.scrollY + window.innerHeight * 0.3;
-    sections.forEach((sec, i) => {
-      if (sec && sec.offsetTop <= y) idx = i;
-    });
-    inPageLinks.forEach((l, i) => l.classList.toggle('active', i === idx));
-
-    const activeLink = inPageLinks[idx];
-    if (activeLink) {
-      activeLink.scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    function setActive(){
+      ticking = false;
+      const y = window.scrollY + window.innerHeight * 0.3;
+      let idx = 0;
+      sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) idx = i; });
+      if (idx === current) return;
+      current = idx;
+      inPageLinks.forEach((l, i) => {
+        l.classList.toggle('active', i === idx);
+        if (i === idx) l.setAttribute('aria-current', 'location'); else l.removeAttribute('aria-current');
+      });
+      const link = inPageLinks[idx];
+      if (dock.scrollWidth > dock.clientWidth) {
+        dock.scrollTo({ left: link.offsetLeft - (dock.clientWidth - link.offsetWidth) / 2,
+                        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+      }
     }
-}
-  window.addEventListener('scroll', setActive, { passive:true });
+    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(setActive); } }, { passive:true });
+    setActive();
+  })();
 
   (() => {
     const form = document.getElementById('contact-form');
@@ -894,8 +957,11 @@
     if (new URLSearchParams(location.search).has('sent')) show('Thanks, your message was sent.', 'ok');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      if (form._honey.value) return;
       const btn = form.querySelector('.cf-send');
+      if (btn.disabled || form.elements.namedItem('_honey').value) return;
+      // Whitespace-only fields pass the browser's "required" check; trim and re-check before sending.
+      ['name', 'email', 'message'].forEach(n => { const f = form.elements.namedItem(n); f.value = f.value.trim(); });
+      if (!form.checkValidity()) { form.reportValidity(); return; }
       btn.disabled = true; show('Sending…');
       try {
         const res = await fetch(form.action.replace('formsubmit.co/', 'formsubmit.co/ajax/'), {
@@ -909,7 +975,6 @@
       } finally { btn.disabled = false; }
     });
   })();
-  setActive();
 </script>
 
 </body>

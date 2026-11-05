@@ -1,5 +1,6 @@
 ---
 title: How To Make Millions Before Grandma Dies
+date: 2026-10-07
 year: 2024
 director: Pat Boonnitipat
 poster: /images/uploads/88673645da3d4a1e45226c953c5d42c8b2099e53e8348dec41526f4e8dc205bf.jpg

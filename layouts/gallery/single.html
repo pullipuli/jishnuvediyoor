@@ -3,11 +3,13 @@
   
 
   <!-- Sub-navigation link back to the blog -->
-  <a href="/blog/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:8px;">
+  <a href="/blog/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6B6861;text-decoration:none;display:inline-block;margin-bottom:8px;">
     ← Back to Blog
   </a>
   
-  <img src="{{ .Params.image }}" alt="{{ .Title }}" style="width:100%;border-radius:14px;margin:20px 0;display:block;">
+  {{- partial "img.html" (dict "src" .Params.image "alt" (.Params.caption | default .Title) "widths" (slice 480 712 1068 1424) "eager" true
+        "sizes" "(min-width: 760px) 712px, calc(100vw - 48px)"
+        "style" "width:100%;height:auto;border-radius:14px;margin:20px 0;display:block;") }}
   <h1 style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;margin:0 0 8px;">{{ .Title }}</h1>
   <p style="color:#5C5A63;">{{ .Params.caption }}</p>
 </div>

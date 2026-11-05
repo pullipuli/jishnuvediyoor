@@ -1,13 +1,13 @@
 {{ define "main" }}
 {{- /* Books come from data/library.yml (editable in Pages CMS). */ -}}
-{{- $books := site.Data.library.books | default slice }}
+{{- $books := hugo.Data.library.books | default slice }}
 {{- $ml := sort (where $books "lang" "ml") "author" }}
 {{- $en := sort (where $books "lang" "en") "author" }}
 {{- $bays := slice
   (dict "id" "malayalam" "label" "മലയാളം" "sub" "Malayalam" "books" $ml)
   (dict "id" "english" "label" "English" "sub" "Fiction, crime & ideas" "books" $en)
 }}
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+Malayalam:wght@500;700&display=swap" rel="stylesheet">
+{{ partial "fonts-malayalam.html" . }}
 
 <div class="lib" id="lib">
   <div class="lib-wall" aria-hidden="true"></div>

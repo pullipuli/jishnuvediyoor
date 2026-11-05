@@ -2,11 +2,41 @@ baseURL = 'https://jishnuvediyoor.com/'
 locale = 'en-us'
 title = 'Jishnu Vediyoor'
 theme = "PaperMod"
+# Generates /robots.txt from the theme template (allows everything and points at the sitemap).
+enableRobotsTXT = true
+
+# Only tags are used in content; an empty /categories/ page served no purpose.
+[taxonomies]
+  tag = "tags"
+
+# Expose static/images to Hugo's image pipeline (responsive WebP copies) while still
+# publishing the originals at their existing URLs.
+[[module.mounts]]
+  source = "static"
+  target = "static"
+[[module.mounts]]
+  source = "static/images"
+  target = "assets/images"
+
+[imaging]
+  resampleFilter = "Lanczos"
+  [imaging.webp]
+    quality = 80
+  [imaging.exif]
+    # Processed copies carry no EXIF (and so no GPS location).
+    disableDate = true
+    disableLatLong = true
+
 [params]
   env = "production"
-  description = "Personal website of Jishnu Vediyoor"
+  description = "Personal website of Jishnu Vediyoor, a digital design manager in Bengaluru: portfolio, films, photos, books and projects."
+  author = "Jishnu Vediyoor"
+  # Fallback share image for pages that have no image of their own.
+  images = ["images/jishnuvediyoor.jpeg"]
   # Contact form messages are forwarded here by FormSubmit (formsubmit.co)
   contactEmail = "mail@jishnuvediyoor.com"
+  # Static pages (not built by Hugo) that should still be listed in sitemap.xml.
+  extraSitemapPaths = ["vakku-vetta/", "vakku-vetta/privacy/"]
   # Custom layouts are designed for a light background only
   defaultTheme = "light"
   disableThemeToggle = true
@@ -18,6 +48,9 @@ theme = "PaperMod"
   ShowWordCount = true
   ShowRssButtonInSectionTermList = true
   UseHugoToc = true
+
+  [params.schema]
+    publisherType = "Person"
 
   [[params.socialIcons]]
     name = "linkedin"

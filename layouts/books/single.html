@@ -1,7 +1,7 @@
 {{ define "main" }}
 <div style="max-width:800px;margin:0 auto;padding:60px 24px;font-family:'IBM Plex Sans',sans-serif;color:#17161C;">
   
-  <a href="/blog/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#98958E;text-decoration:none;display:inline-block;margin-bottom:24px;">
+  <a href="/blog/" style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#6B6861;text-decoration:none;display:inline-block;margin-bottom:24px;">
     ← Back to Blog
   </a>
 
@@ -10,7 +10,9 @@
     <!-- Cover Image -->
     {{ if .Params.coverimg }}
     <div style="flex:0 0 260px;max-width:100%;">
-      <img src="{{ .Params.coverimg }}" alt="{{ .Title }}" style="width:100%;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;aspect-ratio:2/3;object-fit:cover;">
+      {{- partial "img.html" (dict "src" .Params.coverimg "alt" (printf "Cover of %s" .Title) "widths" (slice 260 520) "eager" true
+            "sizes" "(min-width: 600px) 260px, calc(100vw - 48px)"
+            "style" "width:100%;height:auto;border-radius:12px;border:1px solid #E0DACB;box-shadow:0 4px 12px rgba(0,0,0,0.05);display:block;aspect-ratio:2/3;object-fit:cover;") }}
     </div>
     {{ end }}
 
@@ -27,11 +29,11 @@
       <!-- Meta (Year, Pages & Rating) -->
       <div style="display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap;">
         {{ if .Params.year }}
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#98958E;">{{ .Params.year }}</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#6B6861;">{{ .Params.year }}</span>
         {{ end }}
 
         {{ if .Params.pages }}
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#98958E;">{{ .Params.pages }} pages</span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#6B6861;">{{ .Params.pages }} pages</span>
         {{ end }}
         
         {{ if .Params.rating }}

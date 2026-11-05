@@ -5,3 +5,9 @@ updates:
     schedule:
       interval: monthly
     open-pull-requests-limit: 5
+  # Proposes PaperMod theme updates (themes/PaperMod submodule) for review.
+  - package-ecosystem: gitsubmodule
+    directory: /
+    schedule:
+      interval: monthly
+    open-pull-requests-limit: 2

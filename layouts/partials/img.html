@@ -1,0 +1,54 @@
+{{- /*
+  Responsive <img> for images under static/images (mounted as assets/images in hugo.toml).
+
+  Usage:
+    {{ partial "img.html" (dict
+         "src" "/images/uploads/photo.jpg"   (required; site path or external URL)
+         "alt" "Description"                 (required; "" for decorative images)
+         "widths" (slice 320 640 960)        (output widths in px; larger-than-original widths are skipped)
+         "sizes" "(min-width: 900px) 250px, 50vw"
+         "eager" true                        (the LCP image: no lazy-loading, high fetch priority)
+         "lazy" false                        (other above-the-fold images: load normally)
+         "class" "..." "style" "..."           (optional attributes)
+         "width" 600 "height" 900)            (optional; only used for external images) }}
+
+  Local raster images become WebP copies at each width, with width/height set from the source so the
+  browser reserves space before the file arrives. External URLs, SVG/GIF and missing files fall back to
+  a plain <img> with the same loading attributes, so nothing breaks if an image cannot be processed.
+*/ -}}
+{{- $src := .src | default "" -}}
+{{- $alt := .alt | default "" -}}
+{{- $widths := .widths | default (slice 480 800 1200) -}}
+{{- $eager := .eager | default false -}}
+{{- $res := false -}}
+{{- $u := urls.Parse $src -}}
+{{- if and $src (not $u.Scheme) (not $u.Host) (strings.HasPrefix $u.Path "/images/") -}}
+  {{- with resources.Get (strings.TrimPrefix "/" $u.Path) -}}
+    {{- if and (eq .MediaType.MainType "image") (in (slice "jpeg" "png" "webp") .MediaType.SubType) -}}
+      {{- $res = . -}}
+    {{- end -}}
+  {{- end -}}
+{{- end -}}
+{{- $class := .class | default "" -}}
+{{- $style := .style | default "" -}}
+{{- $loading := cond $eager `fetchpriority="high"` `loading="lazy"` -}}
+{{- if and (not $eager) (eq .lazy false) }}{{ $loading = `loading="eager"` }}{{ end -}}
+{{- if $res -}}
+  {{- $set := slice -}}
+  {{- $last := false -}}
+  {{- range $widths -}}
+    {{- if le . $res.Width -}}
+      {{- $img := $res.Resize (printf "%dx webp" .) -}}
+      {{- $set = $set | append (printf "%s %dw" $img.RelPermalink $img.Width) -}}
+      {{- $last = $img -}}
+    {{- end -}}
+  {{- end -}}
+  {{- if not $last -}}
+    {{- /* Source is narrower than every requested width: convert it once at its own size. */ -}}
+    {{- $last = $res.Resize (printf "%dx webp" $res.Width) -}}
+    {{- $set = slice (printf "%s %dw" $last.RelPermalink $last.Width) -}}
+  {{- end -}}
+<img src="{{ $last.RelPermalink }}" srcset="{{ delimit $set ", " }}"{{ with .sizes }} sizes="{{ . }}"{{ end }} width="{{ $last.Width }}" height="{{ $last.Height }}" alt="{{ $alt }}" {{ $loading | safeHTMLAttr }} decoding="async"{{ with $class }} class="{{ . }}"{{ end }}{{ with $style }} style="{{ . | safeCSS }}"{{ end }}>
+{{- else -}}
+<img src="{{ $src }}" alt="{{ $alt }}"{{ with .width }} width="{{ . }}"{{ end }}{{ with .height }} height="{{ . }}"{{ end }} {{ $loading | safeHTMLAttr }} decoding="async"{{ if $u.Scheme }} referrerpolicy="no-referrer"{{ end }}{{ with $class }} class="{{ . }}"{{ end }}{{ with $style }} style="{{ . | safeCSS }}"{{ end }}>
+{{- end -}}
