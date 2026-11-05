@@ -1,6 +1,6 @@
 {{ define "main" }}
 {{- /* Books come from data/library.yml (editable in Pages CMS). */ -}}
-{{- $books := site.Data.library.books | default slice }}
+{{- $books := hugo.Data.library.books | default slice }}
 {{- $ml := sort (where $books "lang" "ml") "author" }}
 {{- $en := sort (where $books "lang" "en") "author" }}
 {{- $bays := slice

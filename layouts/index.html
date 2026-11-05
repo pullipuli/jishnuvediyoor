@@ -8,13 +8,53 @@
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="canonical" href="{{ .Site.BaseURL }}">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Jishnu Vediyoor — Manager, Digital Design">
-<meta property="og:description" content="Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands.">
-<meta property="og:url" content="{{ .Site.BaseURL }}">
-<meta property="og:image" content="{{ "images/jishnuvediyoor.jpeg" | absURL }}">
+{{- $title := "Jishnu Vediyoor — Manager, Digital Design" }}
+{{- $desc := "Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands." }}
+{{- $photo := "images/jishnuvediyoor.jpeg" | absURL }}
+<meta name="robots" content="index, follow">
+<meta name="author" content="{{ site.Params.author }}">
+<link rel="canonical" href="{{ site.Home.Permalink }}">
+<link rel="alternate" type="application/rss+xml" href="{{ "index.xml" | absURL }}" title="{{ site.Title }}">
+<meta property="og:type" content="profile">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:locale" content="en_US">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ site.Home.Permalink }}">
+<meta property="og:image" content="{{ $photo }}">
+<meta property="og:image:width" content="800">
+<meta property="og:image:height" content="800">
+<meta property="og:image:alt" content="Portrait of Jishnu Vediyoor">
+<meta property="profile:first_name" content="Jishnu">
+<meta property="profile:last_name" content="Vediyoor">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $photo }}">
+<script type="application/ld+json">
+{{- $sameAs := slice }}{{ range site.Params.socialIcons }}{{ $sameAs = $sameAs | append .url }}{{ end }}
+{{- dict
+  "@context" "https://schema.org"
+  "@graph" (slice
+    (dict
+      "@type" "WebSite"
+      "@id" (printf "%s#website" site.Home.Permalink)
+      "url" site.Home.Permalink
+      "name" site.Title
+      "inLanguage" "en"
+      "publisher" (dict "@id" (printf "%s#person" site.Home.Permalink)))
+    (dict
+      "@type" "Person"
+      "@id" (printf "%s#person" site.Home.Permalink)
+      "name" "Jishnu Vediyoor"
+      "url" site.Home.Permalink
+      "image" $photo
+      "jobTitle" "Manager, Digital Design"
+      "worksFor" (dict "@type" "Organization" "name" "AXA Global Business Services")
+      "address" (dict "@type" "PostalAddress" "addressLocality" "Bengaluru" "addressRegion" "Karnataka" "addressCountry" "IN")
+      "sameAs" $sameAs))
+  | jsonify | safeJS }}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -722,7 +762,7 @@
         </details>
       </div>
 
-      {{- with site.Data.clients.clients }}
+      {{- with hugo.Data.clients.clients }}
       <div class="clients">
         <span class="sec-tc">SELECTED CLIENTS</span>
         <ul class="client-logos">

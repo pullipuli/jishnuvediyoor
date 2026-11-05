@@ -5,15 +5,12 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
 <meta name="theme-color" content="#f3f7f4">
 <meta name="description" content="വാക്ക് വേട്ട – a Malayalam word-search game for kids. 3 levels, 11 themes, English meanings, leaderboard.">
+<link rel="canonical" href="https://jishnuvediyoor.com/vakku-vetta/">
 <link rel="icon" type="image/png" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
-<style>
-@import url('https://smc.org.in/fonts/anjalioldlipi.css');
-html { font-family: 'Anjalioldlipi', sans-serif; }
-</style>
 <title>വാക്ക് വേട്ട</title>
 
 <style>
@@ -331,7 +328,7 @@ const LEVELS={
 };
 const ALLD=[[0,1],[1,0],[1,1],[-1,1],[0,-1],[-1,0],[-1,-1],[1,-1]];
 const POOL="ക|ത|ന|മ|പ|ര|ല|വ|സ|അ|ആ|ഇ|ഉ|എ|ഒ|കാ|കി|കു|ടി|ച്ച|ല്ല|മ്മ|ങ്ങ|യി|രു|ഴ|ള|ശ|ദ|ഗ|ണ|നാ|മാ|പാ|ലി|വി|ത്ത|ക്ക|പ്പ|ട്ട|രി|നി|ചെ|തെ|കോ|യ|ട|റ|ജ|ബ|ഹ|ഷ".split("|");
-const DEDICATION={name:"Anusree Pillai",url:"https://www.instagram.com/anusreespillaii?srtk=YjZtMG8yeWQ2NzF5"};
+const DEDICATION={name:"Anusree Pillai",url:"https://www.instagram.com/anusreespillaii"};
 const $=id=>document.getElementById(id);
 const rnd=n=>Math.random()*n|0, pick=a=>a[rnd(a.length)];
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));

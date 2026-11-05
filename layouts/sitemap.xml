@@ -1,0 +1,23 @@
+{{- /*
+  Based on Hugo's built-in sitemap. Site changes:
+  - leaves out tag/taxonomy listing pages (marked noindex in partials/head.html);
+  - adds the hand-written pages under static/ listed in params.extraSitemapPaths (e.g. /vakku-vetta/).
+*/ -}}
+{{ printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  {{- range where .Pages "Sitemap.Disable" "ne" true }}
+    {{- if and .Permalink (not (in (slice "taxonomy" "term") .Kind)) (ne .Params.robotsNoIndex true) }}
+  <url>
+    <loc>{{ .Permalink }}</loc>
+    {{- if not .Lastmod.IsZero }}
+    <lastmod>{{ .Lastmod.Format "2006-01-02T15:04:05-07:00" | safeHTML }}</lastmod>
+    {{- end }}
+  </url>
+    {{- end }}
+  {{- end }}
+  {{- range site.Params.extraSitemapPaths }}
+  <url>
+    <loc>{{ . | absURL }}</loc>
+  </url>
+  {{- end }}
+</urlset>

@@ -1,0 +1,23 @@
+{{- /*
+  One description per page, shared by <meta name="description">, Open Graph, Twitter and JSON-LD.
+  Movies, photos and books keep their text in plot / caption / description, so use those before
+  falling back to the summary; never fall back to the site-wide description, which would make
+  every such page share the same text.
+*/ -}}
+{{- $d := "" -}}
+{{- with .Description -}}{{- $d = . -}}
+{{- else with .Params.plot -}}{{- $d = . -}}
+{{- else with .Params.synopsis -}}{{- $d = . -}}
+{{- else with .Params.caption -}}{{- $d = . -}}
+{{- else with .Summary -}}{{- $d = . -}}
+{{- end -}}
+{{- if and (not $d) (eq .Section "movies") .IsPage -}}
+  {{- $d = .Title -}}
+  {{- with .Params.year }}{{ $d = printf "%s (%v)" $d . }}{{ end -}}
+  {{- with .Params.director }}{{ $d = printf "%s, directed by %s" $d . }}{{ end -}}
+  {{- $d = printf "%s. Film notes by %s." $d site.Title -}}
+{{- end -}}
+{{- if not $d -}}
+  {{- if .IsHome }}{{ $d = site.Params.description }}{{ else }}{{ $d = printf "%s — %s" .Title site.Params.description }}{{ end -}}
+{{- end -}}
+{{- return ($d | plainify | htmlUnescape | replaceRE `\s+` " " | strings.TrimSpace | truncate 200) -}}
