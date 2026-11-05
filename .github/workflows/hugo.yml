@@ -29,8 +29,8 @@ jobs:
       contents: read
       pages: read
     env:
-      HUGO_VERSION: 0.164.0
-      HUGO_SHA256: 8325f3653032d0fc536503691f4833dc4eb6c6be02ee62466758f3f37a7f2fcd
+      HUGO_VERSION: 0.169.0
+      HUGO_SHA256: a20f7da84e0981bebbecc032cc87f0dda2049a844727720aab14e61ce416e5e9
     steps:
       - name: Install Hugo CLI
         run: |

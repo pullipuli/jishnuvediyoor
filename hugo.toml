@@ -19,8 +19,9 @@ enableRobotsTXT = true
   target = "assets/images"
 
 [imaging]
-  quality = 80
   resampleFilter = "Lanczos"
+  [imaging.webp]
+    quality = 80
   [imaging.exif]
     # Processed copies carry no EXIF (and so no GPS location).
     disableDate = true
