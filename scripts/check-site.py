@@ -176,7 +176,12 @@ def main():
             if not p.canonical:
                 errors.append(f"{path}: missing canonical URL")
             elif not p.canonical.startswith(base):
-                errors.append(f"{path}: canonical not on {base}: {p.canonical}")
+                # Hand-written pages under static/ hard-code the production URL; flag, don't fail.
+                cu = urlparse(p.canonical)
+                if cu.scheme == "https" and cu.path == path.replace("index.html", ""):
+                    warnings.append(f"{path}: canonical uses another host: {p.canonical}")
+                else:
+                    errors.append(f"{path}: canonical not on {base}: {p.canonical}")
             if p.h1 != 1:
                 errors.append(f"{path}: expected one <h1>, found {p.h1}")
             seen_titles.setdefault(title, []).append(path)

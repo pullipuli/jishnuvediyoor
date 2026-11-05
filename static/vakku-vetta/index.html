@@ -40,6 +40,7 @@ b,strong,h1,h2,label{font-weight:400}
 button,input,select{font-family:inherit;color:inherit;font-weight:400}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #000;outline-offset:3px}
 .paper{background-color:#fff;background-image:var(--fibre),var(--paper)}
+.app{height:100%}
 .screen{height:100%;display:flex;flex-direction:column;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:12px}
 #home{overflow-y:auto}
@@ -200,6 +201,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
 <body>
 
 
+<main class="app">
 <section id="home" class="screen">
   <div class="inner">
     <div class="brandrow">
@@ -241,6 +243,7 @@ canvas#confetti{position:fixed;inset:0;pointer-events:none;z-index:11}
   </div>
   <div class="toast paper" id="toast" role="status" aria-live="polite"><div class="em" id="tEm"></div><div><b id="tMl"></b><span id="tEn"></span></div></div>
 </section>
+</main>
 
 <div class="overlay" id="help" hidden role="dialog" aria-modal="true" aria-labelledby="helpTitle">
   <div class="panel paper">
