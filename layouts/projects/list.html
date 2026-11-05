@@ -10,7 +10,8 @@
     {{- range $i, $p := .Params.projects }}
     <article class="proj-card">
       <a class="proj-thumb" href="{{ $p.url }}" tabindex="-1" aria-hidden="true">
-        <img src="{{ $p.image }}" alt="" width="1200" height="750" {{ if gt $i 0 }}loading="lazy" {{ end }}decoding="async">
+        {{- partial "img.html" (dict "src" $p.image "alt" "" "widths" (slice 480 720 1040) "lazy" (gt $i 1) "eager" (eq $i 0)
+              "sizes" "(min-width: 1040px) 508px, (min-width: 760px) 48vw, calc(100vw - 32px)") }}
       </a>
       <div class="proj-body">
         <h2 class="proj-name">
@@ -18,7 +19,7 @@
           {{- with $p.native }} <span class="proj-native" lang="ml">{{ . }}</span>{{ end }}
         </h2>
         {{- with $p.tags }}
-        <ul class="proj-tags" aria-label="Tags">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
+        <ul class="proj-tags">{{ range . }}<li>{{ . }}</li>{{ end }}</ul>
         {{- end }}
         <p class="proj-desc">{{ $p.description }}</p>
         <a class="proj-cta" href="{{ $p.url }}">{{ $p.cta }} <span aria-hidden="true">→</span></a>
@@ -30,7 +31,7 @@
 
 <style>
   .proj{
-    --paper:#F6F4EE; --card:#EFEAE0; --line:#E0DACB; --ink:#17161C; --ink-soft:#5C5A63; --ink-faint:#8A867D; --accent:#BD7C34;
+    --paper:#F6F4EE; --card:#EFEAE0; --line:#E0DACB; --ink:#17161C; --ink-soft:#5C5A63; --ink-faint:#6B6861; --accent:#BD7C34; --accent-deep:#8F5A22;
     --ease:cubic-bezier(.2,.75,.2,1);
     max-width:1040px; margin:0 auto; padding-block:12px 40px; color:var(--ink); font-family:'IBM Plex Sans',sans-serif;
   }
@@ -49,7 +50,7 @@
   .proj-body{display:flex; flex-direction:column; gap:10px; padding:18px 20px 20px; flex:1}
   .proj-name{margin:0; font-family:'Bricolage Grotesque',sans-serif; font-weight:700; font-size:24px; line-height:1.15; display:flex; flex-wrap:wrap; align-items:baseline; gap:4px 10px}
   .proj-name a{color:var(--ink); text-decoration:none; box-shadow:none; display:inline-block; padding:6px 0; margin:-6px 0}
-  .proj-native{font-family:'Manjari','Noto Sans Malayalam',sans-serif; font-weight:700; font-size:18px; color:var(--accent)}
+  .proj-native{font-family:'Manjari','Noto Sans Malayalam',sans-serif; font-weight:700; font-size:18px; color:var(--accent-deep)}
   .proj-tags{list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:6px}
   .proj-tags li{font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.04em; padding:3px 10px; border-radius:999px; border:1px solid var(--line); color:var(--ink-soft); background:var(--paper); margin:0}
   .proj-desc{margin:0; font-size:15px; line-height:1.6; color:var(--ink-soft); flex:1}
@@ -57,7 +58,7 @@
     padding:11px 20px; border-radius:999px; background:var(--ink); color:var(--paper); text-decoration:none; box-shadow:none;
     transition:background .2s ease, transform .2s ease}
   .proj-cta span{transition:transform .2s var(--ease)}
-  .proj-cta:hover{background:var(--accent); color:var(--paper)}
+  .proj-cta:hover{background:var(--accent-deep); color:var(--paper)}
   .proj-cta:hover span{transform:translateX(3px)}
   .proj-cta:focus-visible,.proj-name a:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
   @media (hover:hover){
@@ -66,5 +67,8 @@
   }
   @media (prefers-reduced-motion:reduce){ .proj-card,.proj-thumb img,.proj-cta,.proj-cta span{transition:none} }
 </style>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manjari:wght@700&display=swap">
+<style>
+  /* Manjari is already self-hosted for the Vakku Vetta game; reuse that file. */
+  @font-face{font-family:'Manjari'; font-style:normal; font-weight:700; font-display:swap; src:url(/vakku-vetta/fonts/manjari-700.woff2) format('woff2')}
+</style>
 {{ end }}

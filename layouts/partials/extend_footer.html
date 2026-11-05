@@ -17,8 +17,9 @@
     if (!dock) return;
     const path = location.pathname, inProjects = path.startsWith('/projects/');
     const current = dock.querySelector(inProjects ? '[data-section="projects"]' : '[data-section="blog"]');
+    if (!current) return;
     current.classList.add('active');
     if (path === current.getAttribute('href')) current.setAttribute('aria-current', 'page');
-    if (current) dock.scrollLeft = current.offsetLeft - (dock.clientWidth - current.offsetWidth) / 2;
+    dock.scrollLeft = current.offsetLeft - (dock.clientWidth - current.offsetWidth) / 2;
   })();
 </script>
