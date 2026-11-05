@@ -1,4 +1,5 @@
 # Build and deploy the Hugo site to GitHub Pages.
+# The build steps mirror validate.yml so a pull request that passes validation builds the same way here.
 name: Deploy Hugo site to Pages
 
 on:
@@ -6,10 +7,9 @@ on:
     branches: ["main"]
   workflow_dispatch:
 
+# Only the deploy job needs Pages and OIDC; each job asks for what it uses.
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: "pages"
@@ -21,35 +21,41 @@ defaults:
 
 jobs:
   build:
+    # Manual runs from other branches must not publish.
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pages: read
     env:
       HUGO_VERSION: 0.164.0
+      HUGO_SHA256: 8325f3653032d0fc536503691f4833dc4eb6c6be02ee62466758f3f37a7f2fcd
     steps:
       - name: Install Hugo CLI
         run: |
-          wget -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          wget -nv -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          echo "${HUGO_SHA256}  ${{ runner.temp }}/hugo.deb" | sha256sum --check
           sudo dpkg -i "${{ runner.temp }}/hugo.deb"
-
-      - name: Install Dart Sass
-        run: sudo snap install dart-sass
+          hugo version
 
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           submodules: recursive
+          persist-credentials: false
 
-      - name: Shrink large images and strip GPS location
+      - name: Install image tools
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq libimage-exiftool-perl imagemagick
-          # Published copies only: cap at 2000px on the long side (originals stay in git).
-          find static/images -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -size +500k -exec mogrify -resize '2000x2000>' -quality 85 {} + || true
-          find static/images -type f -iname '*.png' -size +500k -exec mogrify -resize '2000x2000>' {} + || true
-          exiftool -q -r -overwrite_original -gps:all= -ext jpg -ext jpeg -ext png -ext webp static/images || true
+
+      - name: Shrink large images and strip GPS location
+        run: scripts/prepare-images.sh static/images
 
       - name: Setup Pages
         id: pages
-        uses: actions/configure-pages@v5
+        uses: actions/configure-pages@45bfe0192ca1faeb007ade9deae92b16b8254a0d # v6.0.0
 
       - name: Build with Hugo
         env:
@@ -58,10 +64,15 @@ jobs:
           PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
           # Pages may report http:// while HTTPS enforcement is off; publish HTTPS asset URLs.
-          hugo --minify --baseURL "${PAGES_BASE_URL/#http:/https:}/"
+          hugo --minify --gc --baseURL "${PAGES_BASE_URL/#http:/https:}/"
+
+      - name: Check generated site
+        env:
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
+        run: python3 scripts/check-site.py public "${PAGES_BASE_URL/#http:/https:}/"
 
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@fc324d3547104276b827a68afc52ff2a11cc49c9 # v5.0.0
         with:
           path: ./public
 
@@ -70,8 +81,12 @@ jobs:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
+    timeout-minutes: 10
     needs: build
+    permissions:
+      pages: write
+      id-token: write
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@368f82528645a54fb793d4d04e342629a3f51346 # v5.0.1
