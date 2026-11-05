@@ -1,33 +1,25 @@
-# Sample workflow for building and deploying a Hugo site to GitHub Pages
+# Build and deploy the Hugo site to GitHub Pages.
 name: Deploy Hugo site to Pages
 
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
   group: "pages"
   cancel-in-progress: false
 
-# Default to bash
 defaults:
   run:
     shell: bash
 
 jobs:
-  # Build job
   build:
     runs-on: ubuntu-latest
     env:
@@ -35,44 +27,44 @@ jobs:
     steps:
       - name: Install Hugo CLI
         run: |
-          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
-          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+          wget -O "${{ runner.temp }}/hugo.deb" "https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb"
+          sudo dpkg -i "${{ runner.temp }}/hugo.deb"
+
       - name: Install Dart Sass
         run: sudo snap install dart-sass
+
       - name: Checkout
         uses: actions/checkout@v4
         with:
           submodules: recursive
+
       - name: Shrink large images and strip GPS location
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq libimage-exiftool-perl imagemagick
-          # Published copies only: cap at 2000px on the long side (originals stay in git)
+          # Published copies only: cap at 2000px on the long side (originals stay in git).
           find static/images -type f \( -iname '*.jpg' -o -iname '*.jpeg' \) -size +500k -exec mogrify -resize '2000x2000>' -quality 85 {} + || true
           find static/images -type f -iname '*.png' -size +500k -exec mogrify -resize '2000x2000>' {} + || true
           exiftool -q -r -overwrite_original -gps:all= -ext jpg -ext jpeg -ext png -ext webp static/images || true
+
       - name: Setup Pages
         id: pages
         uses: actions/configure-pages@v5
-      - name: Install Node.js dependencies
-        run: "[[ -f package-lock.json || -f npm-shrinkwrap.json ]] && npm ci || true"
+
       - name: Build with Hugo
         env:
           HUGO_CACHEDIR: ${{ runner.temp }}/hugo_cache
           HUGO_ENVIRONMENT: production
           PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
         run: |
-          # Pages reports http:// while "Enforce HTTPS" is off; the site is served over
-          # https, and http asset links (favicons, canonical URLs) get blocked as mixed content.
-          hugo \
-            --minify \
-            --baseURL "${PAGES_BASE_URL/#http:/https:}/"
+          # Pages may report http:// while HTTPS enforcement is off; publish HTTPS asset URLs.
+          hugo --minify --baseURL "${PAGES_BASE_URL/#http:/https:}/"
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./public
 
-  # Deployment job
   deploy:
     environment:
       name: github-pages
