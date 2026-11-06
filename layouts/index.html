@@ -297,6 +297,22 @@
     gap:12px;
     margin-bottom:6px;
   }
+  /* Employer logo in the top-right of a work card. Decorative (alt=""): the company is named in the heading.
+     Greyscale like the client logos, in colour on hover. */
+  .card-logo{
+    flex:0 0 auto; height:36px; max-width:112px; display:flex; align-items:center; justify-content:flex-end;
+  }
+  .card-logo img{
+    max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain;
+    filter:grayscale(1) contrast(1.1); mix-blend-mode:multiply; opacity:.78;
+    transition:filter .25s ease, opacity .25s ease;
+  }
+  .card:hover .card-logo img{ filter:none; opacity:1; }
+  @media (max-width:560px){
+    .card-top{ flex-direction:column-reverse; gap:10px; }
+    .card-logo{ justify-content:flex-start; height:30px; }
+  }
+
   .card-title{
     font-family:'Bricolage Grotesque', sans-serif;
     font-weight:700;
@@ -649,6 +665,7 @@
           <div class="card">
             <div class="card-top">
               <h3 class="card-title">AXA Global Business Services (AXA GBS) <span class="role">| Manager, Digital Design</span></h3>
+              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/axa.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">MAY 2025 &nbsp;→&nbsp; PRESENT</div>
@@ -661,6 +678,7 @@
           <div class="card">
             <div class="card-top">
               <h3 class="card-title">Standard Chartered GBS <span class="role">| Manager, Video Services | Design Studio</span></h3>
+              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/standard-chartered.svg" "alt" "" "widths" (slice 112 224) "sizes" "112px" "width" 280 "height" 110) }}</div>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">DEC 2023 &nbsp;→&nbsp; MAY 2025</div>
@@ -673,6 +691,7 @@
           <div class="card">
             <div class="card-top">
               <h3 class="card-title">Carelon Global Solutions India <span class="role">| Senior Associate - Branding and Communications</span></h3>
+              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/carelon.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">FEB 2020 &nbsp;→&nbsp; NOV 2023</div>
@@ -700,6 +719,7 @@
           <div class="card">
             <div class="card-top">
               <h3 class="card-title">Lowe's India <span class="role">| Creative Design Consultant, via People360D Consulting</span></h3>
+              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/lowes.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
             </div>
             <div class="meta-row">Bengaluru, Karnataka, India</div>
             <div class="timecode">APR 2019 &nbsp;→&nbsp; JAN 2020</div>
