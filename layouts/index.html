@@ -2,14 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+{{- $title := "Jishnu Vediyoor — Designer and filmmaker, Bengaluru" }}
+{{- $desc := "Brand identity, motion graphics and video production by Jishnu Vediyoor, a Bengaluru design leader with 12+ years in banking, insurance, retail and healthcare. Available for freelance projects." }}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Jishnu Vediyoor — Manager, Digital Design</title>
-<meta name="description" content="Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands.">
+<title>{{ $title }}</title>
+<meta name="description" content="{{ $desc }}">
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-{{- $title := "Jishnu Vediyoor — Manager, Digital Design" }}
-{{- $desc := "Design leader in Bengaluru with 12+ years in brand identity, motion graphics and video production for banking, insurance, retail and healthcare brands." }}
 {{- $photo := "images/jishnuvediyoor.jpeg" | absURL }}
 <meta name="robots" content="index, follow">
 <meta name="author" content="{{ site.Params.author }}">
@@ -55,932 +55,519 @@
       "sameAs" $sameAs))
   | jsonify | safeJS }}
 </script>
-{{ partial "fonts.html" . }}
+<link rel="preload" href="/fonts/archivo-latin-wdth-normal.woff2" as="font" type="font/woff2" crossorigin>
 <style>
+  /* Archivo, one variable family with weight (100–900) and width (62–125%) axes. Self-hosted, OFL. */
+  @font-face{font-family:'Archivo'; font-style:normal; font-weight:100 900; font-stretch:62% 125%; font-display:swap;
+    src:url(/fonts/archivo-latin-ext-wdth-normal.woff2) format('woff2');
+    unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,U+2113,U+2C60-2C7F,U+A720-A7FF}
+  @font-face{font-family:'Archivo'; font-style:normal; font-weight:100 900; font-stretch:62% 125%; font-display:swap;
+    src:url(/fonts/archivo-latin-wdth-normal.woff2) format('woff2');
+    unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
+  /*
+    Design notes
+    - One idea: cinematography. The name loads anamorphically squeezed and de-squeezes to full width
+      (font-stretch 62% → 125%). Work history is set as end credits on a black screen.
+    - Palette: silver-halide grey paper, ink, true black screen, one darkroom-safelight red for
+      the hire action, availability and focus. Nothing else is coloured.
+    - Type: Archivo only; width does the work weight would usually do.
+  */
   :root{
-    --paper:#F6F4EE;
-    --card:#EFEAE0;
-    --card-line:#E0DACB;
-    --ink:#17161C;
-    --ink-soft:#5C5A63;
-    --ink-faint:#6B6861; /* was #98958E (2.7:1 on paper); now 5:1 for WCAG AA */
-    --accent:#BD7C34;
-    --accent-deep:#8F5A22;
-    --line:#DEDACE;
-    --nav-bg:rgba(14,13,15,0.80); /* was .68; with --nav-text-dim keeps nav links at 4.5:1+ over light pages */
-    --nav-bg-strong:rgba(10,9,11,0.86);
-    --nav-text:#EDE9DF;
-    --nav-text-dim:#B5B1A7;
-    --radius:18px;
-    --maxw:760px;
-  }
+    --paper:#E3E4DF;
+    --paper-deep:#D6D8D2;
+    --ink:#16181B;
+    --ink-soft:#4E5257;
+    --rule:#B9BCB5;
+    --screen:#000;
+    --screen-ink:#EFEFEC;
+    --screen-soft:#A0A3A7;
+    --safelight:#C21E16;
 
-  *{box-sizing:border-box;}
-  html{scroll-padding-top:40px;}
-  @media (prefers-reduced-motion:no-preference){ html{scroll-behavior:smooth;} }
+    --gutter:clamp(20px, 4vw, 56px);
+    --measure:34em;
+    --step-0:clamp(16.5px, 0.35vw + 15px, 18px);
+    --step-1:clamp(19px, 0.6vw + 16px, 23px);
+    --step-2:clamp(24px, 1.2vw + 18px, 34px);
+    --step-3:clamp(34px, 3.2vw + 20px, 64px);
+  }
+  *,*::before,*::after{ box-sizing:border-box; }
+  html{ background:var(--paper); scroll-padding-top:72px; -webkit-text-size-adjust:100%; }
+  @media (prefers-reduced-motion:no-preference){ html{ scroll-behavior:smooth; } }
   body{
-    margin:0;
-    overflow-x:hidden;
-    background:var(--paper);
-    color:var(--ink);
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:16px;
-    line-height:1.6;
-    -webkit-font-smoothing:antialiased;
+    margin:0; color:var(--ink); background:var(--paper);
+    font-family:'Archivo', system-ui, sans-serif; font-size:var(--step-0); line-height:1.55;
+    font-stretch:100%; font-weight:400; font-optical-sizing:auto;
+    -webkit-font-smoothing:antialiased; text-rendering:optimizeLegibility;
   }
+  img{ display:block; max-width:100%; height:auto; }
+  a{ color:inherit; }
+  :focus-visible{ outline:3px solid var(--safelight); outline-offset:3px; border-radius:2px; }
+  .skip{ position:absolute; left:var(--gutter); top:-60px; z-index:30; background:var(--ink); color:var(--paper);
+    padding:10px 16px; text-decoration:none; }
+  .skip:focus{ top:12px; }
+  .wrap{ padding-inline:var(--gutter); max-width:1600px; margin-inline:auto; }
+  h1,h2,h3{ margin:0; font-weight:700; line-height:1.05; letter-spacing:-0.01em; }
+  p{ margin:0; }
 
-  ::selection{ background:var(--accent); color:#fff; }
+  /* ---------- Top bar ---------- */
+  .bar{
+    position:sticky; top:0; z-index:20; background:color-mix(in srgb, var(--paper) 92%, transparent);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--rule);
+  }
+  .bar-in{ display:flex; align-items:center; gap:28px; height:60px; }
+  .wordmark{ font-weight:800; font-stretch:112%; text-decoration:none; font-size:17px; letter-spacing:-0.01em; white-space:nowrap; }
+  .bar nav{ display:flex; gap:22px; font-size:15px; }
+  .bar nav a{ text-decoration:none; color:var(--ink-soft); padding:6px 0; white-space:nowrap; }
+  .bar nav a:hover, .bar nav a[aria-current]{ color:var(--ink); text-decoration:underline; text-underline-offset:6px; text-decoration-thickness:1px; }
+  .bar .sep{ width:1px; height:16px; background:var(--rule); align-self:center; }
+  .hire{
+    margin-left:auto; display:inline-flex; align-items:center; gap:10px; white-space:nowrap;
+    background:var(--safelight); color:#fff; text-decoration:none; font-weight:600; font-size:15px;
+    padding:9px 16px; border-radius:999px;
+  }
+  .hire:hover{ background:#9E150F; }
 
-  .wrap{
-    max-width:var(--maxw);
-    margin:0 auto;
-    padding:0 24px;
+  /* ---------- Hero ---------- */
+  .hero{ padding-top:clamp(28px, 5vw, 64px); }
+  .avail{ display:flex; align-items:center; gap:10px; font-size:15px; color:var(--ink-soft); }
+  .avail::before{ content:""; width:9px; height:9px; border-radius:50%; background:var(--safelight); flex:none; }
+  .name{
+    margin-top:clamp(14px, 2vw, 24px);
+    font-size:clamp(48px, 16.4vw, 266px); font-weight:800; line-height:.84; letter-spacing:-0.035em;
+    font-stretch:125%; margin-left:-0.04em;
   }
-
-  /* ---------- background texture: faint frame ticks ---------- */
-  .filmrail{
-    position:fixed; top:0; left:0; height:100%; width:100%;
-    pointer-events:none; z-index:0;
-    background-image:
-      repeating-linear-gradient(180deg, transparent, transparent 79px, rgba(23,22,28,0.05) 79px, rgba(23,22,28,0.05) 80px);
-    opacity:.5;
-  }
-
-  header, main, footer{ position:relative; z-index:1; }
-
-  /* ---------- HERO ---------- */
-  #home{
-    padding:120px 0 64px;
-    display:grid;
-    grid-template-columns: minmax(0, 1.2fr) minmax(260px, 420px);
-    align-items:center;
-    gap:36px;
-  }
-  .hero-copy{
-    min-width:0;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12.5px;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    color:var(--accent-deep);
-    display:flex;
-    align-items:center;
-    gap:8px;
-    margin-bottom:18px;
-  }
-  .eyebrow::before{
-    content:"";
-    width:7px; height:7px; border-radius:50%;
-    background:var(--accent);
-    box-shadow:0 0 0 3px rgba(189,124,52,0.18);
-  }
-  h1.name{
-    font-family:'Bricolage Grotesque', sans-serif;
-    font-weight:800;
-    font-size:clamp(44px, 8vw, 74px);
-    line-height:0.98;
-    letter-spacing:-0.02em;
-    margin:0 0 14px;
-  }
-  .role-line{
-    font-size:19px;
-    color:var(--ink-soft);
-    margin:0 0 4px;
-  }
-  .loc-line{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:13px;
-    color:var(--ink-faint);
-    letter-spacing:.04em;
-    margin:0 0 28px;
-  }
-  .socials{ display:flex; gap:10px; }
-  .social-btn{
-    width:42px; height:42px;
-    border-radius:12px;
-    border:1px solid var(--line);
-    background:var(--paper);
-    display:flex; align-items:center; justify-content:center;
-    color:var(--ink);
-    transition:background .18s ease, transform .18s ease, border-color .18s ease;
-  }
-  .social-btn:hover{ background:var(--ink); color:var(--paper); border-color:var(--ink); transform:translateY(-2px); }
-  .social-btn svg{ width:18px; height:18px; }
-  .social-btn:focus-visible{ outline:2px solid var(--accent-deep); outline-offset:3px; }
-  .hero-photo{
-    display:flex;
-    justify-content:center;
-    align-items:center;
-  }
-  .hero-photo-card{
-    position:relative;
-    width:min(100%, 360px);
-    aspect-ratio:1;
-    padding:12px;
-    border-radius:28px;
-    overflow:hidden;
-    background:linear-gradient(145deg, rgba(255,255,255,0.4), rgba(239,234,224,0.8));
-    border:1px solid rgba(23,22,28,0.08);
-    box-shadow:0 28px 48px rgba(23,22,28,0.12);
-  }
-  .hero-photo-card::before{
-    content:"";
-    position:absolute;
-    inset:14px auto auto 14px;
-    width:90px;
-    height:90px;
-    border-radius:20px;
-    background:rgba(189,124,52,0.14);
-    z-index:0;
-  }
-  .hero-photo-card img{
-    position:relative;
-    z-index:1;
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    object-position:center center;
-    border-radius:22px;
-    background:#ddd;
-  }
-
-  /* ---------- SECTION HEADERS ---------- */
-  section{ padding:56px 0; }
-  section + section{ border-top:1px solid var(--line); }
-  .sec-head{
-    display:flex;
-    align-items:baseline;
-    gap:14px;
-    margin-bottom:30px;
-  }
-  .sec-tc{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--ink-faint);
-    letter-spacing:.08em;
-  }
-  h2.sec-title{
-    font-family:'Bricolage Grotesque', sans-serif;
-    font-weight:700;
-    font-size:30px;
-    letter-spacing:-0.01em;
-    margin:0;
-  }
-  .about-copy{
-    font-size:17px;
-    color:var(--ink-soft);
-    max-width:62ch;
-    margin:0;
-  }
-
-  .highlights{
-    list-style:none; padding:0; margin:28px 0 0;
-    display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:14px;
-  }
-  .highlights li{
-    display:flex; flex-direction:column; gap:6px;
-    padding:18px 20px; border-radius:var(--radius);
-    background:var(--card); border:1px solid var(--card-line);
-  }
-  .hl-fig{
-    font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:26px; line-height:1.1;
-    color:var(--accent-deep); font-variant-numeric:tabular-nums;
-  }
-  .hl-text{ font-size:14px; line-height:1.45; color:var(--ink-soft); }
-  @media (max-width:600px){ .highlights{ grid-template-columns:1fr; } }
-
-  /* ---------- TIMELINE (Work) ---------- */
-  .timeline{
-    position:relative;
-    padding-left:26px;
-  }
-  .timeline::before{
-    content:"";
-    position:absolute;
-    left:5px; top:6px; bottom:6px;
-    width:1px;
-    background:
-      repeating-linear-gradient(180deg, var(--ink-faint) 0 2px, transparent 2px 10px);
-    opacity:.55;
-  }
-  .entry{
-    position:relative;
-    margin-bottom:14px;
-  }
-  .entry:last-child{ margin-bottom:0; }
-  .dot{
-    position:absolute;
-    left:-26px; top:26px;
-    width:11px; height:11px;
-    border-radius:50%;
-    background:var(--paper);
-    border:2px solid var(--ink-faint);
-  }
-  .entry.current .dot{
-    background:var(--accent);
-    border-color:var(--accent);
-    box-shadow:0 0 0 4px rgba(189,124,52,0.2);
-  }
-  .card{
-    background:var(--card);
-    border:1px solid var(--card-line);
-    border-radius:var(--radius);
-    padding:24px 26px;
-  }
-  .card-top{
-    display:flex;
-    align-items:flex-start;
-    justify-content:space-between;
-    gap:12px;
-    margin-bottom:6px;
-  }
-  /* Employer logo in the top-right of a work card. Decorative (alt=""): the company is named in the heading.
-     Greyscale like the client logos, in colour on hover. */
-  .card-logo{
-    flex:0 0 auto; height:36px; max-width:112px; display:flex; align-items:center; justify-content:flex-end;
-  }
-  .card-logo img{
-    max-height:100%; max-width:100%; width:auto; height:auto; object-fit:contain;
-    filter:grayscale(1) contrast(1.1); mix-blend-mode:multiply; opacity:.78;
-    transition:filter .25s ease, opacity .25s ease;
-  }
-  .card:hover .card-logo img{ filter:none; opacity:1; }
-  @media (max-width:560px){
-    .card-top{ flex-direction:column-reverse; gap:10px; }
-    .card-logo{ justify-content:flex-start; height:30px; }
-  }
-
-  .card-title{
-    font-family:'Bricolage Grotesque', sans-serif;
-    font-weight:700;
-    font-size:19px;
-    letter-spacing:-0.005em;
-    margin:0;
-  }
-  .card-title .role{
-    font-family:'IBM Plex Sans', sans-serif;
-    font-weight:400;
-    color:var(--ink-soft);
-    font-size:16px;
-  }
-  .meta-row{
-    font-size:14.5px;
-    color:var(--ink-soft);
-    margin-bottom:2px;
-  }
-  .timecode{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12.5px;
-    letter-spacing:.05em;
-    color:var(--accent-deep);
-    margin-bottom:14px;
-    display:inline-block;
-  }
-  .entry.current .timecode{ color:var(--accent-deep); font-weight:600; }
-  /* earlier roles fold away behind a toggle */
-  .more-roles > summary{
-    list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:8px;
-    margin:2px 0 0; padding:9px 16px; border-radius:999px;
-    border:1px solid var(--card-line); background:var(--paper);
-    font-family:'IBM Plex Mono', monospace; font-size:12px; letter-spacing:.04em; color:var(--ink-soft);
-  }
-  .more-roles > summary::-webkit-details-marker{ display:none; }
-  .more-roles > summary::after{ content:"↓"; color:var(--accent); transition:transform .25s ease; }
-  .more-roles[open] > summary::after{ transform:rotate(180deg); }
-  .more-roles > summary:hover{ color:var(--ink); border-color:var(--ink-faint); }
-  .more-roles > summary:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
-  .more-roles .more-close, .more-roles[open] .more-open{ display:none; }
-  .more-roles[open] .more-close{ display:inline; }
-  .more-roles[open] > summary{ margin-bottom:14px; }
-  .more-roles .entry:last-child{ margin-bottom:0; }
-
-  /* client logos, shown in black and white */
-  .clients{ margin-top:44px; }
-  .clients .sec-tc{ display:block; margin-bottom:16px; }
-  .client-logos{
-    list-style:none; margin:0; padding:0;
-    display:grid; grid-template-columns:repeat(auto-fill, minmax(120px, 1fr)); gap:10px;
-  }
-  .client-logos li{
-    height:84px; display:flex; align-items:center; justify-content:center; padding:16px 18px;
-    background:var(--card); border:1px solid var(--card-line); border-radius:14px;
-  }
-  .client-logos img{
-    max-width:100%; max-height:100%; object-fit:contain;
-    filter:grayscale(1) contrast(1.15); mix-blend-mode:multiply; opacity:.72;
-    transition:opacity .25s ease;
-  }
-  .client-logos li:hover img{ opacity:1; }
-
-  .card-summary{
-    font-size:15px;
-    color:var(--ink-soft);
-    margin:0;
-  }
-  .card-summary .label{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:10.5px;
-    letter-spacing:.1em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
-    display:block;
-    margin-bottom:6px;
-  }
-
-  /* ---------- EDUCATION (reuse card, lighter) ---------- */
-  .edu-list{
-    list-style:none; margin:0; padding:0;
-    background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
-  }
-  .edu-row{
-    display:grid; grid-template-columns:76px minmax(0,1fr) auto; align-items:baseline; gap:4px 18px;
-    padding:16px 22px;
-  }
-  .edu-row + .edu-row{ border-top:1px solid var(--card-line); }
-  .edu-year{
-    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.05em;
-    color:var(--accent-deep); font-variant-numeric:tabular-nums;
-  }
-  .edu-main{ display:flex; flex-direction:column; gap:2px; min-width:0; }
-  .edu-name{ font-family:'Bricolage Grotesque', sans-serif; font-weight:700; font-size:16.5px; }
-  .edu-degree{ font-size:14px; color:var(--ink-soft); }
-  .edu-loc{ font-size:13px; color:var(--ink-faint); text-align:right; white-space:nowrap; }
-  @media (max-width:600px){
-    .edu-row{ grid-template-columns:62px minmax(0,1fr); padding:14px 18px; }
-    .edu-loc{ grid-column:2; text-align:left; white-space:normal; }
-  }
-
-  /* ---------- SKILLS ---------- */
-  .skills-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:14px;
-  }
-  .skill-card{
-    background:var(--card);
-    border:1px solid var(--card-line);
-    border-radius:var(--radius);
-    padding:22px 24px;
-  }
-  .skill-num{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:11px;
-    color:var(--accent-deep);
-    letter-spacing:.08em;
-    margin-bottom:10px;
-    display:block;
-  }
-  .skill-name{
-    font-family:'Bricolage Grotesque', sans-serif;
-    font-weight:700;
-    font-size:18px;
-    margin:0 0 8px;
-  }
-  .skill-list{
-    font-size:14px;
-    color:var(--ink-soft);
-    margin:0;
-  }
-
-  /* ---------- CONTACT ---------- */
-  .contact-form{
-    display:flex; flex-direction:column; gap:14px;
-    background:var(--card); border:1px solid var(--card-line); border-radius:var(--radius);
-    padding:24px 26px;
-  }
-  .cf-row{ display:grid; grid-template-columns:1fr 1fr; gap:14px; }
-  .cf-field{ display:flex; flex-direction:column; gap:6px; min-width:0; }
-  .cf-field span{
-    font-family:'IBM Plex Mono', monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint);
-  }
-  .cf-field input, .cf-field textarea{
-    font:inherit; font-size:15px; color:var(--ink); width:100%;
-    background:var(--paper); border:1px solid var(--card-line); border-radius:12px; padding:11px 14px;
-    transition:border-color .2s ease, box-shadow .2s ease;
-  }
-  .cf-field textarea{ resize:vertical; min-height:120px; }
-  .cf-field input:focus, .cf-field textarea:focus{
-    outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(189,124,52,0.18);
-  }
-  .cf-honey{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
-  .cf-actions{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
-  .cf-send{
-    font:inherit; font-size:14px; font-weight:600; cursor:pointer;
-    color:var(--paper); background:var(--ink); border:1px solid var(--ink); border-radius:999px; padding:11px 22px;
-    transition:transform .2s ease, background .2s ease;
-  }
-  .cf-send:hover{ transform:translateY(-1px); }
-  .cf-send:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
-  .cf-send[disabled]{ opacity:.6; cursor:progress; transform:none; }
-  .cf-status{ margin:0; font-size:14px; color:var(--ink-soft); }
-  .cf-status.ok{ color:#2F6B3A; }
-  .cf-status.err{ color:#A23B2A; }
-  .cf-alt{ margin:0; font-size:13.5px; color:var(--ink-faint); }
-  .cf-alt a{ color:var(--ink-soft); }
-  @media (max-width:600px){
-    .cf-row{ grid-template-columns:1fr; }
-    .contact-form{ padding:20px; }
-  }
-
-  footer{
-    padding:60px 0 160px;
-    text-align:center;
-  }
-  footer .foot-tc a{ color:inherit; text-decoration:underline; text-underline-offset:3px; }
-  footer .foot-tc{
-    font-family:'IBM Plex Mono', monospace;
-    font-size:12px;
-    color:var(--ink-faint);
-    letter-spacing:.08em;
-  }
-
-  /* ---------- FLOATING NAV (dark, transparent, blurred) ---------- */
-  .navdock{
-    position:fixed;
-    left:50%;
-    bottom:26px;
-    transform:translateX(-50%);
-    z-index:50;
-    display:flex;
-    align-items:center;
-    gap:2px;
-    padding:6px;
-    border-radius:999px;
-    background:var(--nav-bg);
-    backdrop-filter:blur(18px) saturate(150%);
-    -webkit-backdrop-filter:blur(18px) saturate(150%);
-    border:1px solid rgba(255,255,255,0.08);
-    box-shadow:0 12px 34px rgba(0,0,0,0.28), inset 0 1px 0 rgba(255,255,255,0.04);
-  }
-  .navdock a{
-    font-family:'IBM Plex Sans', sans-serif;
-    font-size:14px;
-    font-weight:500;
-    color:var(--nav-text-dim);
-    text-decoration:none;
-    padding:10px 18px;
-    border-radius:999px;
-    transition:color .2s ease, background .2s ease;
-    white-space:nowrap;
-  }
-  .navdock a:hover{ color:var(--nav-text); }
-  .navdock a:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
-  .navdock a.active{
-    color:var(--nav-text);
-    background:rgba(255,255,255,0.1);
-  }
-  .navdock a.active::before{
-    content:"";
-    display:inline-block;
-    width:5px; height:5px;
-    border-radius:50%;
-    background:var(--accent);
-    margin-right:7px;
-    vertical-align:middle;
-  }
-
-  /* ---------- MOBILE / TABLET: full-bleed fading photo banner ---------- */
-  @media (max-width:1024px){
-    #home{
-      grid-template-columns:1fr;
-      padding:0 0 48px;
+  .name span{ display:block; }
+  .name span + span{ text-align:right; }
+  @media (prefers-reduced-motion:no-preference){
+    .name span{ animation:desqueeze 1.5s cubic-bezier(.2,.7,0,1) .15s both; transform-origin:left; }
+    .name span + span{ animation-delay:.32s; transform-origin:right; }
+    @keyframes desqueeze{
+      from{ font-stretch:62%; letter-spacing:.02em; opacity:.15; }
+      40%{ opacity:1; }
+      to{ font-stretch:125%; letter-spacing:-0.035em; opacity:1; }
     }
-    .hero-photo{
-      order:-1;
-      width:100vw;
-      margin-left:calc(50% - 50vw);
-      margin-bottom:24px;
-    }
-    .hero-photo-card{
-      width:100%;
-      height:26vh;
-      min-height:200px;
-      aspect-ratio:unset;
-      padding:0;
-      border-radius:0;
-      box-shadow:none;
-      border:none;
-      position:relative;
-      overflow:hidden;
-    }
-    .hero-photo-card::before{ display:none; }
-    .hero-photo-card img{
-      border-radius:0;
-      position:absolute;
-      inset:0;
-    }
-    .hero-photo-card::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height:65%;
-      background:linear-gradient(to bottom, transparent, var(--paper) 90%);
-      z-index:2;
-    }
-    .hero-copy{ padding:0 24px; }
   }
-
-  @media (max-width:600px){
-    .skills-grid{ grid-template-columns:1fr; }
-    .navdock{
-      left:12px; right:12px; transform:none;
-      justify-content:flex-start;
-      overflow-x:auto;
-      -webkit-overflow-scrolling:touch;
-      scrollbar-width:none;
-      bottom:14px;
-      gap:2px;
-    }
-    .navdock::-webkit-scrollbar{ display:none; }
-    .navdock a{ padding:8px 14px; font-size:13px; flex:none; }
-    .card{ padding:20px; }
+  .hero-grid{
+    display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:var(--gutter);
+    margin-top:clamp(36px, 5vw, 72px); padding-bottom:clamp(56px, 8vw, 120px); align-items:end;
   }
+  .portrait{ position:relative; max-width:440px; margin:0; }
+  .portrait img{ width:100%; aspect-ratio:4/5; object-fit:cover; object-position:50% 30%; filter:grayscale(1) contrast(1.05); }
+  .portrait figcaption{ margin-top:10px; font-size:14px; color:var(--ink-soft); }
+  .intro{ max-width:30em; }
+  .intro p{ font-size:var(--step-2); line-height:1.3; letter-spacing:-0.012em; font-weight:400; }
+  .intro p + p{ margin-top:.8em; font-size:var(--step-1); line-height:1.45; color:var(--ink-soft); letter-spacing:0; }
+  .actions{ display:flex; flex-wrap:wrap; gap:12px 18px; margin-top:32px; align-items:center; }
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 24px;
+    border-radius:999px; font:inherit; font-weight:600; font-size:16px; text-decoration:none; cursor:pointer;
+    border:1.5px solid var(--ink); background:var(--ink); color:var(--paper);
+  }
+  .btn:hover{ background:transparent; color:var(--ink); }
+  .btn-quiet{ background:transparent; color:var(--ink); }
+  .btn-quiet:hover{ background:var(--ink); color:var(--paper); }
 
+  /* ---------- Section heads ---------- */
+  .sec{ padding-block:clamp(72px, 10vw, 150px); border-top:1px solid var(--rule); }
+  .sec-head{ display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:var(--gutter); margin-bottom:clamp(36px, 5vw, 64px); align-items:end; }
+  .sec-title{ font-size:var(--step-3); font-stretch:118%; font-weight:750; letter-spacing:-0.025em; }
+  .sec-lede{ font-size:var(--step-1); color:var(--ink-soft); max-width:30em; line-height:1.45; }
+
+  /* ---------- Services ---------- */
+  .services{ list-style:none; margin:0; padding:0; border-top:1px solid var(--ink); }
+  .service{
+    display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:8px var(--gutter);
+    padding:clamp(22px, 2.6vw, 34px) 0; border-bottom:1px solid var(--rule); align-items:baseline;
+  }
+  .service h3{
+    font-size:clamp(30px, 4.4vw, 68px); font-weight:700; font-stretch:72%; letter-spacing:-0.01em; line-height:1;
+  }
+  @media (hover:hover) and (prefers-reduced-motion:no-preference){
+    .service h3{ transition:font-stretch .6s cubic-bezier(.2,.7,0,1); }
+    .service:hover h3{ font-stretch:125%; }
+  }
+  .service p{ max-width:var(--measure); }
+  .service .tools{ display:block; margin-top:8px; font-size:15px; color:var(--ink-soft); }
+  .services-cta{ display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:18px; margin-top:40px; }
+  .services-cta p{ font-size:var(--step-1); max-width:28em; }
+
+  /* ---------- Credits (work) ---------- */
+  .screen{ background:var(--screen); color:var(--screen-ink); padding-block:clamp(88px, 12vw, 180px); }
+  .screen :focus-visible{ outline-color:#FF5A4F; }
+  .credits-title{ text-align:center; font-size:var(--step-3); font-stretch:118%; font-weight:750; letter-spacing:-0.025em; }
+  .credits-sub{ text-align:center; color:var(--screen-soft); margin:16px auto 0; max-width:34em; }
+  .credits{ list-style:none; margin:clamp(56px, 7vw, 96px) auto 0; padding:0; max-width:1100px; }
+  .credit + .credit{ margin-top:6px; }
+  .credit-btn{
+    all:unset; box-sizing:border-box; cursor:pointer; width:100%;
+    display:grid; grid-template-columns:1fr 1fr; column-gap:clamp(20px, 3vw, 48px); padding:14px 0;
+  }
+  .credit-role{ text-align:right; color:var(--screen-soft); font-size:var(--step-0); line-height:1.35; padding-top:.3em; }
+  .credit-who{ text-align:left; }
+  .credit-co{ display:block; font-size:var(--step-2); font-weight:650; font-stretch:105%; line-height:1.12; letter-spacing:-0.01em; }
+  .credit-when{ display:block; margin-top:4px; color:var(--screen-soft); font-size:15px; font-variant-numeric:tabular-nums; }
+  .credit-btn:focus-visible{ outline:3px solid #FF5A4F; outline-offset:6px; border-radius:2px; }
+  .credit-btn:hover .credit-co{ text-decoration:underline; text-decoration-thickness:1px; text-underline-offset:6px; }
+  .credit-btn[aria-expanded="true"] .credit-co{ color:#fff; }
+  .credit-plus{ display:inline-block; margin-left:.35em; color:var(--screen-soft); font-weight:400; font-size:.7em; vertical-align:.18em; }
+  .credit-btn[aria-expanded="true"] .credit-plus{ transform:rotate(45deg); }
+  .credit-detail{ display:grid; grid-template-columns:1fr 1fr; column-gap:clamp(20px, 3vw, 48px); padding:4px 0 26px; }
+  .credit-detail[hidden]{ display:none; }
+  .credit-detail p{ grid-column:2; max-width:30em; color:var(--screen-ink); font-size:16.5px; }
+  .credit-detail .where{ grid-column:1; text-align:right; color:var(--screen-soft); font-size:15px; }
+  .credits-end{ text-align:center; margin-top:clamp(64px, 8vw, 110px); color:var(--screen-soft); }
+  .credits-end strong{ display:block; color:var(--screen-ink); font-size:var(--step-1); font-weight:600; margin-bottom:6px; }
+  .proof{ list-style:none; padding:0; margin:clamp(72px, 9vw, 130px) auto 0; max-width:1100px;
+    display:grid; grid-template-columns:repeat(3, minmax(0,1fr)); gap:clamp(20px, 3vw, 48px); border-top:1px solid #2B2D30; padding-top:32px; }
+  .proof b{ display:block; font-size:var(--step-3); font-stretch:125%; font-weight:750; letter-spacing:-0.03em; line-height:1; margin-bottom:12px; }
+  .proof span{ color:var(--screen-soft); }
+
+  /* ---------- Brands ---------- */
+  .brands{ display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:var(--gutter); }
+  .brands h3{ font-size:var(--step-1); font-weight:600; }
+  .brands h3 + p{ color:var(--ink-soft); margin-top:6px; max-width:22em; }
+  .logos{ list-style:none; margin:0; padding:1px 0 0 1px; display:flex; flex-wrap:wrap; }
+  .logos li{ width:clamp(120px, 11vw, 150px); height:96px; display:flex; align-items:center; justify-content:center; padding:20px 22px;
+    border:1px solid var(--rule); margin:-1px 0 0 -1px; }
+  .logos img{ max-height:100%; max-width:100%; width:auto; object-fit:contain; filter:grayscale(1) contrast(1.15); mix-blend-mode:multiply; opacity:.82; }
+  .brands + .brands{ margin-top:56px; }
+
+  /* ---------- Training and tools ---------- */
+  .training{ display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:var(--gutter); }
+  .edu{ list-style:none; margin:0; padding:0; border-top:1px solid var(--ink); }
+  .edu li{ display:grid; grid-template-columns:7.5em 1fr; gap:16px; padding:18px 0; border-bottom:1px solid var(--rule); }
+  .edu .yr{ color:var(--ink-soft); font-variant-numeric:tabular-nums; }
+  .edu b{ font-weight:600; display:block; }
+  .edu span{ color:var(--ink-soft); }
+  .tools-list{ list-style:none; margin:0; padding:0; display:flex; flex-wrap:wrap; gap:10px; }
+  .tools-list li{ border:1px solid var(--ink); border-radius:999px; padding:7px 16px; font-size:15.5px; }
+  .training h3{ font-size:var(--step-1); font-weight:600; margin-bottom:18px; }
+
+  /* ---------- Contact ---------- */
+  .contact{ background:var(--paper-deep); }
+  .contact-grid{ display:grid; grid-template-columns:minmax(0, 5fr) minmax(0, 7fr); gap:var(--gutter); }
+  .contact h2{ font-size:clamp(44px, 5.4vw, 100px); font-stretch:120%; font-weight:800; letter-spacing:-0.035em; line-height:.92; }
+  .contact-aside{ margin-top:28px; color:var(--ink-soft); max-width:22em; }
+  .contact-aside a{ color:var(--ink); }
+  .contact-aside p + p{ margin-top:14px; }
+  .form{ display:grid; gap:22px; }
+  .row2{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
+  .field{ display:grid; gap:8px; }
+  .field > span{ font-size:15px; font-weight:600; }
+  .field small{ font-weight:400; color:var(--ink-soft); }
+  .field input, .field select, .field textarea{
+    font:inherit; color:var(--ink); background:var(--paper); border:1.5px solid var(--ink-soft); border-radius:6px;
+    padding:13px 14px; width:100%; min-height:50px;
+  }
+  .field textarea{ resize:vertical; min-height:150px; line-height:1.5; }
+  .field select{ appearance:none; background-image:linear-gradient(45deg, transparent 50%, var(--ink) 50%), linear-gradient(135deg, var(--ink) 50%, transparent 50%);
+    background-position:calc(100% - 20px) 52%, calc(100% - 14px) 52%; background-size:6px 6px; background-repeat:no-repeat; padding-right:40px; }
+  .field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible{ outline:3px solid var(--safelight); outline-offset:1px; border-color:var(--ink); }
+  .field input:user-invalid, .field textarea:user-invalid{ border-color:var(--safelight); }
+  .form-foot{ display:flex; flex-wrap:wrap; align-items:center; gap:14px 20px; }
+  .send{ background:var(--safelight); border-color:var(--safelight); color:#fff; min-width:200px; }
+  .send:hover{ background:#9E150F; border-color:#9E150F; color:#fff; }
+  .send:disabled{ opacity:.6; cursor:progress; }
+  .status{ font-size:15.5px; }
+  .status.ok{ color:#1F6B37; font-weight:600; }
+  .status.err{ color:var(--safelight); font-weight:600; }
+  .honey{ position:absolute; left:-9999px; width:1px; height:1px; opacity:0; }
+
+  /* ---------- Footer ---------- */
+  .foot{ padding-block:36px 44px; border-top:1px solid var(--rule); font-size:15px; color:var(--ink-soft); }
+  .foot-in{ display:flex; flex-wrap:wrap; justify-content:space-between; gap:16px 32px; }
+  .foot nav{ display:flex; flex-wrap:wrap; gap:8px 22px; }
+  .foot a{ color:var(--ink); text-underline-offset:4px; }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width:1000px){
+    .bar nav .opt{ display:none; }
+  }
+  @media (max-width:820px){
+    .hero-grid, .sec-head, .service, .brands, .training, .contact-grid{ grid-template-columns:1fr; }
+    .portrait{ max-width:360px; }
+    .service h3{ font-stretch:85%; }
+    .proof{ grid-template-columns:1fr; }
+  }
+  @media (max-width:700px){
+    .bar-in{ height:auto; flex-wrap:wrap; gap:4px 16px; padding-block:10px; }
+    .bar nav{ order:3; width:100%; min-width:0; overflow-x:auto; gap:18px; scrollbar-width:none; }
+    .bar nav::-webkit-scrollbar{ display:none; }
+    .bar nav .opt{ display:inline; }
+    .bar .sep{ display:none; }
+    .hire{ padding:7px 14px; font-size:14.5px; }
+    html{ scroll-padding-top:110px; }
+    .row2{ grid-template-columns:1fr; }
+    .credit-btn, .credit-detail{ grid-template-columns:1fr; text-align:left; }
+    .credit-role, .credit-detail .where{ text-align:left; padding-top:0; order:2; font-size:15px; }
+    .credit-detail p{ grid-column:1; }
+    .credit-detail .where{ grid-column:1; order:0; margin-bottom:6px; }
+    .credit-btn{ padding:16px 0; border-top:1px solid #222; }
+    .credit + .credit{ margin-top:0; }
+    .edu li{ grid-template-columns:1fr; gap:2px; }
+  }
   @media (prefers-reduced-motion:reduce){
-    *, *::before, *::after{ transition:none !important; }
-    .social-btn:hover, .cf-send:hover{ transform:none; }
+    *,*::before,*::after{ transition:none !important; animation:none !important; }
   }
 </style>
 </head>
 <body>
+<a class="skip" href="#main">Skip to content</a>
 
-<div class="filmrail"></div>
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="wordmark" href="#top">Jishnu Vediyoor</a>
+    <nav aria-label="Site" id="sitenav">
+      <a href="#services">Services</a>
+      <a href="#work">Work</a>
+      <a href="#training">Training</a>
+      <a href="#contact">Contact</a>
+      <span class="sep" aria-hidden="true"></span>
+      <a class="opt" href="/blog/">Blog</a>
+      <a class="opt" href="/projects/">Projects</a>
+    </nav>
+    <a class="hire" href="#contact">Hire me</a>
+  </div>
+</header>
 
-<main>
-  <div class="wrap">
+<main id="main">
 
-    <header id="home">
-      <div class="hero-copy">
-        <div class="eyebrow">Portfolio / Résumé</div>
-        <h1 class="name">Jishnu<br>Vediyoor</h1>
-        <p class="role-line">Manager, Digital Design</p>
-        <p class="loc-line">BANGALORE, IN</p>
-        <div class="socials">
-          <a class="social-btn" href="https://www.linkedin.com/in/jishnuvediyoor/" aria-label="LinkedIn" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.03-1.85-3.03-1.86 0-2.14 1.45-2.14 2.94v5.66H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
-          </a>
-          <a class="social-btn" href="mailto:mail@jishnuvediyoor.com" aria-label="Email mail@jishnuvediyoor.com">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
-          </a>
-          <a class="social-btn" href="https://www.instagram.com/thisconfusedguy/" aria-label="Instagram" target="_blank" rel="noreferrer">
-            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="currentColor"><path d="M7 2h10a5 5 0 0 1 5 5v10a5 5 0 0 1-5 5H7a5 5 0 0 1-5-5V7a5 5 0 0 1 5-5zm0 2a3 3 0 0 0-3 3v10a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3H7zm5 3.5A5.5 5.5 0 1 1 6.5 13 5.5 5.5 0 0 1 12 7.5zm0 2A3.5 3.5 0 1 0 15.5 13 3.5 3.5 0 0 0 12 9.5zm5.25-3.25a1.25 1.25 0 1 1-1.25 1.25 1.25 1.25 0 0 1 1.25-1.25z"/></svg>
-          </a>
+  <section class="hero wrap" id="top" aria-labelledby="name">
+    <p class="avail">Available for freelance projects</p>
+    <h1 class="name" id="name"><span>Jishnu</span><span>Vediyoor</span></h1>
+
+    <div class="hero-grid" id="about">
+      <figure class="portrait">
+        {{ partial "img.html" (dict "src" "/images/jishnuvediyoor.jpeg" "alt" "Portrait of Jishnu Vediyoor" "widths" (slice 400 600 800) "eager" true
+              "sizes" "(max-width: 820px) 360px, 440px") }}
+        <figcaption>Bengaluru, India</figcaption>
+      </figure>
+      <div class="intro">
+        <p>I design brands and make the films that carry them.</p>
+        <p>For 12+ years I've led creative teams, rebrands and video production for banks, insurers, retailers and healthcare companies. I trained in digital filmmaking, so my work runs from brand identity and motion graphics to script, shoot and final edit. Today I'm Manager, Digital Design at AXA Global Business Services.</p>
+        <div class="actions">
+          <a class="btn" href="#contact">Start a project</a>
+          <a class="btn btn-quiet" href="#work">See my work history</a>
         </div>
       </div>
+    </div>
+  </section>
 
-      <div class="hero-photo">
-        <div class="hero-photo-card">
-          {{- partial "img.html" (dict "src" "/images/jishnuvediyoor.jpeg" "alt" "Portrait of Jishnu Vediyoor" "widths" (slice 400 600 800) "eager" true
-                "sizes" "(max-width: 1024px) 100vw, 336px") }}
-        </div>
-      </div>
-    </header>
-
-    <section id="about">
+  <section class="sec" id="services" aria-labelledby="services-title">
+    <div class="wrap">
       <div class="sec-head">
-        <span class="sec-tc">00 / ABOUT</span>
-        <h2 class="sec-title">About</h2>
+        <h2 class="sec-title" id="services-title">What I can make for you</h2>
+        <p class="sec-lede">Freelance work for companies, agencies and founders. Pick one, or bring me in for the whole thing.</p>
       </div>
-      <p class="about-copy">I'm a design leader with 12+ years of leading creative teams, rebranding initiatives and video production for global brands in banking, insurance, retail and healthcare. My roots are in film: I trained in digital filmmaking, and my work spans brand identity, motion graphics, UI/UX and end-to-end video, from script to final edit.</p>
-      <ul class="highlights">
-        <li><span class="hl-fig">8,000+</span><span class="hl-text">attendees at a rebranding event across 3 cities at Carelon</span></li>
-        <li><span class="hl-fig">Gold</span><span class="hl-text">for video production, Kochi Ad Club 2016</span></li>
-        <li><span class="hl-fig">Studio</span><span class="hl-text">set up and led an in-house video studio at Standard Chartered GBS</span></li>
+      <ul class="services">
+        <li class="service">
+          <h3>Brand identity</h3>
+          <p>Logos, brand guidelines and rebrands, with the print and digital collateral that carries them.<span class="tools">Illustrator, Photoshop</span></p>
+        </li>
+        <li class="service">
+          <h3>Motion graphics</h3>
+          <p>Animated explainers, social loops, GIFs and titles for campaigns and internal communications.<span class="tools">After Effects</span></p>
+        </li>
+        <li class="service">
+          <h3>Video production</h3>
+          <p>Script, storyboard, shoot and edit, from one person who has done every step.<span class="tools">Premiere Pro, Final Cut Pro</span></p>
+        </li>
+        <li class="service">
+          <h3>Art direction</h3>
+          <p>Campaign concepts, visual direction and UI/UX design for social, events and digital products.<span class="tools">Figma</span></p>
+        </li>
+        <li class="service">
+          <h3>Photography</h3>
+          <p>Portrait and travel photography, shot and graded for brand use.<span class="tools">Lightroom</span></p>
+        </li>
       </ul>
-    </section>
-
-    <section id="work">
-      <div class="sec-head">
-        <span class="sec-tc">01 / TIMELINE</span>
-        <h2 class="sec-title">Work</h2>
+      <div class="services-cta">
+        <p>Tell me what you're making and when you need it.</p>
+        <a class="btn" href="#contact">Start a project</a>
       </div>
+    </div>
+  </section>
 
-      <div class="timeline">
-
-        <div class="entry current">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">AXA Global Business Services (AXA GBS) <span class="role">| Manager, Digital Design</span></h3>
-              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/axa.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
-            </div>
-            <div class="meta-row">Bengaluru, Karnataka, India</div>
-            <div class="timecode">MAY 2025 &nbsp;→&nbsp; PRESENT</div>
-            <p class="card-summary"><span class="label">Summary</span>Lead digital design initiatives for AXA GBS, overseeing creative strategy, design execution, and multimedia projects within corporate services in insurance.</p>
+  <section class="screen" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <h2 class="credits-title" id="work-title">Work</h2>
+      <p class="credits-sub">Ten credits since 2010. Select one to read what I did there.</p>
+      <ol class="credits" reversed>
+        {{- range $i, $j := hugo.Data.work.jobs }}
+        <li class="credit">
+          <button class="credit-btn" type="button" aria-expanded="false" aria-controls="credit-{{ $i }}">
+            <span class="credit-role">{{ .role }}</span>
+            <span class="credit-who">
+              <span class="credit-co">{{ .company }}<span class="credit-plus" aria-hidden="true">+</span></span>
+              <span class="credit-when">{{ .from }} – {{ .to }}</span>
+            </span>
+          </button>
+          <div class="credit-detail" id="credit-{{ $i }}" hidden>
+            <span class="where">{{ .place }}{{ with .note }}, {{ . }}{{ end }}</span>
+            <p>{{ .summary }}</p>
           </div>
-        </div>
+        </li>
+        {{- end }}
+      </ol>
 
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Standard Chartered GBS <span class="role">| Manager, Video Services | Design Studio</span></h3>
-              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/standard-chartered.svg" "alt" "" "widths" (slice 112 224) "sizes" "112px" "width" 280 "height" 110) }}</div>
-            </div>
-            <div class="meta-row">Bengaluru, Karnataka, India</div>
-            <div class="timecode">DEC 2023 &nbsp;→&nbsp; MAY 2025</div>
-            <p class="card-summary"><span class="label">Summary</span>Established and led an in-house video production studio, creating animations, motion graphics and GIFs for corporate campaigns. Oversaw creative workflows to keep video content aligned with brand standards.</p>
-          </div>
-        </div>
+      <ul class="proof">
+        <li><b>8,000+</b><span>attendees at a three-city rebranding event I led at Carelon.</span></li>
+        <li><b>Gold</b><span>for video production at the Kochi Ad Club awards, 2016.</span></li>
+        <li><b>Studio</b><span>set up and led: the in-house video studio at Standard Chartered GBS.</span></li>
+      </ul>
+    </div>
+  </section>
 
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Carelon Global Solutions India <span class="role">| Senior Associate - Branding and Communications</span></h3>
-              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/carelon.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
-            </div>
-            <div class="meta-row">Bengaluru, Karnataka, India</div>
-            <div class="timecode">FEB 2020 &nbsp;→&nbsp; NOV 2023</div>
-            <p class="card-summary"><span class="label">Summary</span>Spearheaded rebranding projects, including a multi-city event for 8,000+ attendees. Developed brand guidelines, logos and digital and print collateral for in-house brands, and managed video production from scripting to post-editing.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Artistory Media Labs <span class="role">| Founder</span></h3>
-            </div>
-            <div class="meta-row">Kochi, Kerala, India</div>
-            <div class="timecode">MAY 2017 &nbsp;→&nbsp; MAR 2022</div>
-            <p class="card-summary"><span class="label">Summary</span>Led production teams in digital content creation, marketing and client deliverables, and streamlined quality control and team collaboration.</p>
-          </div>
-        </div>
-
-        <details class="more-roles">
-          <summary><span class="more-open">Show 6 earlier roles</span><span class="more-close">Hide earlier roles</span></summary>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Lowe's India <span class="role">| Creative Design Consultant, via People360D Consulting</span></h3>
-              <div class="card-logo">{{ partial "img.html" (dict "src" "/images/employers/lowes.png" "alt" "" "widths" (slice 112 224) "sizes" "112px") }}</div>
-            </div>
-            <div class="meta-row">Bengaluru, Karnataka, India</div>
-            <div class="timecode">APR 2019 &nbsp;→&nbsp; JAN 2020</div>
-            <p class="card-summary"><span class="label">Summary</span>Consolidated design workflows for emailers, newsletters, animations and website graphics.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Buzzstop Integrated Communications Pvt. Ltd. <span class="role">| Digital Technologist</span></h3>
-            </div>
-            <div class="meta-row">Kochi, Kerala, India</div>
-            <div class="timecode">MAR 2018 &nbsp;→&nbsp; AUG 2018</div>
-            <p class="card-summary"><span class="label">Summary</span>Implemented digital technology solutions and supported integrated communication strategies in marketing and advertising.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Winningwayz <span class="role">| Senior Digital Visualizer</span></h3>
-            </div>
-            <div class="meta-row">Kochi, Kerala, India</div>
-            <div class="timecode">APR 2014 &nbsp;→&nbsp; JAN 2017</div>
-            <p class="card-summary"><span class="label">Summary</span>Led a team of 5 designers on digital campaigns and video production. Won Gold at the Kochi Ad Club awards 2016 for video production.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Smursh Media <span class="role">| Digital Visualizer</span></h3>
-            </div>
-            <div class="meta-row">Mumbai, Maharashtra, India</div>
-            <div class="timecode">JUN 2013 &nbsp;→&nbsp; MAR 2014</div>
-            <p class="card-summary"><span class="label">Summary</span>Created UI/UX designs and social media campaigns.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">The Links India Pvt Ltd <span class="role">| Visual Director Junior</span></h3>
-            </div>
-            <div class="meta-row">Kerala, Kerala, India</div>
-            <div class="timecode">SEP 2011 &nbsp;→&nbsp; MAR 2013</div>
-            <p class="card-summary"><span class="label">Summary</span>Supported visual direction for advertising campaigns at a creative communications agency.</p>
-          </div>
-        </div>
-
-        <div class="entry">
-          <span class="dot"></span>
-          <div class="card">
-            <div class="card-top">
-              <h3 class="card-title">Indiavibes Web TV – India's First Web TV <span class="role">| Cinematographer – Social Marketing</span></h3>
-            </div>
-            <div class="meta-row">India</div>
-            <div class="timecode">DEC 2010 &nbsp;→&nbsp; MAR 2013</div>
-            <p class="card-summary"><span class="label">Summary</span>Shot and created video content for social marketing initiatives in early web television production.</p>
-          </div>
-        </div>
-
-        </details>
+  <section class="sec" id="brands" aria-labelledby="brands-title">
+    <div class="wrap">
+      <h2 class="sec-title" id="brands-title" style="margin-bottom:clamp(36px, 5vw, 64px)">Brands I've worked with</h2>
+      <div class="brands">
+        <div><h3>As an employee</h3><p>In-house design and video teams.</p></div>
+        <ul class="logos">
+          {{- range hugo.Data.work.jobs }}{{ if .logo }}
+          <li>{{ partial "img.html" (dict "src" .logo "alt" .company "widths" (slice 180 360) "sizes" "180px" "width" 280 "height" 110) }}</li>
+          {{- end }}{{ end }}
+        </ul>
       </div>
-
       {{- with hugo.Data.clients.clients }}
-      <div class="clients">
-        <span class="sec-tc">SELECTED CLIENTS</span>
-        <ul class="client-logos">
+      <div class="brands">
+        <div><h3>As a client</h3><p>Selected clients.</p></div>
+        <ul class="logos">
           {{- range . }}
           <li>{{ partial "img.html" (dict "src" .logo "alt" .name "widths" (slice 180 360) "sizes" "180px") }}</li>
           {{- end }}
         </ul>
       </div>
       {{- end }}
-    </section>
+    </div>
+  </section>
 
-    <section id="education">
+  <section class="sec" id="training" aria-labelledby="training-title">
+    <div class="wrap">
       <div class="sec-head">
-        <span class="sec-tc">02 / CREDENTIALS</span>
-        <h2 class="sec-title">Education</h2>
+        <h2 class="sec-title" id="training-title">Training and tools</h2>
       </div>
-
-      <ul class="edu-list">
-        <li class="edu-row">
-          <span class="edu-year">2023–24</span>
-          <div class="edu-main">
-            <span class="edu-name">Indian Institute of Technology, Delhi</span>
-            <span class="edu-degree">Certification · Design Thinking for UX</span>
-          </div>
-          <span class="edu-loc">India</span>
-        </li>
-        <li class="edu-row">
-          <span class="edu-year">2016–19</span>
-          <div class="edu-main">
-            <span class="edu-name">Dr CV Raman University</span>
-            <span class="edu-degree">BBA · Business Administration and Management</span>
-          </div>
-          <span class="edu-loc">Vaishali, Bihar</span>
-        </li>
-        <li class="edu-row">
-          <span class="edu-year">2009</span>
-          <div class="edu-main">
-            <span class="edu-name">SAE Institute</span>
-            <span class="edu-degree">Diploma · Digital Film Making</span>
-          </div>
-          <span class="edu-loc">Chennai</span>
-        </li>
-        <li class="edu-row">
-          <span class="edu-year">1999–01</span>
-          <div class="edu-main">
-            <span class="edu-name">BHSS Kalady</span>
-          </div>
-          <span class="edu-loc">Kalady, Kerala</span>
-        </li>
-      </ul>
-    </section>
-
-    <section id="skills">
-      <div class="sec-head">
-        <span class="sec-tc">03 / TOOLKIT</span>
-        <h2 class="sec-title">Skills</h2>
-      </div>
-
-      <div class="skills-grid">
-        <div class="skill-card">
-          <span class="skill-num">01</span>
-          <h3 class="skill-name">Brand &amp; Graphic Design</h3>
-          <p class="skill-list">Brand Identity, Rebranding, Logos, Brand Guidelines, Print &amp; Digital Collateral. Photoshop, Illustrator.</p>
+      <div class="training">
+        <div>
+          <h3>Tools</h3>
+          <ul class="tools-list">
+            {{- range hugo.Data.work.tools }}<li>{{ . }}</li>{{ end }}
+          </ul>
         </div>
-        <div class="skill-card">
-          <span class="skill-num">02</span>
-          <h3 class="skill-name">Video &amp; Motion Graphics</h3>
-          <p class="skill-list">Video Editing, Motion Graphics, Animation, GIFs. Premiere Pro, After Effects, Final Cut Pro.</p>
-        </div>
-        <div class="skill-card">
-          <span class="skill-num">03</span>
-          <h3 class="skill-name">UI/UX Design</h3>
-          <p class="skill-list">UI/UX Design, Design Thinking, Social Media Campaigns. Figma.</p>
-        </div>
-        <div class="skill-card">
-          <span class="skill-num">04</span>
-          <h3 class="skill-name">Creative &amp; Art Direction</h3>
-          <p class="skill-list">Creative Direction, Art Direction, Visual Storytelling, Storyboarding, Scripting.</p>
-        </div>
-        <div class="skill-card">
-          <span class="skill-num">05</span>
-          <h3 class="skill-name">Leadership</h3>
-          <p class="skill-list">Team Management, Cross-functional Collaboration, Creative Workflows, In-house Studio Setup.</p>
-        </div>
-        <div class="skill-card">
-          <span class="skill-num">06</span>
-          <h3 class="skill-name">Film, Video &amp; Photography</h3>
-          <p class="skill-list">Film &amp; Video Production, Videography, Digital, Portrait &amp; Travel Photography, Lightroom.</p>
+        <div>
+          <h3>Education</h3>
+          <ul class="edu">
+            {{- range hugo.Data.work.education }}
+            <li><span class="yr">{{ .years }}</span><div><b>{{ .school }}</b>{{ with .course }}<span>{{ . }}</span>{{ end }}</div></li>
+            {{- end }}
+          </ul>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="contact">
-      <div class="sec-head">
-        <span class="sec-tc">04 / CONTACT</span>
-        <h2 class="sec-title">Get in touch</h2>
-      </div>
-      {{- $to := site.Params.contactEmail }}
-      <form class="contact-form" id="contact-form" action="https://formsubmit.co/{{ $to }}" method="POST">
-        <div class="cf-row">
-          <label class="cf-field">
-            <span>Name</span>
-            <input id="cf-name" type="text" name="name" autocomplete="name" required maxlength="120">
-          </label>
-          <label class="cf-field">
-            <span>Email</span>
-            <input id="cf-email" type="email" name="email" autocomplete="email" required maxlength="200">
-          </label>
+  <section class="sec contact" id="contact" aria-labelledby="contact-title">
+    <div class="wrap contact-grid">
+      <div>
+        <h2 id="contact-title">Let's make something.</h2>
+        <div class="contact-aside">
+          {{- $to := site.Params.contactEmail }}
+          <p>Send a few lines about the project, the deadline and the budget if you have one. I'll reply by email.</p>
+          <p>Prefer email? Write to <a href="mailto:{{ $to }}">{{ $to }}</a></p>
+          <p>Or find me on {{ range $i, $s := site.Params.socialIcons }}{{ if $i }} and {{ end }}<a href="{{ $s.url }}" rel="noopener noreferrer" target="_blank">{{ cond (eq $s.name "linkedin") "LinkedIn" ($s.name | humanize) }}</a>{{ end }}.</p>
         </div>
-        <label class="cf-field">
-          <span>Message</span>
-          <textarea id="cf-message" name="message" rows="5" required maxlength="5000"></textarea>
-        </label>
-        <input type="hidden" name="_subject" value="New message from jishnuvediyoor.com">
+      </div>
+      <form class="form" id="contact-form" action="https://formsubmit.co/{{ $to }}" method="POST">
+        <div class="row2">
+          <label class="field"><span>Your name</span>
+            <input id="cf-name" type="text" name="name" autocomplete="name" required maxlength="120"></label>
+          <label class="field"><span>Email</span>
+            <input id="cf-email" type="email" name="email" autocomplete="email" required maxlength="200"></label>
+        </div>
+        <div class="row2">
+          <label class="field"><span>What do you need?</span>
+            <select id="cf-type" name="project_type">
+              <option>Brand identity</option>
+              <option>Motion graphics</option>
+              <option>Video production</option>
+              <option>Art direction</option>
+              <option>Photography</option>
+              <option>A full-time role</option>
+              <option>Something else</option>
+            </select></label>
+          <label class="field"><span>Timeline <small>(optional)</small></span>
+            <input id="cf-when" type="text" name="timeline" maxlength="120" placeholder="For example, launch in March"></label>
+        </div>
+        <label class="field"><span>About the project</span>
+          <textarea id="cf-message" name="message" rows="6" required maxlength="5000"></textarea></label>
+        <input type="hidden" name="_subject" value="New project enquiry from jishnuvediyoor.com">
         <input type="hidden" name="_template" value="table">
         <input type="hidden" name="_next" value="{{ site.BaseURL }}?sent=1#contact">
-        <input type="text" name="_honey" class="cf-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
-        <div class="cf-actions">
-          <button type="submit" class="cf-send">Send message</button>
-          <p class="cf-status" id="cf-status" role="status" aria-live="polite"></p>
+        <input type="text" name="_honey" class="honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <div class="form-foot">
+          <button type="submit" class="btn send">Send enquiry</button>
+          <p class="status" id="cf-status" role="status" aria-live="polite"></p>
         </div>
-        <p class="cf-alt">Or email <a href="mailto:{{ $to }}">{{ $to }}</a></p>
       </form>
-    </section>
+    </div>
+  </section>
 
-  </div>
 </main>
 
-<footer>
-  <div class="wrap">
-    <span class="foot-tc">JISHNU VEDIYOOR — BANGALORE, IN · <a href="mailto:mail@jishnuvediyoor.com">MAIL@JISHNUVEDIYOOR.COM</a></span>
+<footer class="foot">
+  <div class="wrap foot-in">
+    <span>© {{ now.Year }} Jishnu Vediyoor</span>
+    <nav aria-label="More from this site">
+      <a href="/blog/">Blog</a>
+      <a href="/projects/">Projects</a>
+      {{- range site.Params.socialIcons }}
+      <a href="{{ .url }}" rel="noopener noreferrer" target="_blank">{{ cond (eq .name "linkedin") "LinkedIn" (.name | humanize) }}</a>
+      {{- end }}
+    </nav>
   </div>
 </footer>
 
-<nav class="navdock" id="navdock" aria-label="Site">
-  <a href="#home" class="active" aria-current="location">Home</a>
-  <a href="#about">About</a>
-  <a href="#work">Work</a>
-  <a href="#education">Education</a>
-  <a href="#skills">Skills</a>
-  <a href="#contact">Contact</a>
-  <a href="/blog/">Blog</a>
-  <a href="/projects/">Projects</a>
-</nav>
-
 <script>
-  // Highlight the section being read in the nav dock. Runs at most once per frame, and only
-  // touches the DOM when the section changes. On narrow screens the dock scrolls sideways, so the
-  // current link is centred by scrolling the dock itself (scrollIntoView here used to fire on every
-  // scroll event and could cut short the page's own smooth scroll to an anchor).
-  (() => {
-    const dock = document.getElementById('navdock');
-    if (!dock) return;
-    const inPageLinks = [...dock.querySelectorAll('a[href^="#"]')];
-    const sections = inPageLinks.map(l => document.querySelector(l.getAttribute('href')));
-    let current = -1, ticking = false;
+  // Work credits: each credit is a button that shows or hides its summary.
+  document.querySelectorAll('.credit-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const open = btn.getAttribute('aria-expanded') === 'true';
+      btn.setAttribute('aria-expanded', String(!open));
+      document.getElementById(btn.getAttribute('aria-controls')).hidden = open;
+    });
+  });
 
-    function setActive(){
-      ticking = false;
-      const y = window.scrollY + window.innerHeight * 0.3;
-      let idx = 0;
-      sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) idx = i; });
-      if (idx === current) return;
-      current = idx;
-      inPageLinks.forEach((l, i) => {
-        l.classList.toggle('active', i === idx);
-        if (i === idx) l.setAttribute('aria-current', 'location'); else l.removeAttribute('aria-current');
+  // Mark the section in view in the top bar.
+  (() => {
+    const links = [...document.querySelectorAll('#sitenav a[href^="#"]')];
+    if (!('IntersectionObserver' in window) || !links.length) return;
+    const byId = new Map(links.map(a => [a.getAttribute('href').slice(1), a]));
+    const io = new IntersectionObserver(entries => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        links.forEach(a => a.removeAttribute('aria-current'));
+        const a = byId.get(e.target.id);
+        if (a) a.setAttribute('aria-current', 'location');
       });
-      const link = inPageLinks[idx];
-      if (dock.scrollWidth > dock.clientWidth) {
-        dock.scrollTo({ left: link.offsetLeft - (dock.clientWidth - link.offsetWidth) / 2,
-                        behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
-      }
-    }
-    window.addEventListener('scroll', () => { if (!ticking) { ticking = true; requestAnimationFrame(setActive); } }, { passive:true });
-    setActive();
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    byId.forEach((_, id) => { const s = document.getElementById(id); if (s) io.observe(s); });
   })();
 
+  // Contact form: send through FormSubmit without leaving the page; plain POST still works without JS.
   (() => {
     const form = document.getElementById('contact-form');
     const status = document.getElementById('cf-status');
-    if (!form) return;
-    const show = (msg, cls) => { status.textContent = msg; status.className = 'cf-status ' + (cls || ''); };
-    if (new URLSearchParams(location.search).has('sent')) show('Thanks, your message was sent.', 'ok');
+    if (!form || !status) return;
+    const show = (msg, cls) => { status.textContent = msg; status.className = 'status ' + (cls || ''); };
+    if (new URLSearchParams(location.search).has('sent')) show('Thanks, your enquiry was sent. I’ll reply by email.', 'ok');
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const btn = form.querySelector('.cf-send');
+      const btn = form.querySelector('.send');
       if (btn.disabled || form.elements.namedItem('_honey').value) return;
       // Whitespace-only fields pass the browser's "required" check; trim and re-check before sending.
-      ['name', 'email', 'message'].forEach(n => { const f = form.elements.namedItem(n); f.value = f.value.trim(); });
+      ['name', 'email', 'message', 'timeline'].forEach(n => { const f = form.elements.namedItem(n); if (f) f.value = f.value.trim(); });
       if (!form.checkValidity()) { form.reportValidity(); return; }
       btn.disabled = true; show('Sending…');
       try {
@@ -988,14 +575,13 @@
           method: 'POST', headers: { 'Accept': 'application/json' }, body: new FormData(form)
         });
         const data = await res.json().catch(() => ({}));
-        if (res.ok && String(data.success) === 'true') { form.reset(); show('Thanks, your message was sent.', 'ok'); }
-        else show(data.message || 'Something went wrong. Please email me directly instead.', 'err');
+        if (res.ok && String(data.success) === 'true') { form.reset(); show('Thanks, your enquiry was sent. I’ll reply by email.', 'ok'); }
+        else show(data.message || 'The enquiry was not sent. Email me at the address on the left instead.', 'err');
       } catch (err) {
-        show('Could not send right now. Please email me directly instead.', 'err');
+        show('The enquiry could not be sent. Check your connection, or email me at the address on the left.', 'err');
       } finally { btn.disabled = false; }
     });
   })();
 </script>
-
 </body>
 </html>
