@@ -1,0 +1,83 @@
+# Work history shown as the "credits" on the homepage, newest first.
+# logo is optional (an employer logo under static/images/employers/).
+jobs:
+  - role: Manager, Digital Design
+    company: AXA Global Business Services
+    place: Bengaluru
+    from: May 2025
+    to: Present
+    logo: /images/employers/axa.png
+    summary: Lead digital design initiatives for AXA GBS, overseeing creative strategy, design execution and multimedia projects within corporate services in insurance.
+  - role: Manager, Video Services, Design Studio
+    company: Standard Chartered GBS
+    place: Bengaluru
+    from: Dec 2023
+    to: May 2025
+    logo: /images/employers/standard-chartered.svg
+    summary: Established and led an in-house video production studio, creating animations, motion graphics and GIFs for corporate campaigns. Oversaw creative workflows to keep video content aligned with brand standards.
+  - role: Senior Associate, Branding and Communications
+    company: Carelon Global Solutions India
+    place: Bengaluru
+    from: Feb 2020
+    to: Nov 2023
+    logo: /images/employers/carelon.png
+    summary: Spearheaded rebranding projects, including a multi-city event for 8,000+ attendees. Developed brand guidelines, logos and digital and print collateral for in-house brands, and managed video production from scripting to post-editing.
+  - role: Creative Design Consultant
+    company: Lowe's India
+    note: via People360D Consulting
+    place: Bengaluru
+    from: Apr 2019
+    to: Jan 2020
+    logo: /images/employers/lowes.png
+    summary: Consolidated design workflows for emailers, newsletters, animations and website graphics.
+  - role: Digital Technologist
+    company: Buzzstop Integrated Communications
+    place: Kochi
+    from: Mar 2018
+    to: Aug 2018
+    summary: Implemented digital technology solutions and supported integrated communication strategies in marketing and advertising.
+  - role: Founder
+    company: Artistory Media Labs
+    place: Kochi
+    from: May 2017
+    to: Mar 2022
+    summary: Led production teams in digital content creation, marketing and client deliverables, and streamlined quality control and team collaboration.
+  - role: Senior Digital Visualizer
+    company: Winningwayz
+    place: Kochi
+    from: Apr 2014
+    to: Jan 2017
+    summary: Led a team of 5 designers on digital campaigns and video production. Won Gold at the Kochi Ad Club awards 2016 for video production.
+  - role: Digital Visualizer
+    company: Smursh Media
+    place: Mumbai
+    from: Jun 2013
+    to: Mar 2014
+    summary: Created UI/UX designs and social media campaigns.
+  - role: Visual Director Junior
+    company: The Links India
+    place: Kerala
+    from: Sep 2011
+    to: Mar 2013
+    summary: Supported visual direction for advertising campaigns at a creative communications agency.
+  - role: Cinematographer, Social Marketing
+    company: Indiavibes Web TV
+    place: India
+    from: Dec 2010
+    to: Mar 2013
+    summary: Shot and created video content for social marketing initiatives in early web television production.
+
+education:
+  - years: 2023–24
+    school: Indian Institute of Technology, Delhi
+    course: Certification in Design Thinking for UX
+  - years: 2016–19
+    school: Dr CV Raman University, Vaishali, Bihar
+    course: BBA, Business Administration and Management
+  - years: "2009"
+    school: SAE Institute, Chennai
+    course: Diploma in Digital Film Making
+  - years: 1999–01
+    school: BHSS Kalady, Kerala
+
+tools: [Photoshop, Illustrator, After Effects, Premiere Pro, Final Cut Pro, Figma, Lightroom]
