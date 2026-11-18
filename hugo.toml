@@ -6,6 +6,11 @@ theme = "PaperMod"
 enableRobotsTXT = true
 
 # Only tags are used in content; an empty /categories/ page served no purpose.
+# Google Analytics 4. Only injected in production builds (see partials/head.html and layouts/index.html).
+# Not added to the static Vakku Vetta pages: their privacy policy promises no analytics.
+[services.googleAnalytics]
+  ID = "G-Q78Q1PEJ8Z"
+
 [taxonomies]
   tag = "tags"
 

@@ -312,6 +312,10 @@
     *,*::before,*::after{ transition:none !important; animation:none !important; }
   }
 </style>
+{{- /* The homepage has its own <head>, so it adds Google Analytics itself (ID in hugo.toml). */}}
+{{- if hugo.IsProduction | or (eq site.Params.env "production") }}
+{{- partial "google_analytics.html" . }}
+{{- end }}
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
